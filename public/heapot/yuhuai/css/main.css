@@ -164,23 +164,23 @@ header nav.navbar-default {
     padding: 10px 30px;
     border-radius: 5px; }
     header nav.navbar-default .navbar-nav > li > a:hover {
-      color: #fff !important;
-      background-color: #e91219 !important; }
+      color: #000 !important;
+      background-color: #fff !important; }
     header nav.navbar-default .navbar-nav > li > a:focus {
-      color: #fff !important;
-      background-color: #e91219 !important; }
+      color: #000 !important;
+      background-color: #fff !important; }
   header nav.navbar-default .navbar-nav > .active > a {
-    color: #fff;
+    color: #000;
     border-radius: 5px;
-    background-color: #e91219; }
+    background-color: #fff; }
     header nav.navbar-default .navbar-nav > .active > a:hover {
-      color: #fff !important; }
+      color: #000 !important; }
     header nav.navbar-default .navbar-nav > .active > a:focus {
-      color: #fff !important;
-      background-color: #e91219 !important; }
+      color: #000 !important;
+      background-color: #fff !important; }
   header nav.navbar-default .navbar-nav > .open > a {
-    color: #fff !important;
-    background-color: #e91219 !important; }
+    color: #000 !important;
+    background-color: #fff !important; }
 
 main {
   font-size: 1.6rem;
@@ -197,15 +197,29 @@ main {
   border: 1px solid #e91219; }
 
 .carousel-inner .item:first-of-type .carousel-caption {
+  padding-bottom: 8%;
   z-index: 9;
   margin: auto;
   top: 0;
   bottom: 0;
-  height: 230px; }
-  .carousel-inner .item:first-of-type .carousel-caption h3 {
-    font-size: 4rem; }
-  .carousel-inner .item:first-of-type .carousel-caption p {
-    font-size: 2rem; }
+  height: 100%;
+  width: 50%;
+  max-width: 500px;
+  left: auto;
+  right: 10%; }
+  .carousel-inner .item:first-of-type .carousel-caption .container {
+    width: 100%;
+    height: 100%;
+    display: table; }
+    .carousel-inner .item:first-of-type .carousel-caption .container .box {
+      display: table-cell;
+      vertical-align: middle; }
+  .carousel-inner .item:first-of-type .carousel-caption p:first-of-type {
+    width: 70%;
+    float: right; }
+  .carousel-inner .item:first-of-type .carousel-caption img {
+    display: block;
+    width: 100%; }
 
 .homepage-hero-module {
   position: absolute;
