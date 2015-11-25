@@ -3,5 +3,7 @@ module.exports = {
 	db: 'heapot',
 	host: '114.215.107.167',
 	port: 27017,
-	url: 'mongodb://114.215.107.167:27017/heapot'
+	user: 'heapot',
+	pwd: 'Lumia703',
+	url: 'mongodb://heapot:Lumia703@114.215.107.167:27017/heapot'
 };

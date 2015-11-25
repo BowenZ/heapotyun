@@ -2,4 +2,4 @@ var settings = require('../settings'),
 	Db = require('mongodb').Db,
 	Connection = require('mongodb').Connection,
 	Server = require('mongodb').Server;
-module.exports = new Db(settings.db, new Server(settings.host, settings.port, 'zhaobowen', 'jjang007'), {safe: true});
+module.exports = new Db(settings.db, new Server(settings.host, settings.port, settings.user, settings.pwd), {safe: true});
