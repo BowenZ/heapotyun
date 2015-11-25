@@ -1,7 +1,7 @@
 module.exports = {
-	cookieSecret: 'bowen',
+	cookieSecret: 'heapot',
 	db: 'heapot',
-	host: '121.41.27.97',
+	host: '114.215.107.167',
 	port: 27017,
-	url: 'mongodb://121.41.27.97:27017/heapot'
+	url: 'mongodb://114.215.107.167:27017/heapot'
 };
