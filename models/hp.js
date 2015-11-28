@@ -1,9 +1,7 @@
-var settings = require('../settings');
 var crypto = require('crypto'),
     ObjectID = require('mongodb').ObjectID;
 // var mongodb = require('mongodb').MongoClient;
-var mongoose = require('mongoose');
-mongoose.connect(settings.url);
+var mongoose = require('./getMongoose');
 
 //--------user start---------
 var userSchema = new mongoose.Schema({

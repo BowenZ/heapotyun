@@ -1,0 +1,212 @@
+<div class="popup-content popup-car">
+    <section class="intro">
+        <p>爱车梦工厂为您推出车辆免费高价帮卖服务、车辆免费147项检测及全国数千商家竞拍服务，让您省时、省力、高价出售爱车</p>
+        <p>大厂牌值得信赖！每天我们有5个名额专送给那些需要买卖二手车的朋友！</p>
+    </section>
+    <section class="choose">
+        <div class="weui_cells_title">您是想</div>
+        <div class="weui_cells weui_cells_radio">
+            <label class="weui_cell weui_check_label" for="radioWant1">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>买二手车</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" class="weui_check" name="radioWant" id="radioWant1" ng-model="carCtrl.flag" value="buy" checked="checked">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+            <label class="weui_cell weui_check_label" for="radioWant2">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>卖二手车</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" name="radioWant" class="weui_check" id="radioWant2" ng-model="carCtrl.flag" value="sell">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+        </div>
+    </section>
+    <section class="buy-car" ng-show="carCtrl.flag=='buy'">
+        <form ng-submit="carCtrl.processBuyForm()">
+            <div class="weui_cells_title">请填写以下信息</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">品牌</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="您想要买的车型和品牌" ng-model="carCtrl.buyCarData.brand">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">年限</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="number" placeholder="您希望的车辆年限" ng-model="carCtrl.buyCarData.buyYear">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">里程数</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="number" placeholder="您理想的车辆里程数（公里）" ng-model="carCtrl.buyCarData.mailage">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">手机号</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="tel" placeholder="您的手机号码" ng-model="carCtrl.buyCarData.tel">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_btn_area">
+                <button type="submit" class="weui_btn weui_btn_primary">确定</button>
+            </div>
+        </form>
+    </section>
+    <section class="sell-car" ng-show="carCtrl.flag=='sell'">
+        <form>
+            <div class="weui_cells_title">请填写以下信息</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">品牌</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="车辆品牌（车型）">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">颜色</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="车辆颜色">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">价格</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="number" placeholder="购买时价格（万元）">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">排量</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="排量">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_cells_title">变速箱</div>
+            <div class="weui_cells weui_cells_radio">
+                <label class="weui_cell weui_check_label" for="biansu1">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>AT自动挡</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" class="weui_check" name="radioBiansu" id="biansu1" checked="checked">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="biansu2">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>MT手动挡</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radioBiansu" class="weui_check" id="biansu2">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="biansu3">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>手自一体</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radioBiansu" class="weui_check" id="biansu3">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+            </div>
+            <div class="weui_cells_title">是否带天窗</div>
+            <div class="weui_cells weui_cells_radio">
+                <label class="weui_cell weui_check_label" for="skylight1">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>是</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" class="weui_check" name="radioSkylight" id="skylight1" checked="checked">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="skylight2">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>否</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radioSkylight" class="weui_check" id="skylight2">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+            </div>
+            <div class="weui_cells_title">上牌时间</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label for="" class="weui_label">日期</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="date" value="" placeholder="请选择日期">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_cells_title">您目前的状态是</div>
+            <div class="weui_cells weui_cells_radio">
+                <label class="weui_cell weui_check_label" for="status1">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>问问价</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" class="weui_check" name="radioStatus" id="status1">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="status2">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>想卖车</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" class="weui_check" name="radioStatus" id="status2" checked="checked">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
+            </div>
+            <div class="weui_cells_title">您的手机号</div>
+            <div class="weui_cells weui_cells_split">
+                <div class="weui_cell weui_cell_select weui_select_before">
+                    <div class="weui_cell_hd">
+                        <select class="weui_select" name="tel">
+                            <option value="1">+86</option>
+                            <option value="2">+80</option>
+                            <option value="3">+84</option>
+                            <option value="4">+87</option>
+                        </select>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="请输入号码">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_btn_area">
+                <a class="weui_btn weui_btn_primary" href="javascript:">确定</a>
+            </div>
+        </form>
+    </section>
+</div>

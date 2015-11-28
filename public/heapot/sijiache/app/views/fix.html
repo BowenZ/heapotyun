@@ -1,0 +1,55 @@
+<div class="popup-content popup-fix">
+    <section class="intro">
+        <p>请认真填写以下内容，谢谢。</p>
+    </section>
+    <section class="">
+        <form>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">车型</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="请输入您的车型" ng-model="fixCtrl.fixData.model">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">里程</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="请输入车辆行驶里程" ng-model="fixCtrl.fixData.mailage">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">手机号</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="tel" placeholder="如果需要帮助，请留下联系方式" ng-model="fixCtrl.tel.model">
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">车牌号</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="进场维修唯一凭证" ng-model="fixCtrl.fixData.licensePlateNumber">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_cells_title">您要咨询的问题</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <textarea class="weui_textarea" placeholder="请输入您的问题" ng-model="fixCtrl.fixData.question"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="weui_btn_area">
+                <a class="weui_btn weui_btn_primary" ng-click="fixCtrl.processFixForm()">确定</a>
+            </div>
+            <input type="reset">
+        </form>
+    </section>
+</div>

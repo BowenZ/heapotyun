@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "homepage": "https://github.com/BowenZ/web-template",
+  "authors": [
+    "Bowen"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.5",
+    "angular-resource": "~1.4.7",
+    "Swiper": "swiper#~3.2.0",
+    "angular-ui-router": "~0.2.15"
+  }
+}
