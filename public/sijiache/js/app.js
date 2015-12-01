@@ -1,4 +1,4 @@
-define(['angular', 'ui.router', 'js/controller/controllers', 'js/service/services'], function(angular) {
+define(['angular', 'ui.router', 'js/controller/controllers', 'js/service/admin_services'], function(angular) {
     'use strict';
     var App = angular.module('App', ['ui.router', 'appServices', 'appControllers']);
 

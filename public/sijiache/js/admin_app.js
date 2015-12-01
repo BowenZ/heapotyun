@@ -1,4 +1,4 @@
-define(['angular', 'ui.router', 'js/controller/admin_controllers'], function(angular) {
+define(['angular', 'angular-animate', 'ui.router', 'angular-resource', 'js/controller/admin_controllers'], function(angular) {
     'use strict';
     var App = angular.module('App', ['ui.router', 'appServices', 'adminControllers']);
 
@@ -42,6 +42,24 @@ define(['angular', 'ui.router', 'js/controller/admin_controllers'], function(ang
                 'admin-view': {
                     templateUrl: 'views/admin/maintenanceitem.html',
                     controller: 'MaintenanceItemController as itemCtrl'
+                }
+            }
+        }).
+        state('maintenance', {
+            url: '/maintenance',
+            views: {
+                'admin-view': {
+                    templateUrl: 'views/admin/maintenance.html',
+                    controller: 'MaintenanceController as mtncCtrl'
+                }
+            }
+        }).
+        state('ad', {
+            url: '/ad',
+            views: {
+                'admin-view': {
+                    templateUrl: 'views/admin/ad.html',
+                    controller: 'AdvertisementController as adCtrl'
                 }
             }
         });

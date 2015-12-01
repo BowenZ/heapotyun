@@ -8,6 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
     <link rel="stylesheet" href="css/main.css">
+    <link href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,14 +20,14 @@
             <div class="gallary">
                 <div class="swiper-container swiper-top">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="http://heapot.b0.upaiyun.com/tmpimg/1.jpg" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="http://heapot.b0.upaiyun.com/tmpimg/2.jpg" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="http://heapot.b0.upaiyun.com/tmpimg/3.jpg" alt="">
+                        <div class="swiper-slide" ng-repeat="ad in mainCtrl.ads">
+                            <a ng-href="{{ad.linkUrl}}" target="_blank">
+                                <img ng-src="{{ad.imgUrl}}" alt="">
+                                <div class="copys">
+                                    <h3>{{ad.title}}</h3>
+                                    <p>{{ad.content}}</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -36,25 +37,25 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <a ui-sref="car" class="button-container" ng-click="showPopup()">
-                            <span class="glyphicon glyphicon-random"></span>
+                            <span class="fa fa-car"></span>
                             <span class="copy">二手车</span>
                         </a>
                     </div>
                     <div class="col-xs-6">
                         <a ui-sref="fix" class="button-container" ng-click="showPopup()">
-                            <span class="glyphicon glyphicon-wrench"></span>
+                            <span class="fa fa-wrench"></span>
                             <span class="copy">维修</span>
                         </a>
                     </div>
                     <div class="col-xs-6">
-                        <a ui-sref="upkeep" class="button-container" ng-click="showPopup()">
-                            <span class="glyphicon glyphicon-leaf"></span>
+                        <a ui-sref="maintenance" class="button-container" ng-click="showPopup()">
+                            <span class="fa fa-heart"></span>
                             <span class="copy">保养</span>
                         </a>
                     </div>
                     <div class="col-xs-6">
                         <a href="" class="button-container">
-                            <span class="glyphicon glyphicon-yen"></span>
+                            <span class="fa fa-calculator"></span>
                             <span class="copy">车险</span>
                         </a>
                     </div>
@@ -65,7 +66,7 @@
         <div class="popup">
             <header>
                 <h2>{{popupTitle}}</h2>
-                <a href="" class="glyphicon glyphicon-menu-left" ng-click="hidePopup()">&lt;</a>
+                <a href="" class="fa fa-arrow-left" ng-click="hidePopup()"></a>
             </header>
             <div class="view-frame" ui-view="view-content"></div>
         </div>

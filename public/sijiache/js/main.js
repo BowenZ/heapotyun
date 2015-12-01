@@ -37,20 +37,6 @@ require.config({
     waitSeconds: 30
 });
 
-require(['jquery','swiper','bootstrap','angular','ui.router','angular-resource'], function(){
-	var swiper = new Swiper('.swiper-container', {
-        pagination: '.swiper-pagination',
-        paginationClickable: false,
-        // direction: 'vertical',
-        // autoplay: 1000,
-        effect: 'slide', //Could be "slide", "fade", "cube" or "coverflow"
-        loop: true,
-        onSlideChangeEnd: function(s) {
-            // console.log(s.activeIndex);
-        }
-    });
-});
-
 require(['js/app'], function(app){
 	app.bootstrap();
 });

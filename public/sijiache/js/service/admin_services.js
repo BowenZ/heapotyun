@@ -22,5 +22,9 @@ define(['angular', 'angular-resource'], function(angular) {
     	return $resource('maintenance/:id', {}, {});
     }]);
 
+    appServices.factory('AdvertisementService', ['$resource', function($resource){
+    	return $resource('ad/:id', {}, {});
+    }]);
+
     return appServices;
 });

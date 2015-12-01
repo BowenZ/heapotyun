@@ -1,12 +1,20 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+
+var fs = require('fs'),
+    multer = require('multer'),
+    upload = multer({
+        dest: '/public/sijiache/upload/'
+    });
+
 var sijiache = require('../models/sijiache.js'),
     BuyCarInfo = sijiache.BuyCarInfo,
     SellCarInfo = sijiache.SellCarInfo,
     FixCarInfo = sijiache.FixCarInfo,
     MaintenanceItem = sijiache.MaintenanceItem,
-    MaintenanceInfo = sijiache.MaintenanceInfo;
+    MaintenanceInfo = sijiache.MaintenanceInfo,
+    AdvertisementInfo = sijiache.AdvertisementInfo;
 
 function checkLogin(req, res, next){
 	if(!req.session.login){
@@ -247,8 +255,10 @@ router.delete('/maintenanceitem/:id', function(req, res, next){
 
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+router.post('/maintenance', checkLogin);
 router.post('/maintenance', function(req, res, next){
 	var newMaintenanceInfo = new MaintenanceInfo({
+		items: req.body.items,
 		model: req.body.model,
 		tel: req.body.tel,
 		licensePlateNumber: req.body.licensePlateNumber
@@ -280,8 +290,9 @@ router.get('/maintenance', function(req, res, next){
 	});
 });
 
+router.delete('/maintenance/:id', checkLogin);
 router.delete('/maintenance/:id', function(req, res, next){
-	MaintenanceInfo.deleteOne(function(err){
+	MaintenanceInfo.deleteOne(req.params.id, function(err){
 		if(err){
 			return res.json({
 				msg: 'error'
@@ -291,6 +302,91 @@ router.delete('/maintenance/:id', function(req, res, next){
 			msg: 'success'
 		});
 	});
+});
+
+/*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+router.post('/ad', checkLogin);
+router.post('/ad', function(req, res, next){
+	var newAdInfo = new AdvertisementInfo({
+		title: req.body.title,
+    	content: req.body.content,
+    	imgUrl: req.body.imgUrl,
+    	linkUrl: req.body.linkUrl
+	});
+
+	newAdInfo.save(function(err){
+		if(err){
+			return res.json({
+				msg: 'error'
+			});
+		}
+		return res.json({
+			msg: 'success'
+		});
+	});
+});
+
+router.get('/ad', function(req, res, next){
+	AdvertisementInfo.get(function(err, docs){
+		if(err){
+			return res.json({
+				msg: 'error'
+			});
+		}
+		return res.json({
+			msg: 'success',
+			result: docs
+		});
+	});
+});
+
+router.delete('/ad/:id', checkLogin);
+router.delete('/ad/:id', function(req, res, next){
+	AdvertisementInfo.deleteOne(req.params.id, function(err){
+		if(err){
+			return res.json({
+				msg: 'error'
+			});
+		}
+		return res.json({
+			msg: 'success'
+		});
+	});
+});
+
+router.post('/upload', checkLogin);
+router.post('/upload', upload.single('imgFile'), function(req, res, next){
+	if (req.file == undefined) {
+        res.json({
+        	msg: 'error',
+        	err: 'no file'
+        });
+        return;
+    }
+    var tmp_path = req.file.path;
+
+    /** The original name of the uploaded file
+        stored in the variable "originalname". **/
+    var file_name = (new Date - 0) + req.file.originalname;
+    var target_path = 'public/sijiache/upload/' + file_name;
+
+    /** A better way to copy the uploaded file. **/
+    var src = fs.createReadStream(tmp_path);
+    var dest = fs.createWriteStream(target_path);
+    src.pipe(dest);
+    src.on('end', function() {
+        res.json({
+        	msg: 'success',
+        	filename: file_name
+        });
+    });
+    src.on('error', function(err) {
+        res.json({
+    		mgs: 'error',
+    		err: err
+        });
+    });
+    return;
 });
 
 module.exports = router;

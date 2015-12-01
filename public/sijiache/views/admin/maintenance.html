@@ -1,0 +1,41 @@
+<div class="maintenance-view row">
+    <div class="col-sm-12">
+        <div class="panel panel-info">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">保养信息</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>参加优惠</th>
+                            <th>车型</th>
+                            <th>车牌号</th>
+                            <th>手机号</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="info in mtncCtrl.mtncInfos">
+                            <th scope="row">{{$index+1}}</th>
+                            <td>
+                                <p ng-repeat="item in info.items" style="margin:0">
+                                    {{item.name}}
+                                </p>
+                            </td>
+                            <td>{{info.model}}</td>
+                            <td>{{info.licensePlateNumber}}</td>
+                            <td>{{info.tel}}</td>
+                            <td>{{info.publishDate.formatDate}}</td>
+                            <td>
+                                <a href="" class="glyphicon glyphicon-trash" ng-click="mtncCtrl.deleteItem(info._id, $index)"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2726,11 +2726,22 @@ body {
       .main-wrapper .menu .button-container span {
         display: block;
         text-align: center; }
-        .main-wrapper .menu .button-container span.glyphicon {
+        .main-wrapper .menu .button-container span.fa {
           font-size: 25px;
           line-height: 50px; }
         .main-wrapper .menu .button-container span.copy {
           line-height: 36px; }
+  .main-wrapper .gallary .swiper-wrapper .swiper-slide .copys {
+    color: #fff;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 20px; }
+  .main-wrapper .gallary .swiper-pagination {
+    bottom: 0; }
 
 .popup {
   position: absolute;
@@ -2738,6 +2749,7 @@ body {
   left: 0;
   width: 100%;
   min-height: 100%;
+  padding-top: 4rem;
   background-color: #FBF9FE;
   z-index: 9;
   -webkit-transform: translateX(100%);
@@ -2745,15 +2757,18 @@ body {
   -webkit-transition: -webkit-transform .3s ease-out;
   transition: transform .3s ease-out; }
   .popup.active {
-    -webkit-transform: translateX(0);
-    transform: translateX(0); }
+    -webkit-transform: none;
+    transform: none; }
   .popup header {
-    position: relative; }
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9; }
     .popup header h2 {
       margin: 0;
       text-align: center;
       font-size: 2.2rem;
-      line-height: 3.5rem;
+      line-height: 4rem;
       background: #efefef; }
     .popup header a {
       position: absolute;
@@ -2762,7 +2777,8 @@ body {
       line-height: 3.5rem;
       width: 45px;
       text-align: center;
-      font-size: 2rem; }
+      font-size: 2rem;
+      color: #333; }
   .popup .popup-content {
     margin-top: 1.6rem; }
     .popup .popup-content section {

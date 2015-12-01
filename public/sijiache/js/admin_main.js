@@ -13,7 +13,8 @@ require.config({
         'angular': DEV_CONFIG.DEV_MODE ? 'bower_components/angular/angular' : '//cdn.bootcss.com/angular.js/1.4.7/angular.min',
         'angular-route': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-route/angular-route' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-route.min',
         'ui.router': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-ui-router/release/angular-ui-router' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-ui-router.min',
-        'angular-resource': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-resource/angular-resource' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-resource.min'
+        'angular-resource': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-resource/angular-resource' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-resource.min',
+        'angular-animate': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-animate/angular-animate' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-animate.min'
     },
     shim: {
         'bootstrap': {
@@ -35,13 +36,16 @@ require.config({
             deps: ['angular']
         },
         'angular-resource': {
-            deps: ['angular', 'angular-route']
+            deps: ['angular', 'ui.router']
+        },
+        'angular-animate': {
+            deps: ['angular']
         }
     },
     waitSeconds: 30
 });
 
-require(['jquery', 'bootstrap', 'bootstrapValidator', 'angular', 'ui.router', 'angular-resource'], function() {
+require(['jquery', 'bootstrap', 'bootstrapValidator'], function() {
     var $shade = $('.shade'),
         $alert = $('.shade .alert');
     var resetPreview, loadContent;

@@ -233,6 +233,9 @@ ol {
   .panel-body ol li.active {
     color: #1abc9c; }
 
+.ad-view .link-img {
+  min-width: 60px; }
+
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

@@ -10,9 +10,11 @@ html {
     font-size: 10px;
     overflow-x: hidden;
 }
-body{
-	overflow-x: hidden;
+
+body {
+    overflow-x: hidden;
 }
+
 div {
     box-sizing: border-box;
 }
@@ -32,16 +34,16 @@ body {
     font-size: 16px;
 }
 
-.hide{
+.hide {
     display: none;
 }
 
-.toptip{
+.toptip {
     z-index: 99;
 }
 
 .main-wrapper {
-	overflow: hidden;
+    overflow: hidden;
     .menu {
         margin-top: 20px;
         .col-xs-6 {
@@ -67,7 +69,7 @@ body {
             span {
                 display: block;
                 text-align: center;
-                &.glyphicon {
+                &.fa {
                     font-size: 25px;
                     line-height: 50px;
                 }
@@ -75,6 +77,23 @@ body {
                     line-height: 36px;
                 }
             }
+        }
+    }
+    .gallary {
+        .swiper-wrapper {
+            .swiper-slide .copys {
+                color: #fff;
+                position: absolute;
+                background: rgba(0, 0, 0, .5);
+                width: 100%;
+                text-align: center;
+                bottom: 0;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+        }
+        .swiper-pagination {
+            bottom: 0;
         }
     }
 }
@@ -85,6 +104,7 @@ body {
     left: 0;
     width: 100%;
     min-height: 100%;
+    padding-top: 4rem;
     background-color: #FBF9FE;
     z-index: 9;
     -webkit-transform: translateX(100%);
@@ -92,16 +112,19 @@ body {
     -webkit-transition: -webkit-transform .3s ease-out;
     transition: transform .3s ease-out;
     &.active {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
+        -webkit-transform: none;
+        transform: none;
     }
     header {
-        position: relative;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 9;
         h2 {
             margin: 0;
             text-align: center;
             font-size: 2.2rem;
-            line-height: 3.5rem;
+            line-height: 4rem;
             background: #efefef;
         }
         a {
@@ -112,6 +135,7 @@ body {
             width: 45px;
             text-align: center;
             font-size: 2rem;
+            color: #333;
         }
     }
     .popup-content {

@@ -280,6 +280,11 @@ MaintenanceItem.deleteOne = function(_id, callback){
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var MaintenanceInfoSchema = new mongoose.Schema({
+	items: [{
+		id: String,
+		name: String,
+		price: Number
+	}],
 	model: String,
 	tel: String,
 	licensePlateNumber: String,
@@ -302,6 +307,7 @@ var MaintenanceInfoSchema = new mongoose.Schema({
 var MaintenanceInfoModel = mongoose.model('MaintenanceInfo', MaintenanceInfoSchema);
 
 function MaintenanceInfo(info){
+	this.items = info.items;
 	this.model = info.model;
 	this.tel = info.tel;
 	this.licensePlateNumber = info.licensePlateNumber;
@@ -315,6 +321,7 @@ MaintenanceInfo.prototype.save = function(callback) {
     };
 
     var maintenanceInfo = {
+    	items: this.items,
     	model: this.model,
     	tel: this.tel,
     	licensePlateNumber: this.licensePlateNumber,
@@ -342,10 +349,68 @@ MaintenanceInfo.deleteOne = function(_id, callback){
 	});
 }
 
+/*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+var AdvertisementInfoSchema = new mongoose.Schema({
+	title: String,
+	content: String,
+	imgUrl: String,
+	linkUrl: String,
+	publishDate: {
+        date: Date,
+        formatDate: String
+    }
+}, {
+	collection: 'advertisementinfos'
+});
+
+var AdvertisementInfoModel = mongoose.model('AdvertisementInfo', AdvertisementInfoSchema);
+
+function AdvertisementInfo(info){
+	this.title = info.title;
+	this.content = info.content;
+	this.imgUrl = info.imgUrl;
+	this.linkUrl = info.linkUrl;
+}
+
+AdvertisementInfo.prototype.save = function(callback) {
+	var date = new Date();
+    var time = {
+        date: date,
+        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+    };
+
+    var newAdInfo = new AdvertisementInfoModel({
+    	title: this.title,
+    	content: this.content,
+    	imgUrl: this.imgUrl,
+    	linkUrl: this.linkUrl,
+    	publishDate: time
+    });
+
+    newAdInfo.save(function(err, doc){
+    	return callback(err, doc);
+    });
+};
+
+AdvertisementInfo.get = function(callback){
+	AdvertisementInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs){
+		return callback(err, docs);
+	});
+}
+
+AdvertisementInfo.deleteOne = function(id, callback){
+	AdvertisementInfoModel.remove({
+		_id: new ObjectID(id)
+	}, function(err){
+		return callback(err);
+	});
+}
+
 module.exports = {
     BuyCarInfo: BuyCarInfo,
     SellCarInfo: SellCarInfo,
     FixCarInfo: FixCarInfo,
     MaintenanceItem: MaintenanceItem,
-    MaintenanceInfo: MaintenanceInfo
+    MaintenanceInfo: MaintenanceInfo,
+    AdvertisementInfo: AdvertisementInfo
 }
