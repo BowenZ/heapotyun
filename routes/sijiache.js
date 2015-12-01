@@ -8,6 +8,8 @@ var fs = require('fs'),
         dest: '/public/sijiache/upload/'
     });
 
+var tools = require('../common/tools.js');
+
 var sijiache = require('../models/sijiache.js'),
     BuyCarInfo = sijiache.BuyCarInfo,
     SellCarInfo = sijiache.SellCarInfo,
@@ -59,6 +61,28 @@ router.get('/buycar', function(req, res){
 			msg: 'success',
 			result: result
 		});
+	});
+});
+
+router.get('/buycar/getexcel', checkLogin);
+router.get('/buycar/getexcel', function(req, res){
+	BuyCarInfo.get(function(err, result){
+		if(err){
+			res.json({
+				msg: 'error'
+			});
+		}
+		var dataArr = [];
+		dataArr.push(['品牌车型','车辆年限','里程数','手机号','创建时间']);
+		result.forEach(function(item){
+			dataArr.push([item.brand, item.buyYear, item.mailage, item.tel, item.publishDate.formatDate]);
+		});
+		tools.exportExcel({
+			data: dataArr,
+			ws_name: '购买二手车信息',
+			file_name: path.join(__dirname, '../private/sijiache/', 'buycarinfo.xlsx')
+		});
+		res.download(path.join(__dirname, '../private/sijiache/', 'buycarinfo.xlsx'));
 	});
 });
 
@@ -114,6 +138,28 @@ router.get('/sellcar', function(req, res, next){
 	});
 });
 
+router.get('/sellcar/getexcel', checkLogin);
+router.get('/sellcar/getexcel', function(req, res){
+	SellCarInfo.get(function(err, result){
+		if(err){
+			res.json({
+				msg: 'error'
+			});
+		}
+		var dataArr = [];
+		dataArr.push(['品牌车型','颜色','价格','排量','变速箱','是否带天窗','上牌时间','目前状态','手机号','创建时间']);
+		result.forEach(function(item){
+			dataArr.push([item.brand, item.color, item.price, item.displacement, item.gearbox==1?'AT自动挡':(item.gearbox==2?'MT手动挡':'手自一体'), item.skylight?'是':'否', item.licenseDate, item.status?'想卖车':'问问价', item.tel, item.publishDate.formatDate]);
+		});
+		tools.exportExcel({
+			data: dataArr,
+			ws_name: '出售二手车信息',
+			file_name: path.join(__dirname, '../private/sijiache/', 'sellcarinfo.xlsx')
+		});
+		res.download(path.join(__dirname, '../private/sijiache/', 'sellcarinfo.xlsx'));
+	});
+});
+
 router.delete('/sellcar/:id', checkLogin);
 router.delete('/sellcar/:id', function(req, res, next){
 	SellCarInfo.deleteOne(req.params.id, function(err){
@@ -162,6 +208,28 @@ router.get('/fixcar', function(req, res, next){
 	});
 });
 
+router.get('/fixcar/getexcel', checkLogin);
+router.get('/fixcar/getexcel', function(req, res){
+	FixCarInfo.get(function(err, result){
+		if(err){
+			res.json({
+				msg: 'error'
+			});
+		}
+		var dataArr = [];
+		dataArr.push(['品牌车型','里程','手机号','车牌号','问题','创建时间']);
+		result.forEach(function(item){
+			dataArr.push([item.model, item.mailage, item.tel, item.licensePlateNumber, item.question, item.publishDate.formatDate]);
+		});
+		tools.exportExcel({
+			data: dataArr,
+			ws_name: '维修信息',
+			file_name: path.join(__dirname, '../private/sijiache/', 'fixcarinfo.xlsx')
+		});
+		res.download(path.join(__dirname, '../private/sijiache/', 'fixcarinfo.xlsx'));
+	});
+});
+
 router.delete('/fixcar/:id', checkLogin);
 router.delete('/fixcar/:id', function(req, res, next){
 	FixCarInfo.deleteOne(req.params.id, function(err){
@@ -181,7 +249,6 @@ router.delete('/fixcar/:id', function(req, res, next){
 router.get('/admin', function(req, res, next) {
     var login = !!req.session.login;
     res.render('sijiache/admin', {
-        title: '私家车999后台管理',
         login: login
     });
 });
@@ -254,7 +321,6 @@ router.delete('/maintenanceitem/:id', function(req, res, next){
 
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-router.post('/maintenance', checkLogin);
 router.post('/maintenance', function(req, res, next){
 	var newMaintenanceInfo = new MaintenanceInfo({
 		items: req.body.items,
@@ -287,6 +353,36 @@ router.get('/maintenance', function(req, res, next){
 			msg: 'success',
 			result: docs
 		});
+	});
+});
+
+function formatItems(arr){
+	var result = [];
+	arr.forEach(function(item){
+		result.push(item.name);
+	});
+	return result.join(',');
+}
+
+router.get('/maintenance/getexcel', checkLogin);
+router.get('/maintenance/getexcel', function(req, res){
+	MaintenanceInfo.get(function(err, result){
+		if(err){
+			res.json({
+				msg: 'error'
+			});
+		}
+		var dataArr = [];
+		dataArr.push(['参加优惠','车型','车牌号','手机号','创建时间']);
+		result.forEach(function(item){
+			dataArr.push([formatItems(item.items), item.model, item.licensePlateNumber, item.tel, item.publishDate.formatDate]);
+		});
+		tools.exportExcel({
+			data: dataArr,
+			ws_name: '维修信息',
+			file_name: path.join(__dirname, '../private/sijiache/', 'maintenanceinfo.xlsx')
+		});
+		res.download(path.join(__dirname, '../private/sijiache/', 'maintenanceinfo.xlsx'));
 	});
 });
 

@@ -1,6 +1,6 @@
 define(['angular', 'angular-animate', 'ui.router', 'angular-resource', 'js/controller/admin_controllers'], function(angular) {
     'use strict';
-    var App = angular.module('App', ['ui.router', 'appServices', 'adminControllers']);
+    var App = angular.module('App', ['ngAnimate', 'ui.router', 'appServices', 'adminControllers']);
 
     App.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         /*$locationProvider.html5Mode({

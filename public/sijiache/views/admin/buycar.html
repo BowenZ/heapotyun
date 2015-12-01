@@ -3,6 +3,7 @@
         <div class="panel panel-info">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">题目信息</h3>
+                <a href="buycar/getexcel" class="btn btn-primary">导出excel</a>
                 <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
             </div>
             <div class="collapse search-form" id="searchForm">
@@ -39,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="info in buyCtrl.buyCarInfos">
+                        <tr ng-repeat="info in buyCtrl.buyCarInfos | filter: queryName | filter: dateFilter">
                             <th scope="row">{{$index+1}}</th>
                             <td>{{info.brand}}</td>
                             <td>{{info.buyYear}}</td>

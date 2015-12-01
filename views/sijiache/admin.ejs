@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title><%= title %></title>
+    <title>爱车梦工厂后台管理</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -68,7 +68,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#">
-                        <%= title %>
+                        爱车梦工厂后台管理
                     </a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -100,8 +100,8 @@
     </header>
 
     <div class="wrapper">
-        <div class="view-frame" ui-view="admin-view">
-            
+        <div class="view-container">
+            <div class="view-frame" ui-view="admin-view"></div>
         </div>
     </div>
     <script src="//cdn.bootcss.com/require.js/2.1.20/require.min.js" data-main="./js/admin_main"></script>

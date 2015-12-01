@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in itemCtrl.itemInfos">
+                        <tr ng-repeat="item in itemCtrl.itemInfos | filter: queryName | filter: dateFilter">
                             <th scope="row">{{$index+1}}</th>
                             <td>{{item.name}}</td>
                             <td>{{item.content}}</td>

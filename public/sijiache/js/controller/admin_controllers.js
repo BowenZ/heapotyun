@@ -21,6 +21,10 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.buyCarInfos = result.result;
         });
 
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
+
         self.deleteInfo = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
                 BuyCarService.remove({
@@ -51,6 +55,10 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             }
             self.sellCarInfos = result.result;
         });
+
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
 
         self.formatGearbox = function(obj) {
             var result;
@@ -109,6 +117,10 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             }, 500);
         });
 
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
+
         self.deleteInfo = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
                 FixService.remove({
@@ -149,6 +161,10 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 $('[data-toggle="tooltip"]').tooltip();
             }, 500);
         });
+
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
 
         self.deleteItem = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
@@ -201,6 +217,10 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.mtncInfos = result.result;
         });
 
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
+
         self.deleteItem = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
                 MaintenanceService.remove({
@@ -226,13 +246,17 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         var $alert = $('#adModal .alert');
 
-        AdvertisementService.get().$promise.then(function(result){
-        	if (result.msg == 'nologin') {
+        AdvertisementService.get().$promise.then(function(result) {
+            if (result.msg == 'nologin') {
                 alert('登录超时，请刷新页面重新登录');
                 return;
             }
             self.adInfos = result.result;
         });
+
+        $scope.dateFilter = function(obj){
+        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
 
         self.deleteItem = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
@@ -285,7 +309,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             }
             xhr.open("POST", "upload", true);
             xhr.onload = function(event) {
-            	var result = JSON.parse(xhr.response);
+                var result = JSON.parse(xhr.response);
                 if (result.msg == 'success') {
                     self.formData.imgUrl = 'upload/' + result.filename;
                     $alert.text('上传成功！').removeClass('alert-danger').addClass('alert-success').css('visibility', 'visible');
@@ -294,7 +318,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                     }, 1500);
                     $scope.$apply();
                 } else if (result.msg == 'nologin') {
-                	$alert.text('登录超时，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
+                    $alert.text('登录超时，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                 } else {
                     console.log(result.err);
                     $alert.text('上传出现错误，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
@@ -311,15 +335,15 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         }
 
         self.processForm = function() {
-            if(!self.formData.imgUrl){
-            	$alert.text('请填写图片路径或上传图片').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
-            	setTimeout(function() {
+            if (!self.formData.imgUrl) {
+                $alert.text('请填写图片路径或上传图片').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
+                setTimeout(function() {
                     $alert.css('visibility', 'hidden')
                 }, 2000);
-            	return false;
+                return false;
             }
             $.post('./ad', $.param(self.formData), function(data, textStatus, xhr) {
-            	console.log(data);
+                console.log(data);
                 if (data.msg == 'success') {
                     $alert.text('提交成功').removeClass('alert-danger').addClass('alert-success').css('visibility', 'visible');
                     setTimeout(function() {
@@ -329,8 +353,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                     $("#adModal #progressBar").attr("style", "width: 0%").attr("aria-valuenow", "0");
                     self.formData = {};
                     $scope.$apply();
-                } else if(data.msg == 'nologin'){
-					$alert.text('登录超时，请刷新页面重新登录').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
+                } else if (data.msg == 'nologin') {
+                    $alert.text('登录超时，请刷新页面重新登录').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                     setTimeout(function() {
                         $alert.css('visibility', 'hidden')
                     }, 2000);

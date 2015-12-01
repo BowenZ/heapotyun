@@ -144,6 +144,37 @@ textarea {
   h2,
   h3 {
     page-break-after: avoid; } }
+.view-frame.ng-enter, .view-frame.ng-leave, .view-frame.ng-move {
+  -webkit-transition: 0.3s linear all;
+  -moz-transition: 0.3s linear all;
+  -o-transition: 0.3s linear all;
+  transition: 0.3s linear all; }
+.view-frame.ng-enter, .view-frame.ng-move {
+  opacity: 0; }
+.view-frame.ng-move.ng-move-active, .view-frame.ng-enter.ng-enter-active {
+  opacity: 1; }
+.view-frame.ng-leave {
+  opacity: 1; }
+.view-frame.ng-leave.ng-leave-active {
+  opacity: 0; }
+.view-frame tr.ng-enter,
+.view-frame tr.ng-leave,
+.view-frame tr.ng-move {
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  -o-transition: 0.1s linear all;
+  transition: 0.1s linear all; }
+.view-frame tr.ng-enter,
+.view-frame tr.ng-move {
+  opacity: 0; }
+.view-frame tr.ng-move.ng-move-active,
+.view-frame tr.ng-enter.ng-enter-active {
+  opacity: 1; }
+.view-frame tr.ng-leave {
+  opacity: 1; }
+.view-frame tr.ng-leave.ng-leave-active {
+  opacity: 0; }
+
 body {
   font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei', 'Hiragino Sans GB', 'WenQuanYi Micro Hei', sans-serif;
   background-image: url(../img/bg.png);
@@ -178,10 +209,18 @@ table thead th:nth-child(3) {
 table thead th:nth-child(4) {
   width: 130px; }
 
+.view-container {
+  position: relative;
+  width: 100%; }
+  .view-container .view-frame {
+    position: absolute;
+    top: 0;
+    width: 100%; }
+
 .panel-heading h3 {
   float: left;
   line-height: 34px; }
-.panel-heading button {
+.panel-heading button, .panel-heading a {
   float: right;
   margin-right: 0.8rem; }
 

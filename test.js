@@ -1,18 +1,5 @@
-var moment = require('moment');
-var xlsx = require('xlsx');
-
-moment.locale('zh-cn');
-
-module.exports.formatDate = function(date, friendly){
-	date = moment(date);
-	if(friendly){
-		return date.fromNow();
-	}
-	else{
-		return date.format('YYYY-MM-DD HH:mm');
-	}
-}
-
+/* require XLSX */
+var XLSX = require('XLSX')
 
 function datenum(v, date1904) {
 	if(date1904) v+=1462;
@@ -31,12 +18,12 @@ function sheet_from_array_of_arrays(data, opts) {
 			if(range.e.c < C) range.e.c = C;
 			var cell = {v: data[R][C] };
 			if(cell.v == null) continue;
-			var cell_ref = xlsx.utils.encode_cell({c:C,r:R});
+			var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
 			
 			if(typeof cell.v === 'number') cell.t = 'n';
 			else if(typeof cell.v === 'boolean') cell.t = 'b';
 			else if(cell.v instanceof Date) {
-				cell.t = 'n'; cell.z = xlsx.SSF._table[14];
+				cell.t = 'n'; cell.z = XLSX.SSF._table[14];
 				cell.v = datenum(cell.v);
 			}
 			else cell.t = 's';
@@ -44,9 +31,13 @@ function sheet_from_array_of_arrays(data, opts) {
 			ws[cell_ref] = cell;
 		}
 	}
-	if(range.s.c < 10000000) ws['!ref'] = xlsx.utils.encode_range(range);
+	if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
 	return ws;
 }
+
+/* original data */
+var data = [[1,2,3],[true, false, null, "sheetjs"],["foo","bar",new Date("2014-02-19T14:30Z"), "0.3"], ["baz", null, "qux"]]
+var ws_name = "SheetJS";
 
 function Workbook() {
 	if(!(this instanceof Workbook)) return new Workbook();
@@ -54,9 +45,11 @@ function Workbook() {
 	this.Sheets = {};
 }
 
-module.exports.exportExcel = function(option){
-	var wb = new Workbook(), ws = sheet_from_array_of_arrays(option.data);
-	wb.SheetNames.push(option.ws_name);
-	wb.Sheets[option.ws_name] = ws;
-	xlsx.writeFile(wb, option.file_name);
-}
+var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+
+/* add worksheet to workbook */
+wb.SheetNames.push(ws_name);
+wb.Sheets[ws_name] = ws;
+
+/* write file */
+XLSX.writeFile(wb, 'test.xlsx');

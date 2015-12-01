@@ -34,25 +34,32 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         }
 
         $scope.showPopup = function() {
-            $('.popup').addClass('active');
+            $('.popup').css('display', 'block');
+            setTimeout(function() {
+                $('.popup').addClass('active');
+            }, 30);
         }
         $scope.hidePopup = function() {
             $('.popup').removeClass('active');
+            setTimeout(function() {
+                $('.popup').css('display', 'none');
+            }, 300);
         }
     }]);
 
     appControllers.controller('CarController', ['$scope', function($scope) {
         var self = this;
         $scope.$parent.popupTitle = '二手车';
+        $scope.$parent.showPopup();
 
         self.processBuyForm = function() {
             $.post('./buycar', $.param(self.buyCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip(data, '添加成功');
+                    $scope.$parent.showToptip('success', '添加成功');
                     $('.popup-car .buy-car input[type="reset"]').trigger('click');
                     self.buyCarData = {};
                 } else {
-                    $scope.$parent.showToptip(data, '添加失败');
+                    $scope.$parent.showToptip('error', '添加失败');
                 }
             });
         }
@@ -60,11 +67,11 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         self.processSellForm = function() {
             $.post('./sellcar', $.param(self.sellCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip(data, '提交成功');
+                    $scope.$parent.showToptip('success', '提交成功');
                     $('.popup-car .sell-car input[type="reset"]').trigger('click');
                     self.sellCarData = {};
                 } else {
-                    $scope.$parent.showToptip(data, '提交失败');
+                    $scope.$parent.showToptip('error', '提交失败');
                 }
             });
         }
@@ -73,17 +80,18 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
     appControllers.controller('FixController', ['$scope', function($scope) {
         var self = this;
         $scope.$parent.popupTitle = '维修';
-        console.log('fix');
+        $scope.$parent.showPopup();
+        
         self.processFixForm = function() {
             console.log(123);
             console.log(self.fixData);
             $.post('./fixcar', $.param(self.fixData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip(data, '提交成功');
+                    $scope.$parent.showToptip('success', '提交成功');
                     $('.popup-fix form input[type="reset"]').trigger('click');
                     self.fixData = {};
                 } else {
-                    $scope.$parent.showToptip(data, '提交失败');
+                    $scope.$parent.showToptip('error', '提交失败');
                 }
             });
         }
@@ -92,11 +100,13 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
     appControllers.controller('MaintenanceController', ['$scope', 'MaintenanceItemService', 'MaintenanceService', function($scope, MaintenanceItemService, MaintenanceService) {
         var self = this;
         $scope.$parent.popupTitle = '保养';
+        $scope.$parent.showPopup();
 
         MaintenanceItemService.get().$promise.then(function(result) {
-            console.log(result);
             self.maintenanceItems = result.result;
         });
+
+        self.formData = {};
 
         self.processForm = function() {
             var itemArr = [];
@@ -110,6 +120,7 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             self.formData.items = itemArr;
             var newMaintenanceInfo = new MaintenanceService(self.formData);
             newMaintenanceInfo.$save(function(result) {
+                console.log(result);
                 if (result.msg == 'success') {
                     $scope.$parent.showToptip(result.msg, '提交成功');
                     $('.popup-maintenance form input[type="reset"]').trigger('click');

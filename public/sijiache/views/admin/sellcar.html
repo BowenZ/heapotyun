@@ -3,6 +3,7 @@
         <div class="panel panel-info">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">题目信息</h3>
+                <a href="sellcar/getexcel" class="btn btn-primary">导出excel</a>
                 <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
             </div>
             <div class="collapse search-form" id="searchForm">
@@ -44,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="info in sellCtrl.sellCarInfos">
+                        <tr ng-repeat="info in sellCtrl.sellCarInfos | filter: queryName | filter: dateFilter">
                             <th scope="row">{{$index+1}}</th>
                             <td>{{info.brand}}</td>
                             <td>{{info.color}}</td>
@@ -53,7 +54,7 @@
                             <td>{{sellCtrl.formatGearbox(info.gearbox)}}</td>
                             <td>{{info.skylight?'有':'无'}}</td>
                             <td>{{sellCtrl.formatDate(info.licenseDate)}}</td>
-                            <td>{{info.status}}</td>
+                            <td>{{info.status?'想卖车':'问问价'}}</td>
                             <td>{{info.tel}}</td>
                             <td>{{info.publishDate.formatDate}}</td>
                             <td>
