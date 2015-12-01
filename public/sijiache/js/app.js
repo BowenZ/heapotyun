@@ -10,7 +10,12 @@ define(['angular', 'ui.router', 'js/controller/controllers', 'js/service/admin_s
         $urlRouterProvider.otherwise('/');
         $stateProvider.
         state('index', {
-            url: '/'
+            url: '/',
+            views: {
+                'view-content': {
+                    controller: 'IndexController'
+                }
+            }
         }).
         state('car', {
             url: '/car',

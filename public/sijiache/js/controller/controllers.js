@@ -47,6 +47,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         }
     }]);
 
+    appControllers.controller('IndexController', ['$scope', function($scope){
+        $scope.$parent.hidePopup();
+    }]);
+
     appControllers.controller('CarController', ['$scope', function($scope) {
         var self = this;
         $scope.$parent.popupTitle = '二手车';
