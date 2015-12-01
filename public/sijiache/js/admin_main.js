@@ -1,5 +1,5 @@
 var DEV_CONFIG = {
-    DEV_MODE: true
+    DEV_MODE: false
 }
 
 require.config({
@@ -45,12 +45,16 @@ require.config({
     waitSeconds: 30
 });
 
-require(['jquery', 'bootstrap', 'bootstrapValidator'], function() {
+require(['js/admin_app', 'jquery', 'bootstrap', 'bootstrapValidator'], function(app) {
     var $shade = $('.shade'),
         $alert = $('.shade .alert');
     var resetPreview, loadContent;
 
     $(document).ready(function() {
+        if($shade.hasClass('true')){
+            app.bootstrap();
+        }
+
         $alert.find('button').click(function() {
             $alert.hide(200);
         });
@@ -89,7 +93,7 @@ require(['jquery', 'bootstrap', 'bootstrapValidator'], function() {
                         $alert.find('.info').text('用户名或密码错误！');
                         $alert.show(200);
                     } else {
-                        // loadContent();
+                        app.bootstrap();
                         $('.shade').hide(600);
                         $('.shade').find('input').val('')
                     }
@@ -110,8 +114,4 @@ require(['jquery', 'bootstrap', 'bootstrapValidator'], function() {
         }();
     });
 
-});
-
-require(['js/admin_app'], function(app) {
-    app.bootstrap();
 });

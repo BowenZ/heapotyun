@@ -179,7 +179,7 @@ router.delete('/fixcar/:id', function(req, res, next){
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 router.get('/admin', function(req, res, next) {
-    var login = !!req.session.user;
+    var login = !!req.session.login;
     res.render('sijiache/admin', {
         title: '私家车999后台管理',
         login: login
@@ -224,7 +224,6 @@ router.post('/maintenanceitem', function(req, res, next){
 	});
 });
 
-router.get('/maintenanceitem', checkLogin);
 router.get('/maintenanceitem', function(req, res, next){
 	MaintenanceItem.get(function(err, docs){
 		if(err){
@@ -276,6 +275,7 @@ router.post('/maintenance', function(req, res, next){
 	});
 });
 
+router.get('/maintenance', checkLogin);
 router.get('/maintenance', function(req, res, next){
 	MaintenanceInfo.get(function(err, docs){
 		if(err){

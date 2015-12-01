@@ -1,5 +1,5 @@
 var DEV_CONFIG = {
-    DEV_MODE: true
+    DEV_MODE: false
 }
 
 require.config({
