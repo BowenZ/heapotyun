@@ -21,8 +21,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.buyCarInfos = result.result;
         });
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.deleteInfo = function(id, index) {
@@ -56,8 +56,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.sellCarInfos = result.result;
         });
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.formatGearbox = function(obj) {
@@ -117,8 +117,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             }, 500);
         });
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.deleteInfo = function(id, index) {
@@ -151,19 +151,24 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         var $alert = $('#mainteanceItemModal .alert');
 
-        MaintenanceItemService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.itemInfos = result.result;
-            setTimeout(function() {
-                $('[data-toggle="tooltip"]').tooltip();
-            }, 500);
-        });
+        function loadData(callback) {
+            MaintenanceItemService.get().$promise.then(function(result) {
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.itemInfos = result.result;
+                setTimeout(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }, 500);
+                callback && callback();
+            });
+        }
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        loadData();
+
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.deleteItem = function(id, index) {
@@ -171,7 +176,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 MaintenanceItemService.remove({
                     id: id
                 }).$promise.then(function(result) {
-                    console.log(result);
                     if (result.msg == 'nologin') {
                         alert('登录超时，请刷新页面重新登录');
                         return;
@@ -182,6 +186,22 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                     self.itemInfos.splice(index, 1);
                 });
             }
+        }
+
+        self.changeStatus = function(id, index, status) {
+            MaintenanceItemService.changeStatus({
+                id: id,
+                status: Math.abs(status - 1)
+            }).$promise.then(function(result) {
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                } else if (result.msg == 'error') {
+                    alert('操作失败，请稍后再试');
+                    return;
+                }
+            	self.itemInfos[index].status = Math.abs(status - 1);
+            });
         }
 
         self.processItemForm = function() {
@@ -217,8 +237,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.mtncInfos = result.result;
         });
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.deleteItem = function(id, index) {
@@ -254,8 +274,8 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             self.adInfos = result.result;
         });
 
-        $scope.dateFilter = function(obj){
-        	return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
         }
 
         self.deleteItem = function(id, index) {

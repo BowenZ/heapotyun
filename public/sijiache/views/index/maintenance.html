@@ -22,7 +22,10 @@
                         <label class="weui_label">车型</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="请输入您的车型" ng-model="mtncCtrl.formData.model">
+                        <input required="required" class="weui_input" type="text" placeholder="请输入您的车型" ng-model="mtncCtrl.formData.model">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -30,7 +33,10 @@
                         <label class="weui_label">手机号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="tel" placeholder="如果需要帮助，请留下联系方式" ng-model="mtncCtrl.formData.tel">
+                        <input required="required" class="weui_input" type="tel" placeholder="如果需要帮助，请留下联系方式" ng-model="mtncCtrl.formData.tel">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -38,7 +44,10 @@
                         <label class="weui_label">车牌号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="进场维修唯一凭证" ng-model="mtncCtrl.formData.licensePlateNumber">
+                        <input required="required" class="weui_input" type="text" placeholder="进场维修唯一凭证" ng-model="mtncCtrl.formData.licensePlateNumber">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
             </div>

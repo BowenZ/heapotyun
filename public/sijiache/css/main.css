@@ -2752,13 +2752,11 @@ body {
   padding-top: 4rem;
   background-color: #FBF9FE;
   z-index: 9;
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-  -webkit-transition: -webkit-transform .3s ease-out;
-  transition: transform .3s ease-out; }
+  left: 100%;
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
   .popup.active {
-    -webkit-transform: none;
-    transform: none; }
+    left: 0; }
   .popup header {
     position: fixed;
     top: 0;

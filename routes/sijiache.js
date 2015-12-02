@@ -291,8 +291,21 @@ router.post('/maintenanceitem', function(req, res, next){
 	});
 });
 
+router.patch('/maintenanceitem/:id', checkLogin);
+router.patch('/maintenanceitem/:id', function(req, res, next){
+	MaintenanceItem.updateStatus(req.params.id, req.body.status, function(err){
+		if(err)
+			return res.json({
+				msg: 'error'
+			});
+		return res.json({
+			msg: 'success'
+		});
+	});
+});
+
 router.get('/maintenanceitem', function(req, res, next){
-	MaintenanceItem.get(function(err, docs){
+	MaintenanceItem.get(req.query, function(err, docs){
 		if(err){
 			return res.json({
 				msg: 'error'

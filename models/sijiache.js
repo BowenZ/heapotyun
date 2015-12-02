@@ -264,9 +264,19 @@ MaintenanceItem.prototype.save = function(callback) {
     });
 };
 
-MaintenanceItem.get = function(callback){
-	MaintenanceItemModel.find({}).sort('-publishDate.date').exec(function(err, docs){
+MaintenanceItem.get = function(query, callback){
+	MaintenanceItemModel.find(query).sort('-publishDate.date').exec(function(err, docs){
 		return callback(err, docs);
+	});
+}
+
+MaintenanceItem.updateStatus = function(id, status, callback){
+	MaintenanceItemModel.update({
+		_id: new ObjectID(id)
+	}, {
+		status: status
+	}, {}, function(err){
+		return callback(err);
 	});
 }
 

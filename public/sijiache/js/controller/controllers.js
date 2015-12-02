@@ -56,7 +56,25 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         $scope.$parent.popupTitle = '二手车';
         $scope.$parent.showPopup();
 
+        self.buyCarData = {};
+
+        $('input.weui_input').on('focus', function(event) {
+            $('.weui_cell').removeClass('weui_cell_warn');
+        });
+
         self.processBuyForm = function() {
+            var validated = true;
+            $('.buy-car input.weui_input[required]').each(function(index, el) {
+                if(!$(el).val()){
+                    validated = false;
+                    $(el).parents('.weui_cell').addClass('weui_cell_warn');
+                    // return false;
+                }
+            });
+            if(!validated){
+                $scope.$parent.showToptip('error', '请将表单填写完整');
+                return false;
+            }
             $.post('./buycar', $.param(self.buyCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
                     $scope.$parent.showToptip('success', '添加成功');
@@ -69,6 +87,18 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         }
 
         self.processSellForm = function() {
+            var validated = true;
+            $('.sell-car input.weui_input[required]').each(function(index, el) {
+                if(!$(el).val()){
+                    validated = false;
+                    $(el).parents('.weui_cell').addClass('weui_cell_warn');
+                    // return false;
+                }
+            });
+            if(!validated){
+                $scope.$parent.showToptip('error', '请将表单填写完整');
+                return false;
+            }
             $.post('./sellcar', $.param(self.sellCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
                     $scope.$parent.showToptip('success', '提交成功');
@@ -87,8 +117,18 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         $scope.$parent.showPopup();
         
         self.processFixForm = function() {
-            console.log(123);
-            console.log(self.fixData);
+            var validated = true;
+            $('.popup-fix input.weui_input[required]').each(function(index, el) {
+                if(!$(el).val()){
+                    validated = false;
+                    $(el).parents('.weui_cell').addClass('weui_cell_warn');
+                    // return false;
+                }
+            });
+            if(!validated){
+                $scope.$parent.showToptip('error', '请将表单填写完整');
+                return false;
+            }
             $.post('./fixcar', $.param(self.fixData), function(data, textStatus, xhr) {
                 if (data == 'success') {
                     $scope.$parent.showToptip('success', '提交成功');
@@ -106,13 +146,31 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         $scope.$parent.popupTitle = '保养';
         $scope.$parent.showPopup();
 
-        MaintenanceItemService.get().$promise.then(function(result) {
+        MaintenanceItemService.getActiveItems().$promise.then(function(result) {
             self.maintenanceItems = result.result;
         });
 
         self.formData = {};
 
         self.processForm = function() {
+            if(!$('.popup-maintenance input.mtnc-item:checked').val()){
+                $scope.$parent.showToptip('error', '请选择参加的特惠活动');
+                return false;
+            }
+
+            var validated = true;
+            $('.popup-maintenance input.weui_input[required]').each(function(index, el) {
+                if(!$(el).val()){
+                    validated = false;
+                    $(el).parents('.weui_cell').addClass('weui_cell_warn');
+                    // return false;
+                }
+            });
+            if(!validated){
+                $scope.$parent.showToptip('error', '请将表单填写完整');
+                return false;
+            }
+
             var itemArr = [];
             $('input.mtnc-item:checked').each(function(index, el) {
                 itemArr.push({

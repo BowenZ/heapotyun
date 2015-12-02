@@ -45,10 +45,12 @@
                             <td>{{item.name}}</td>
                             <td>{{item.content}}</td>
                             <td>{{item.price}}</td>
-                            <td>{{item.status}}</td>
+                            <td>{{item.status == 1 ? '进行中' : '已结束'}}</td>
                             <td>{{item.publishDate.formatDate}}</td>
                             <td>
-                                <a href="" class="glyphicon glyphicon-trash" ng-click="itemCtrl.deleteItem(item._id, $index)"></a>
+                                <a title="删除" href="" class="glyphicon glyphicon-trash" ng-click="itemCtrl.deleteItem(item._id, $index)"></a>
+                                <a title="关闭该活动" href="" ng-if="item.status == 1" class="glyphicon glyphicon-eye-close" ng-click="itemCtrl.changeStatus(item._id, $index, item.status)"></a>
+                                <a title="打开该活动" href="" ng-if="item.status != 1" class="glyphicon glyphicon-eye-open" ng-click="itemCtrl.changeStatus(item._id, $index, item.status)"></a>
                             </td>
                         </tr>
                     </tbody>

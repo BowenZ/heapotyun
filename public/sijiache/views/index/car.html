@@ -35,7 +35,10 @@
                         <label class="weui_label">品牌</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="您想要买的车型和品牌" ng-model="carCtrl.buyCarData.brand">
+                        <input class="weui_input" required="required" type="text" placeholder="您想要买的车型和品牌" ng-model="carCtrl.buyCarData.brand">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -43,7 +46,10 @@
                         <label class="weui_label">年限</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="您希望的车辆年限" ng-model="carCtrl.buyCarData.buyYear">
+                        <input class="weui_input" required="required" type="text" placeholder="您希望的车辆年限" ng-model="carCtrl.buyCarData.buyYear">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -51,7 +57,10 @@
                         <label class="weui_label">里程数</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="您理想的车辆里程数（公里）" ng-model="carCtrl.buyCarData.mailage">
+                        <input class="weui_input" required="required" type="text" placeholder="您理想的车辆里程数（公里）" ng-model="carCtrl.buyCarData.mailage">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -59,7 +68,10 @@
                         <label class="weui_label">手机号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="tel" placeholder="您的手机号码" ng-model="carCtrl.buyCarData.tel">
+                        <input class="weui_input" required="required" type="tel" placeholder="您的手机号码" ng-model="carCtrl.buyCarData.tel">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
             </div>
@@ -78,7 +90,10 @@
                         <label class="weui_label">品牌</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="车辆品牌（车型）" ng-model="carCtrl.sellCarData.brand">
+                        <input required="required" class="weui_input" type="text" placeholder="车辆品牌（车型）" ng-model="carCtrl.sellCarData.brand">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -86,7 +101,10 @@
                         <label class="weui_label">颜色</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="车辆颜色" ng-model="carCtrl.sellCarData.color">
+                        <input required="required" class="weui_input" type="text" placeholder="车辆颜色" ng-model="carCtrl.sellCarData.color">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -94,7 +112,10 @@
                         <label class="weui_label">价格</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="text" placeholder="购买时价格（万元）" ng-model="carCtrl.sellCarData.price">
+                        <input required="required" class="weui_input" type="text" placeholder="购买时价格（万元）" ng-model="carCtrl.sellCarData.price">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
                 <div class="weui_cell">
@@ -103,6 +124,9 @@
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <input class="weui_input" type="text" placeholder="排量" ng-model="carCtrl.sellCarData.displacement">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
             </div>
@@ -164,7 +188,10 @@
                         <label for="" class="weui_label">日期</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="date" value="" placeholder="请选择日期" ng-model="carCtrl.sellCarData.licenseDate">
+                        <input required="required" class="weui_input" type="date" value="" placeholder="请选择日期" ng-model="carCtrl.sellCarData.licenseDate">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
             </div>
@@ -195,7 +222,10 @@
                         <label class="weui_label">手机号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input class="weui_input" type="tel" placeholder="您的手机号码" ng-model="carCtrl.sellCarData.tel">
+                        <input required="required" class="weui_input" type="tel" placeholder="您的手机号码" ng-model="carCtrl.sellCarData.tel">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
                     </div>
                 </div>
             </div>

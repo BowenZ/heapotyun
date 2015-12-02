@@ -15,7 +15,17 @@ define(['angular', 'angular-resource'], function(angular) {
     }]);
 
     appServices.factory('MaintenanceItemService', ['$resource', function($resource){
-    	return $resource('maintenanceitem/:id', {}, {});
+    	return $resource('maintenanceitem/:id', {id: '@id'}, {
+    		changeStatus: {
+    			method: 'PATCH'
+    		},
+    		getActiveItems: {
+    			method: 'GET',
+    			params: {
+    				status: 1
+    			}
+    		}
+    	});
     }]);
 
     appServices.factory('MaintenanceService', ['$resource', function($resource){
