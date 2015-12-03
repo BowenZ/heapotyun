@@ -19,35 +19,6 @@ img {
     padding: 0 10px;
 }
 
-td.no-padding {
-    padding: 0!important;
-}
-
-.table>tbody+tbody {
-    border: none!important;
-}
-
-table {
-    .col-md-4,
-    .col-sm-6,
-    .col-xs-12 {
-        padding-bottom: 15px;
-    }
-    thead {
-        th {
-            &:nth-child(1) {
-                width: 60px;
-            }
-            &:nth-child(3) {
-                width: 150px;
-            }
-            &:nth-child(4) {
-                width: 130px;
-            }
-        }
-    }
-}
-
 .view-container{
     position: relative;
     width: 100%;

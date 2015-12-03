@@ -191,23 +191,6 @@ img {
   margin: 0 auto;
   padding: 0 10px; }
 
-td.no-padding {
-  padding: 0 !important; }
-
-.table > tbody + tbody {
-  border: none !important; }
-
-table .col-md-4,
-table .col-sm-6,
-table .col-xs-12 {
-  padding-bottom: 15px; }
-table thead th:nth-child(1) {
-  width: 60px; }
-table thead th:nth-child(3) {
-  width: 150px; }
-table thead th:nth-child(4) {
-  width: 130px; }
-
 .view-container {
   position: relative;
   width: 100%; }
