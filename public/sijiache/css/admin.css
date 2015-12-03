@@ -202,7 +202,8 @@ img {
 .panel-heading h3 {
   float: left;
   line-height: 34px; }
-.panel-heading button, .panel-heading a {
+.panel-heading button,
+.panel-heading a {
   float: right;
   margin-right: 0.8rem; }
 
@@ -255,6 +256,7 @@ ol {
     color: #1abc9c; }
 
 .ad-view .link-img {
+  max-width: 300px;
   min-width: 60px; }
 
 @-webkit-keyframes rotate {

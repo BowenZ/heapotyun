@@ -19,10 +19,10 @@ img {
     padding: 0 10px;
 }
 
-.view-container{
+.view-container {
     position: relative;
     width: 100%;
-    .view-frame{
+    .view-frame {
         position: absolute;
         top: 0;
         width: 100%;
@@ -34,7 +34,8 @@ img {
         float: left;
         line-height: 34px;
     }
-    button, a {
+    button,
+    a {
         float: right;
         margin-right: 0.8rem;
     }
@@ -93,8 +94,11 @@ ol {
     }
 }
 
-.ad-view .link-img{
-    min-width: 60px;
+.ad-view {
+    .link-img {
+        max-width: 300px;
+        min-width: 60px;
+    }
 }
 
 @-webkit-keyframes rotate {
