@@ -14,7 +14,8 @@ require.config({
         'angular-route': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-route/angular-route' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-route.min',
         'ui.router': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-ui-router/release/angular-ui-router' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-ui-router.min',
         'angular-resource': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-resource/angular-resource' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-resource.min',
-        'angular-animate': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-animate/angular-animate' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-animate.min'
+        'angular-animate': DEV_CONFIG.DEV_MODE ? 'bower_components/angular-animate/angular-animate' : 'http://bowen-blog.b0.upaiyun.com/js/angular/angular-animate.min',
+        'pagedown': 'js/vendor/jquery.pagedown-bootstrap.combined.min'
     },
     shim: {
         'bootstrap': {

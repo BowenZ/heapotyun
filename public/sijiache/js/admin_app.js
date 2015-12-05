@@ -62,6 +62,15 @@ define(['angular', 'angular-animate', 'ui.router', 'angular-resource', 'js/contr
                     controller: 'AdvertisementController as adCtrl'
                 }
             }
+        }).
+        state('article', {
+            url: '/article',
+            views: {
+                'admin-view': {
+                    templateUrl: 'views/admin/article.html',
+                    controller: 'ArticleController as articleCtrl'
+                }
+            }
         });
     }]);
 

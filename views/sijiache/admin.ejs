@@ -74,12 +74,23 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse nav-links" id="admin-navbar">
                     <ul class="nav navbar-nav">
-                        <li class="link-buycar"><a ui-sref="buycar">购买二手车</a></li>
-                        <li class="link-sellcar"><a ui-sref="sellcar">出售二手车</a></li>
-                        <li class="link-fix"><a ui-sref="fix">维修</a></li>
-                        <li class="link-maintenance"><a ui-sref="maintenance">保养</a></li>
-                        <li class="link-maintenanceitem"><a ui-sref="maintenanceitem">保养项目</a></li>
-                        <li class="link-ad"><a ui-sref="ad">广告</a></li>
+                        <li class="mainlink dropdown link-car">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">二手车<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="sublink link-buycar"><a ui-sref="buycar">购买二手车</a></li>
+                                <li class="sublink link-sellcar"><a ui-sref="sellcar">出售二手车</a></li>
+                            </ul>
+                        </li>
+                        <li class="mainlink link-fix"><a ui-sref="fix">维修</a></li>
+                        <li class="mainlink dropdown link-maintenance">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">保养<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="sublink link-maintenanceinfo"><a ui-sref="maintenance">保养信息</a></li>
+                                <li class="sublink link-maintenanceitem"><a ui-sref="maintenanceitem">保养项目</a></li>
+                            </ul>
+                        </li>
+                        <li class="mainlink link-ad"><a ui-sref="ad">广告</a></li>
+                        <li class="mainlink link-article"><a ui-sref="article">文章</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#" class="logout">注销</a></li>

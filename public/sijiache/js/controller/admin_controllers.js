@@ -2,16 +2,14 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
     var adminControllers = angular.module('adminControllers', ['appServices']);
     var $navLinks = $('.nav-links');
 
-    function updateLink(location) {
-        if (!$navLinks.find('.active').hasClass('link-' + location)) {
-            $navLinks.find('.active').removeClass('active');
-            $navLinks.find('.link-' + location).addClass('active');
-        }
+    function updateLink(location, sublink) {
+        $navLinks.find('.mainlink.active').removeClass('active').find('.sublink.active').removeClass('active');
+        $navLinks.find('.mainlink.link-' + location).addClass('active').find('.sublink.link-' + sublink).addClass('active');
     }
 
     adminControllers.controller('BuyCarController', ['$scope', 'BuyCarService', function($scope, BuyCarService) {
         var self = this;
-        updateLink('buycar');
+        updateLink('car', 'buycar');
 
         BuyCarService.get().$promise.then(function(result) {
             if (result.msg == 'nologin') {
@@ -46,7 +44,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
     adminControllers.controller('SellCarController', ['$scope', 'SellCarService', function($scope, SellCarService) {
         var self = this;
-        updateLink('sellcar');
+        updateLink('car', 'sellcar');
 
         SellCarService.get().$promise.then(function(result) {
             if (result.msg == 'nologin') {
@@ -147,7 +145,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
     adminControllers.controller('MaintenanceItemController', ['$scope', 'MaintenanceItemService', function($scope, MaintenanceItemService) {
         var self = this;
 
-        updateLink('maintenanceitem');
+        updateLink('maintenance', 'maintenanceitem');
 
         var $alert = $('#mainteanceItemModal .alert');
 
@@ -200,7 +198,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                     alert('操作失败，请稍后再试');
                     return;
                 }
-            	self.itemInfos[index].status = Math.abs(status - 1);
+                self.itemInfos[index].status = Math.abs(status - 1);
             });
         }
 
@@ -227,7 +225,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
     adminControllers.controller('MaintenanceController', ['$scope', 'MaintenanceService', function($scope, MaintenanceService) {
         var self = this;
 
-        updateLink('maintenance');
+        updateLink('maintenance', 'maintenanceinfo');
 
         MaintenanceService.get().$promise.then(function(result) {
             if (result.msg == 'nologin') {
@@ -387,6 +385,25 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             });
         }
 
+    }]);
+
+    adminControllers.controller('ArticleController', ['$scope', 'ArticleService', function($scope, ArticleService) {
+        var self = this;
+        updateLink('article');
+        require(['pagedown'], function(a) {
+            $("textarea#pagedownMe").pagedownBootstrap({
+                sanatize: false,
+                help: function() {
+                    alert(1);
+                    return false;
+                }
+            });
+            $('.article-view .article-preview').append($('.article-view .article-form .wmd-preview').detach())
+        });
+
+        self.submitArticle = function(){
+            console.log(self.formData);
+        }
     }]);
 
     return adminControllers;

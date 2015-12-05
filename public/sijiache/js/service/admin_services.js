@@ -36,5 +36,13 @@ define(['angular', 'angular-resource'], function(angular) {
     	return $resource('ad/:id', {}, {});
     }]);
 
+    appServices.factory('ArticleService', ['$resource', function($resource){
+        return $resource('article/:id', {}, {
+            like: {
+                method: 'PATCH'
+            }
+        });
+    }]);
+
     return appServices;
 });

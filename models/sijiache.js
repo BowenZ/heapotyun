@@ -170,7 +170,7 @@ var FixCarInfoSchema = new mongoose.Schema({
         city: String
     }
 }, {
-	collection: 'fixcarinfos'
+    collection: 'fixcarinfos'
 });
 
 var FixCarInfoModel = mongoose.model('FixCarInfo', FixCarInfoSchema);
@@ -199,8 +199,8 @@ FixCarInfo.prototype.save = function(callback) {
         userinfo: null
     }
     var newFixCarInfo = new FixCarInfoModel(fixCarInfo);
-    newFixCarInfo.save(function(err, info){
-    	return callback(err, info);
+    newFixCarInfo.save(function(err, info) {
+        return callback(err, info);
     });
 };
 
@@ -220,85 +220,85 @@ FixCarInfo.deleteOne = function(id, callback) {
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var MaintenanceItemSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true
-	},
-	content: String,
-	price: Number,
-	status: Number,
-	publishDate: {
+    name: {
+        type: String,
+        required: true
+    },
+    content: String,
+    price: Number,
+    status: Number,
+    publishDate: {
         date: Date,
         formatDate: String
     }
 }, {
-	collection: 'maintenanceitems'
+    collection: 'maintenanceitems'
 });
 
 var MaintenanceItemModel = mongoose.model('MaintenanceItem', MaintenanceItemSchema);
 
-function MaintenanceItem(item){
-	this.name = item.name;
-	this.content = item.content;
-	this.price = item.price;
+function MaintenanceItem(item) {
+    this.name = item.name;
+    this.content = item.content;
+    this.price = item.price;
 }
 
 MaintenanceItem.prototype.save = function(callback) {
-	var date = new Date();
+    var date = new Date();
     var time = {
         date: date,
         formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
     };
 
     var maintenanceItem = {
-    	name: this.name,
-    	content: this.content,
-    	price: this.price,
-    	status: 1,
-    	publishDate: time
+        name: this.name,
+        content: this.content,
+        price: this.price,
+        status: 1,
+        publishDate: time
     }
 
     var newMaintenanceItem = new MaintenanceItemModel(maintenanceItem);
-    newMaintenanceItem.save(function(err, doc){
-    	return callback(err, doc);
+    newMaintenanceItem.save(function(err, doc) {
+        return callback(err, doc);
     });
 };
 
-MaintenanceItem.get = function(query, callback){
-	MaintenanceItemModel.find(query).sort('-publishDate.date').exec(function(err, docs){
-		return callback(err, docs);
-	});
+MaintenanceItem.get = function(query, callback) {
+    MaintenanceItemModel.find(query).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
 }
 
-MaintenanceItem.updateStatus = function(id, status, callback){
-	MaintenanceItemModel.update({
-		_id: new ObjectID(id)
-	}, {
-		status: status
-	}, {}, function(err){
-		return callback(err);
-	});
+MaintenanceItem.updateStatus = function(id, status, callback) {
+    MaintenanceItemModel.update({
+        _id: new ObjectID(id)
+    }, {
+        status: status
+    }, {}, function(err) {
+        return callback(err);
+    });
 }
 
-MaintenanceItem.deleteOne = function(_id, callback){
-	MaintenanceItemModel.remove({
-		_id: new ObjectID(_id)
-	}, function(err){
-		callback(err);
-	});
+MaintenanceItem.deleteOne = function(_id, callback) {
+    MaintenanceItemModel.remove({
+        _id: new ObjectID(_id)
+    }, function(err) {
+        callback(err);
+    });
 }
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var MaintenanceInfoSchema = new mongoose.Schema({
-	items: [{
-		id: String,
-		name: String,
-		price: Number
-	}],
-	model: String,
-	tel: String,
-	licensePlateNumber: String,
-	publishDate: {
+    items: [{
+        id: String,
+        name: String,
+        price: Number
+    }],
+    model: String,
+    tel: String,
+    licensePlateNumber: String,
+    publishDate: {
         date: Date,
         formatDate: String
     },
@@ -311,110 +311,202 @@ var MaintenanceInfoSchema = new mongoose.Schema({
         city: String
     }
 }, {
-	collection: 'maintenanceinfos'
+    collection: 'maintenanceinfos'
 });
 
 var MaintenanceInfoModel = mongoose.model('MaintenanceInfo', MaintenanceInfoSchema);
 
-function MaintenanceInfo(info){
-	this.items = info.items;
-	this.model = info.model;
-	this.tel = info.tel;
-	this.licensePlateNumber = info.licensePlateNumber;
+function MaintenanceInfo(info) {
+    this.items = info.items;
+    this.model = info.model;
+    this.tel = info.tel;
+    this.licensePlateNumber = info.licensePlateNumber;
 }
 
 MaintenanceInfo.prototype.save = function(callback) {
-	var date = new Date();
+    var date = new Date();
     var time = {
         date: date,
         formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
     };
 
     var maintenanceInfo = {
-    	items: this.items,
-    	model: this.model,
-    	tel: this.tel,
-    	licensePlateNumber: this.licensePlateNumber,
-    	publishDate: time,
-    	userinfo: null
+        items: this.items,
+        model: this.model,
+        tel: this.tel,
+        licensePlateNumber: this.licensePlateNumber,
+        publishDate: time,
+        userinfo: null
     }
 
     var newMaintenanceInfo = new MaintenanceInfoModel(maintenanceInfo);
-    newMaintenanceInfo.save(function(err, doc){
-    	return callback(err, doc);
+    newMaintenanceInfo.save(function(err, doc) {
+        return callback(err, doc);
     });
 };
 
-MaintenanceInfo.get = function(callback){
-	MaintenanceInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs){
-		return callback(err, docs);
-	});
+MaintenanceInfo.get = function(callback) {
+    MaintenanceInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
 }
 
-MaintenanceInfo.deleteOne = function(_id, callback){
-	MaintenanceInfoModel.remove({
-		_id: new ObjectID(_id)
-	}, function(err){
-		return callback(err);
-	});
+MaintenanceInfo.deleteOne = function(_id, callback) {
+    MaintenanceInfoModel.remove({
+        _id: new ObjectID(_id)
+    }, function(err) {
+        return callback(err);
+    });
 }
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var AdvertisementInfoSchema = new mongoose.Schema({
-	title: String,
-	content: String,
-	imgUrl: String,
-	linkUrl: String,
-	publishDate: {
+    title: String,
+    content: String,
+    imgUrl: String,
+    linkUrl: String,
+    publishDate: {
         date: Date,
         formatDate: String
     }
 }, {
-	collection: 'advertisementinfos'
+    collection: 'advertisementinfos'
 });
 
 var AdvertisementInfoModel = mongoose.model('AdvertisementInfo', AdvertisementInfoSchema);
 
-function AdvertisementInfo(info){
-	this.title = info.title;
-	this.content = info.content;
-	this.imgUrl = info.imgUrl;
-	this.linkUrl = info.linkUrl;
+function AdvertisementInfo(info) {
+    this.title = info.title;
+    this.content = info.content;
+    this.imgUrl = info.imgUrl;
+    this.linkUrl = info.linkUrl;
 }
 
 AdvertisementInfo.prototype.save = function(callback) {
-	var date = new Date();
+    var date = new Date();
     var time = {
         date: date,
         formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
     };
 
     var newAdInfo = new AdvertisementInfoModel({
-    	title: this.title,
-    	content: this.content,
-    	imgUrl: this.imgUrl,
-    	linkUrl: this.linkUrl,
-    	publishDate: time
+        title: this.title,
+        content: this.content,
+        imgUrl: this.imgUrl,
+        linkUrl: this.linkUrl,
+        publishDate: time
     });
 
-    newAdInfo.save(function(err, doc){
-    	return callback(err, doc);
+    newAdInfo.save(function(err, doc) {
+        return callback(err, doc);
     });
 };
 
-AdvertisementInfo.get = function(callback){
-	AdvertisementInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs){
-		return callback(err, docs);
-	});
+AdvertisementInfo.get = function(callback) {
+    AdvertisementInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
 }
 
-AdvertisementInfo.deleteOne = function(id, callback){
-	AdvertisementInfoModel.remove({
-		_id: new ObjectID(id)
-	}, function(err){
-		return callback(err);
-	});
+AdvertisementInfo.deleteOne = function(id, callback) {
+    AdvertisementInfoModel.remove({
+        _id: new ObjectID(id)
+    }, function(err) {
+        return callback(err);
+    });
 }
+
+
+/*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+var ArticleInfoSchema = new mongoose.Schema({
+    author: String,
+    title: String,
+    publishDate: {
+        date: Date,
+        formatDate: String
+    },
+    tags: [String],
+    content: String,
+    pv: Number,
+    like: Number
+}, {
+    collection: 'articleinfos'
+});
+
+var ArticleInfoModel = mongoose.model('ArticleInfo', ArticleInfoSchema);
+
+function ArticleInfo(info) {
+    this.author = info.author;
+    this.title = info.title;
+    this.tags = info.tags;
+    this.content = info.content;
+}
+
+ArticleInfo.prototype.save = function(callback) {
+    var date = new Date();
+    var time = {
+        date: date,
+        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+    };
+
+    var newArticle = new ArticleInfoModel({
+        author: this.author,
+        title: this.title,
+        publishDate: this.date,
+        tags: this.tags,
+        content: this.content,
+        pv: 0,
+        linke: 0
+    });
+
+    newArticle.save(function(err, doc) {
+        return callback(err, doc);
+    });
+};
+
+ArticleInfo.get = function(callback) {
+    ArticleInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
+}
+
+ArticleInfo.getOne = function(id, inc, callback) {
+    ArticleInfoModel.findOneAndUpdate({
+        _id: new ObjectID(id)
+    }, {
+        $inc: {
+            pv: inc?1:0
+        }
+    }, {
+        upsert: false,
+        new: false
+    }, function(err, doc){
+        return callback(err, doc);
+    });
+}
+
+ArticleInfo.deleteOne = function(id, callback) {
+    ArticleInfoModel.remove({
+        _id: new ObjectID(id)
+    }, function(err) {
+        return callback(err);
+    });
+}
+
+ArticleInfo.like = function(id, callback) {
+    ArticleInfoModel.update({
+        _id: new ObjectID(id)
+    }, {
+        $inc: {
+            like: 1
+        }
+    }, {
+        multi: false
+    }, function(err, raw){
+        return callback(err ,raw);
+    });
+}
+
 
 module.exports = {
     BuyCarInfo: BuyCarInfo,
@@ -422,5 +514,6 @@ module.exports = {
     FixCarInfo: FixCarInfo,
     MaintenanceItem: MaintenanceItem,
     MaintenanceInfo: MaintenanceInfo,
-    AdvertisementInfo: AdvertisementInfo
+    AdvertisementInfo: AdvertisementInfo,
+    ArticleInfo: ArticleInfo
 }
