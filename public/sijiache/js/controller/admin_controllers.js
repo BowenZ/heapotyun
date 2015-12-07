@@ -203,7 +203,9 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         }
 
         self.processItemForm = function() {
-            console.log(self.itemData);
+            if(isNaN(self.itemData.price - 0)){
+                alert('价格请填写纯数字，不要加任何字符');
+            }
             $.post('./maintenanceitem', $.param(self.itemData), function(data, textStatus, xhr) {
                 if (data.msg == 'success') {
                     $alert.text('提交成功').removeClass('alert-danger').addClass('alert-success').css('visibility', 'visible');

@@ -477,7 +477,7 @@ router.post('/upload', upload.single('imgFile'), function(req, res, next) {
     /** The original name of the uploaded file
         stored in the variable "originalname". **/
     var file_name = (new Date - 0) + req.file.originalname;
-    var target_path = 'public/sijiache/upload/' + file_name;
+    var target_path = 'public/sijiache/upload/' + (req.folder?req.folder:'') + file_name;
 
     /** A better way to copy the uploaded file. **/
     var src = fs.createReadStream(tmp_path);

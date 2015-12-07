@@ -146,11 +146,22 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         $scope.$parent.popupTitle = '保养';
         $scope.$parent.showPopup();
 
+        $('#dialog1').find('.weui_btn_dialog').on('click', function () {
+            $('#dialog1').hide();
+        });
+
         MaintenanceItemService.getActiveItems().$promise.then(function(result) {
+            console.log(result);
             self.maintenanceItems = result.result;
         });
 
         self.formData = {};
+        self.itemDetail = {};
+
+        self.showMore = function(index){
+            self.itemDetail = self.maintenanceItems[index];
+            $('#dialog1').show();
+        }
 
         self.processForm = function() {
             if(!$('.popup-maintenance input.mtnc-item:checked').val()){
