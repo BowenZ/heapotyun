@@ -231,7 +231,7 @@ img {
 
 .wrapper {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 10px; }
 
@@ -302,6 +302,9 @@ ol {
 .ad-view .link-img {
   max-width: 300px;
   min-width: 60px; }
+
+.buycar-view table td:nth-child(5) {
+  max-width: 80px; }
 
 .modal-body .alert {
   margin: -8px 0 0;
