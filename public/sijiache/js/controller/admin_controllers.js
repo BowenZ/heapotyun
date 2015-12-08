@@ -22,16 +22,24 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         var self = this;
         updateLink('car', 'buycar');
 
-        BuyCarService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.buyCarInfos = result.result;
-            setTimeout(function() {
-                $('[data-toggle="tooltip"]').tooltip();
-            }, 500);
-        });
+        self.loadData = function(callback){
+            BuyCarService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.buyCarInfos = result.result;
+                setTimeout(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }, 500);
+            });
+        }
+
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -65,16 +73,25 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         var self = this;
         updateLink('car', 'sellcar');
 
-        SellCarService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.sellCarInfos = result.result;
-            setTimeout(function() {
-                $('[data-toggle="tooltip"]').tooltip();
-            }, 500);
-        });
+        self.loadData = function(callback){
+            SellCarService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.sellCarInfos = result.result;
+                setTimeout(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }, 500);
+                callback && callback();
+            });
+        }
+
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -133,16 +150,25 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         updateLink('fix');
 
-        FixService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.fixInfos = result.result;
-            setTimeout(function() {
-                $('[data-toggle="tooltip"]').tooltip();
-            }, 500);
-        });
+        self.loadData = function(callback){
+            FixService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.fixInfos = result.result;
+                setTimeout(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }, 500);
+                callback && callback();
+            });
+        }
+
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -178,21 +204,27 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         var $alert = $('#mainteanceItemModal .alert');
 
-        function loadData(callback) {
+        self.loadData = function(flag, callback) {
             MaintenanceItemService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
                 if (result.msg == 'nologin') {
                     alert('登录超时，请刷新页面重新登录');
                     return;
                 }
                 self.itemInfos = result.result;
-                setTimeout(function() {
-                    $('[data-toggle="tooltip"]').tooltip();
-                }, 500);
+                if(!flag){
+                    setTimeout(function() {
+                        $('[data-toggle="tooltip"]').tooltip();
+                    }, 500);
+                }
                 callback && callback();
             });
         }
 
-        loadData();
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -234,6 +266,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         self.processItemForm = function() {
             if (isNaN(self.itemData.price - 0)) {
                 alert('价格请填写纯数字，不要加任何字符');
+                return;
             }
             $.post('./maintenanceitem', $.param(self.itemData), function(data, textStatus, xhr) {
                 if (data.msg == 'success') {
@@ -251,6 +284,52 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 }
             });
         }
+
+        self.editItem = function(id, index){
+            var copyItem = $.extend({}, self.itemInfos[index]);
+            
+            self.editItemData = {
+                id: id,
+                name: copyItem.name,
+                content: copyItem.content,
+                price: copyItem.price
+            }
+            $('#editItemModal').modal('show');
+        }
+
+        var $alert2 = $('#editItemModal .alert');
+        self.processEditItemForm = function() {
+            if (isNaN(self.editItemData.price - 0)) {
+                alert('价格请填写纯数字，不要加任何字符');
+                return;
+            }
+            console.log(self.editItemData);
+            MaintenanceItemService.editItem({
+                id: self.editItemData.id,
+                item: self.editItemData
+            }).$promise.then(function(result){
+                if (result.msg == 'success') {
+                    self.loadData(false);
+                    $alert2.text('修改成功').removeClass('alert-danger').addClass('alert-success').css('visibility', 'visible');
+                    setTimeout(function() {
+                        $alert2.css('visibility', 'hidden')
+                    }, 2000);
+                    $('#editItemModal input[type="reset"]').trigger('click');
+                    self.editItemData = {};
+                } else if(result.msg == 'nologin'){
+                    $alert2.text('登录超时，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
+                    setTimeout(function() {
+                        $alert2.css('visibility', 'hidden')
+                    }, 2000);
+                }
+                else {
+                    $alert2.text('修改失败，请稍后再试').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
+                    setTimeout(function() {
+                        $alert2.css('visibility', 'hidden')
+                    }, 2000);
+                }
+            });
+        }
     }]);
 
     adminControllers.controller('MaintenanceController', ['$scope', 'MaintenanceService', function($scope, MaintenanceService) {
@@ -258,13 +337,22 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         updateLink('maintenance', 'maintenanceinfo');
 
-        MaintenanceService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.mtncInfos = result.result;
-        });
+        self.loadData = function(callback){
+            MaintenanceService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.mtncInfos = result.result;
+                callback && callback();
+            });
+        }
+
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -295,13 +383,22 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
 
         var $alert = $('#adModal .alert');
 
-        AdvertisementService.get().$promise.then(function(result) {
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.adInfos = result.result;
-        });
+        self.loadData = function(callback){
+            AdvertisementService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.adInfos = result.result;
+                callback && callback();
+            });
+        }
+
+        self.loadData();
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -429,14 +526,22 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             console.dir(pagedown);
         });
 
-        ArticleService.get().$promise.then(function(result) {
-            console.log(result);
-            if (result.msg == 'nologin') {
-                alert('登录超时，请刷新页面重新登录');
-                return;
-            }
-            self.articleInfos = result.result;
-        });
+        self.loadData = function(callback){
+            ArticleService.get().$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                self.articleInfos = result.result;
+                callback && callback();
+            });
+        }
+
+        self.loadData();
 
         self.submitArticle = function() {
             self.formData.content = $('textarea.article-content').val();

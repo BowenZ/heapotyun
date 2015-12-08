@@ -24,6 +24,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             }, 100);
         });
 
+        $('.success-message').find('.weui_btn').click(function(event) {
+            $('.success-message').hide();
+        });;
+
         $scope.showToptip = function(status, copy) {
             if (status == 'success') {
                 $toptip.css('background-color', '#09BB07');
@@ -77,9 +81,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             }
             $.post('./buycar', $.param(self.buyCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip('success', '添加成功');
+                    // $scope.$parent.showToptip('success', '添加成功');
                     $('.popup-car .buy-car input[type="reset"]').trigger('click');
                     self.buyCarData = {};
+                    $('.success-message').show();
                 } else {
                     $scope.$parent.showToptip('error', '添加失败');
                 }
@@ -101,9 +106,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             }
             $.post('./sellcar', $.param(self.sellCarData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip('success', '提交成功');
+                    // $scope.$parent.showToptip('success', '提交成功');
                     $('.popup-car .sell-car input[type="reset"]').trigger('click');
                     self.sellCarData = {};
+                    $('.success-message').show();
                 } else {
                     $scope.$parent.showToptip('error', '提交失败');
                 }
@@ -131,9 +137,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             }
             $.post('./fixcar', $.param(self.fixData), function(data, textStatus, xhr) {
                 if (data == 'success') {
-                    $scope.$parent.showToptip('success', '提交成功');
+                    // $scope.$parent.showToptip('success', '提交成功');
                     $('.popup-fix form input[type="reset"]').trigger('click');
                     self.fixData = {};
+                    $('.success-message').show();
                 } else {
                     $scope.$parent.showToptip('error', '提交失败');
                 }
@@ -195,9 +202,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
             newMaintenanceInfo.$save(function(result) {
                 console.log(result);
                 if (result.msg == 'success') {
-                    $scope.$parent.showToptip(result.msg, '提交成功');
+                    // $scope.$parent.showToptip(result.msg, '提交成功');
                     $('.popup-maintenance form input[type="reset"]').trigger('click');
                     self.fixData = {};
+                    $('.success-message').show();
                 } else {
                     $scope.$parent.showToptip(result.msg, '提交失败');
                 }

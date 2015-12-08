@@ -5,6 +5,7 @@
                 <h3 class="panel-title">保养项目信息</h3>
                 <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mainteanceItemModal">添加</button>
+                <button type="button" class="btn btn-info" ng-click="itemCtrl.loadData()">刷新</button>
             </div>
             <div class="collapse search-form" id="searchForm">
                 <form class="form-horizontal">
@@ -51,6 +52,7 @@
                                 <a title="删除" href="" class="glyphicon glyphicon-trash" ng-click="itemCtrl.deleteItem(item._id, $index)"></a>
                                 <a title="关闭该活动" href="" ng-if="item.status == 1" class="glyphicon glyphicon-eye-close" ng-click="itemCtrl.changeStatus(item._id, $index, item.status)"></a>
                                 <a title="打开该活动" href="" ng-if="item.status != 1" class="glyphicon glyphicon-eye-open" ng-click="itemCtrl.changeStatus(item._id, $index, item.status)"></a>
+                                <a title="修改" href="" class="glyphicon glyphicon-edit" ng-click="itemCtrl.editItem(item._id, $index)"></a>
                             </td>
                         </tr>
                     </tbody>
@@ -85,6 +87,50 @@
                         <label for="itemPrice" class="col-sm-2 control-label">价格</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="itemPrice" placeholder="填写项目价格" ng-model="itemCtrl.itemData.price">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                    <input type="reset" class="hide">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加新保养项目</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert" style="margin: -8px 0 0;padding: 5px;text-align: center;visibility: hidden;">添加上得到</div>
+                <form class="form-horizontal" ng-submit="itemCtrl.processEditItemForm()">
+                    <input type="hidden" ng-model="item.editItemData.id">
+                    <div class="form-group">
+                        <label for="editItemName" class="col-sm-2 control-label">项目名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editItemName" required="required" placeholder="填写项目名称" ng-model="itemCtrl.editItemData.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editItemContent" class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" id="editItemContent" placeholder="填写项目内容" ng-model="itemCtrl.editItemData.content"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editItemPrice" class="col-sm-2 control-label">价格</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editItemPrice" placeholder="填写项目价格" ng-model="itemCtrl.editItemData.price">
                         </div>
                     </div>
                     <div class="form-group">

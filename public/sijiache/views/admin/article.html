@@ -12,6 +12,7 @@
                         <h3 class="panel-title">文章信息</h3>
                         <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adModal">添加</button>
+                        <button type="button" class="btn btn-info" ng-click="articleCtrl.loadData()">刷新</button>
                     </div>
                     <div class="collapse search-form" id="searchForm">
                         <form class="form-horizontal">
@@ -50,15 +51,17 @@
                             <tbody>
                                 <tr ng-repeat="info in articleCtrl.articleInfos | filter: queryName | filter: dateFilter">
                                     <th scope="row">{{$index+1}}</th>
-                                    <td>{{info.title}}</td>
+                                    <td>
+                                    	<a ng-href="/sijiache/article/{{info._id}}?html=1" target="_blank">{{info.title}}</a>
+                                    </td>
                                     <td>{{info.author}}</td>
                                     <td><span ng-repeat="tag in info.tags">{{tag}}&nbsp;</span></td>
                                     <td>{{info.publishDate.formatDate}}</td>
                                     <td>{{info.pv}}</td>
                                     <td>{{info.like}}</td>
                                     <td>
-                                        <a href="" class="glyphicon glyphicon-trash" ng-click="articleCtrl.deleteItem(info._id, $index)"></a>
-                                        <a href="" class="glyphicon glyphicon-eye-open" ng-click="articleCtrl.viewArticle($index)"></a>
+                                        <a href="" title="删除" class="glyphicon glyphicon-trash" ng-click="articleCtrl.deleteItem(info._id, $index)"></a>
+                                        <a href="" title="预览" class="glyphicon glyphicon-eye-open" ng-click="articleCtrl.viewArticle($index)"></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -113,9 +116,10 @@
                     <h1>{{articleCtrl.activeArticle.title}}</h1>
                     <p>
                         <span>{{articleCtrl.activeArticle.publishDate.formatDate}}</span>
-                        <span>{{articleCtrl.activeArticle.author}}</span>
+                        <span class="author">{{articleCtrl.activeArticle.author}}</span>
                     </p>
                     <p>
+                    	<span class="glyphicon glyphicon-tags"></span>
                         <span ng-repeat="tag in articleCtrl.activeArticle.tags">{{tag}}</span>
                     </p>
                     <div ng-bind-html="articleCtrl.activeArticle.content"></div>

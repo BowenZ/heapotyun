@@ -307,6 +307,20 @@ router.patch('/maintenanceitem/:id', function(req, res, next) {
     });
 });
 
+router.put('/maintenanceitem/:id', checkLogin);
+router.put('/maintenanceitem/:id', function(req, res, next){
+	MaintenanceItem.updateItem(req.params.id, req.body.item, function(err, doc){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success',
+            result: doc
+        });
+	});
+});
+
 router.get('/maintenanceitem', function(req, res, next) {
     MaintenanceItem.get(req.query, function(err, docs) {
         if (err) {
@@ -560,11 +574,15 @@ router.get('/article', function(req, res, next) {
 });
 
 router.get('/article/:id', function(req, res, next) {
-    ArticleInfo.getOne(req.params.id, req.query.inc, function(err, doc) {
+    ArticleInfo.getOne(req.params.id, req.query.html, function(err, doc) {
         if (err)
-            return res.json({
+            return res.status(500).json({
                 msg: 'error'
             });
+        if(req.query.html)
+        	return res.render('sijiache/article', {
+        		article: doc
+        	});
         return res.json({
         	msg: 'success',
         	result: doc
@@ -606,7 +624,6 @@ router.delete('/article/:id', function(req, res, next){
 	});
 });
 
-router.patch('/article/:id', checkLogin);
 router.patch('/article/:id', function(req, res, next){
 	ArticleInfo.like(req.params.id, function(err){
 		if (err)
@@ -618,5 +635,6 @@ router.patch('/article/:id', function(req, res, next){
         });
 	});
 });
+
 
 module.exports = router;

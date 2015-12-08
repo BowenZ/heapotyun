@@ -312,6 +312,9 @@ ol {
   text-align: center;
   visibility: hidden; }
 
+article span.author {
+  margin-left: 10px; }
+
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

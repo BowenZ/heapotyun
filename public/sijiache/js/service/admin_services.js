@@ -24,7 +24,10 @@ define(['angular', 'angular-resource'], function(angular) {
     			params: {
     				status: 1
     			}
-    		}
+    		},
+            editItem: {
+                method: 'PUT'
+            }
     	});
     }]);
 

@@ -300,6 +300,20 @@ MaintenanceItem.deleteOne = function(_id, callback) {
     });
 }
 
+MaintenanceItem.updateItem = function(id, obj, callback) {
+    MaintenanceItemModel.findByIdAndUpdate(id, {
+        $set: {
+            name: obj.name,
+            content: obj.content,
+            price: obj.price
+        }
+    }, function(err, doc) {
+        if (err) 
+            return callback(err);
+        return callback(err, doc)
+    });
+}
+
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var MaintenanceInfoSchema = new mongoose.Schema({
     items: [{
@@ -465,7 +479,7 @@ ArticleInfo.prototype.save = function(callback) {
         author: this.author,
         title: this.title,
         publishDate: time,
-        tags: this.tags?this.tags.split(';'):null,
+        tags: this.tags ? this.tags.split(';') : null,
         content: this.content,
         pv: 0,
         like: 0
@@ -478,7 +492,7 @@ ArticleInfo.prototype.save = function(callback) {
 
 ArticleInfo.get = function(callback) {
     ArticleInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
-        docs.forEach(function(doc){
+        docs.forEach(function(doc) {
             doc.content = markdown.toHTML(doc.content);
         });
         return callback(err, docs);
@@ -490,12 +504,12 @@ ArticleInfo.getOne = function(id, inc, callback) {
         _id: new ObjectID(id)
     }, {
         $inc: {
-            pv: inc?1:0
+            pv: inc ? 1 : 0
         }
     }, {
         upsert: false,
         new: false
-    }, function(err, doc){
+    }, function(err, doc) {
         doc.content = markdown.toHTML(doc.content);
         return callback(err, doc);
     });
@@ -518,8 +532,8 @@ ArticleInfo.like = function(id, callback) {
         }
     }, {
         multi: false
-    }, function(err, raw){
-        return callback(err ,raw);
+    }, function(err, raw) {
+        return callback(err, raw);
     });
 }
 
