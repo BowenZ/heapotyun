@@ -50,7 +50,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 BuyCarService.remove({
                     id: id
                 }).$promise.then(function(result) {
-                    console.log(result);
                     if (result.msg == 'nologin') {
                         alert('登录超时，请刷新页面重新登录');
                         return;
@@ -126,7 +125,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 SellCarService.remove({
                     id: id
                 }).$promise.then(function(result) {
-                    console.log(result);
                     if (result.msg == 'nologin') {
                         alert('登录超时，请刷新页面重新登录');
                         return;
@@ -179,7 +177,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 FixService.remove({
                     id: id
                 }).$promise.then(function(result) {
-                    console.log(result);
                     if (result.msg == 'nologin') {
                         alert('登录超时，请刷新页面重新登录');
                         return;
@@ -303,7 +300,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 alert('价格请填写纯数字，不要加任何字符');
                 return;
             }
-            console.log(self.editItemData);
             MaintenanceItemService.editItem({
                 id: self.editItemData.id,
                 item: self.editItemData
@@ -457,7 +453,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 } else if (result.msg == 'nologin') {
                     $alert.text('登录超时，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                 } else {
-                    console.log(result.err);
                     $alert.text('上传出现错误，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                     setTimeout(function() {
                         $alert.css('visibility', 'hidden');
@@ -480,7 +475,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 return false;
             }
             $.post('./ad', $.param(self.formData), function(data, textStatus, xhr) {
-                console.log(data);
                 if (data.msg == 'success') {
                     $alert.text('提交成功').removeClass('alert-danger').addClass('alert-success').css('visibility', 'visible');
                     setTimeout(function() {
@@ -523,7 +517,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             $('.article-view .wmd-panel .wmd-button-group2').append('<button class="btn btn-default" id="wmd-upload-button-0" type="button" data-toggle="tooltip" data-placement="bottom" title="上传"><i class="fa fa-cloud-upload"></i></button>').find('[data-toggle="tooltip"]').tooltip().click(function(event) {
                 $('#uploadModal').modal('show');
             });
-            console.dir(pagedown);
         });
 
         self.loadData = function(callback){
@@ -621,7 +614,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
             xhr.open("POST", "uploadarray", true);
             xhr.onload = function(event) {
                 var result = JSON.parse(xhr.response);
-                console.log(result);
                 if (result.msg == 'success') {
                     result.filenames.forEach(function(filename){
                         insertAtCursor($('textarea.article-content')[0], '![enter image description here](/sijiache/upload/article/'+filename+')\n\n');    
@@ -635,7 +627,6 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 } else if (result.msg == 'nologin') {
                     $alert.text('登录超时，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                 } else {
-                    console.log(result.err);
                     $alert.text('上传出现错误，请刷新页面再试！').removeClass('alert-success').addClass('alert-danger').css('visibility', 'visible');
                     setTimeout(function() {
                         $alert.css('visibility', 'hidden');
