@@ -74,6 +74,14 @@
                         <i class="weui_icon_warn"></i>
                     </div>
                 </div>
+                <div class="weui_cells_title">备注</div>
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <textarea class="weui_textarea" placeholder="请输入您想说的任何话" ng-model="carCtrl.buyCarData.comment"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="weui_btn_area">
                 <button type="submit" class="weui_btn weui_btn_primary">确定</button>
@@ -124,6 +132,17 @@
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
                         <input class="weui_input" type="text" placeholder="排量" ng-model="carCtrl.sellCarData.displacement">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <i class="weui_icon_warn"></i>
+                    </div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd">
+                        <label class="weui_label">里程数</label>
+                    </div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" required="required" type="text" placeholder="您行驶的里程数（公里）" ng-model="carCtrl.sellCarData.mailage">
                     </div>
                     <div class="weui_cell_ft">
                         <i class="weui_icon_warn"></i>
@@ -229,6 +248,14 @@
                     </div>
                 </div>
             </div>
+            <div class="weui_cells_title">备注</div>
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <textarea class="weui_textarea" placeholder="请输入您想说的任何话" ng-model="carCtrl.sellCarData.comment"></textarea>
+                        </div>
+                    </div>
+                </div>
             <div class="weui_btn_area">
                 <button type="submit" class="weui_btn weui_btn_primary">确定</button>
             </div>

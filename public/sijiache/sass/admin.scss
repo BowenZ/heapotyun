@@ -102,6 +102,13 @@ ol {
     }
 }
 
+.modal-body .alert {
+    margin: -8px 0 0;
+    padding: 5px;
+    text-align: center;
+    visibility: hidden;
+}
+
 @-webkit-keyframes rotate {
     0% {
         -webkit-transform: rotate(0deg);

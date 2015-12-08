@@ -39,7 +39,8 @@ router.post('/buycar', function(req, res, next) {
         brand: req.body.brand,
         buyYear: req.body.buyYear,
         mailage: req.body.mailage,
-        tel: req.body.tel
+        tel: req.body.tel,
+        comment: req.body.comment
     });
 
     newBuyCarInfo.save(function(err) {
@@ -74,9 +75,9 @@ router.get('/buycar/getexcel', function(req, res) {
             });
         }
         var dataArr = [];
-        dataArr.push(['品牌车型', '车辆年限', '里程数', '手机号', '创建时间']);
+        dataArr.push(['品牌车型', '车辆年限', '里程数', '手机号', '创建时间', '备注']);
         result.forEach(function(item) {
-            dataArr.push([item.brand, item.buyYear, item.mailage, item.tel, item.publishDate.formatDate]);
+            dataArr.push([item.brand, item.buyYear, item.mailage, item.tel, item.publishDate.formatDate, item.comment]);
         });
         tools.exportExcel({
             data: dataArr,
@@ -109,11 +110,13 @@ router.post('/sellcar', function(req, res, next) {
         color: req.body.color,
         price: req.body.price,
         displacement: req.body.displacement,
+        mailage: req.body.mailage,
         gearbox: req.body.gearbox,
         skylight: req.body.skylight,
         licenseDate: req.body.licenseDate,
         status: req.body.status == '1' ? true : false,
-        tel: req.body.tel
+        tel: req.body.tel,
+        comment: req.body.comment
     });
 
     newSellCarInfo.save(function(err) {
@@ -148,9 +151,9 @@ router.get('/sellcar/getexcel', function(req, res) {
             });
         }
         var dataArr = [];
-        dataArr.push(['品牌车型', '颜色', '价格', '排量', '变速箱', '是否带天窗', '上牌时间', '目前状态', '手机号', '创建时间']);
+        dataArr.push(['品牌车型', '颜色', '价格', '排量', '变速箱', '是否带天窗', '上牌时间', '目前状态', '手机号', '创建时间', '备注']);
         result.forEach(function(item) {
-            dataArr.push([item.brand, item.color, item.price, item.displacement, item.gearbox == 1 ? 'AT自动挡' : (item.gearbox == 2 ? 'MT手动挡' : '手自一体'), item.skylight ? '是' : '否', item.licenseDate, item.status ? '想卖车' : '问问价', item.tel, item.publishDate.formatDate]);
+            dataArr.push([item.brand, item.color, item.price, item.displacement, item.gearbox == 1 ? 'AT自动挡' : (item.gearbox == 2 ? 'MT手动挡' : '手自一体'), item.skylight ? '是' : '否', item.licenseDate, item.status ? '想卖车' : '问问价', item.tel, item.publishDate.formatDate, item.comment]);
         });
         tools.exportExcel({
             data: dataArr,
@@ -476,8 +479,8 @@ router.post('/upload', upload.single('imgFile'), function(req, res, next) {
 
     /** The original name of the uploaded file
         stored in the variable "originalname". **/
-    var file_name = (new Date - 0) + req.file.originalname;
-    var target_path = 'public/sijiache/upload/' + (req.folder?req.folder:'') + file_name;
+    var file_name = (new Date - 0) + (Math.random()+'').substr(-5) + ('.' + file.originalname.split('.').pop());
+    var target_path = 'public/sijiache/upload/' + (req.folder?(req.folder+'/'):'') + file_name;
 
     /** A better way to copy the uploaded file. **/
     var src = fs.createReadStream(tmp_path);
@@ -496,6 +499,50 @@ router.post('/upload', upload.single('imgFile'), function(req, res, next) {
         });
     });
     return;
+});
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/public/sijiache/upload/article/')
+  },
+  filename: function (req, file, cb) {
+  	console.log(file,'==========');
+    cb(null, '123.jpg');
+  }
+})
+
+var uploadArray = multer({ storage: storage });
+router.post('/uploadarray', upload.array('files'), function(req, res, next){
+	if (req.files == undefined) {
+        res.json({
+            msg: 'error',
+            err: 'no file'
+        });
+        return;
+    }
+    var folder = req.body.folder?(req.body.folder+'/'):'';
+    var result = {msg: 'success', filenames: []};
+
+    req.files.forEach(function(file, index){
+    	var tmp_path = file.path;
+
+	    var file_name = (new Date - 0) + (Math.random()+'').substr(-5) + ('.' + file.originalname.split('.').pop());
+	    var target_path = 'public/sijiache/upload/' + folder + file_name;
+
+	    var src = fs.createReadStream(tmp_path);
+	    var dest = fs.createWriteStream(target_path);
+	    src.pipe(dest);
+	    src.on('end', function() {
+	    	result.filenames.push(file_name);
+	    	if(index == req.files.length - 1){
+	    		res.json(result);
+	    	}
+	    });
+	    src.on('error', function(err) {
+	        result.msg = 'error';
+	        result.err = err;
+	    });
+    });
 });
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
@@ -525,6 +572,7 @@ router.get('/article/:id', function(req, res, next) {
     });
 });
 
+router.post('/article', checkLogin);
 router.post('/article', function(req, res, next){
 	var newArticle = new ArticleInfo({
 		author: req.body.author,
@@ -545,6 +593,7 @@ router.post('/article', function(req, res, next){
 	});
 });
 
+router.delete('/article/:id', checkLogin);
 router.delete('/article/:id', function(req, res, next){
 	ArticleInfo.deleteOne(req.params.id, function(err){
 		if (err)
@@ -557,6 +606,7 @@ router.delete('/article/:id', function(req, res, next){
 	});
 });
 
+router.patch('/article/:id', checkLogin);
 router.patch('/article/:id', function(req, res, next){
 	ArticleInfo.like(req.params.id, function(err){
 		if (err)

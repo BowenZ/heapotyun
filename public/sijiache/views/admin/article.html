@@ -48,19 +48,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="info in adCtrl.adInfos | filter: queryName | filter: dateFilter">
+                                <tr ng-repeat="info in articleCtrl.articleInfos | filter: queryName | filter: dateFilter">
                                     <th scope="row">{{$index+1}}</th>
                                     <td>{{info.title}}</td>
-                                    <td>{{info.content}}</td>
-                                    <td>
-                                        <a ng-href="{{info.imgUrl}}" target="_blank">
-                                            <img ng-src="{{info.imgUrl}}" alt="{{info.imgUrl}}" title="{{info.imgUrl}}" class="link-img">
-                                        </a>
-                                    </td>
-                                    <td><a ng-href="{{info.linkUrl}}" target="_blank">{{info.linkUrl}}</a></td>
+                                    <td>{{info.author}}</td>
+                                    <td><span ng-repeat="tag in info.tags">{{tag}}&nbsp;</span></td>
                                     <td>{{info.publishDate.formatDate}}</td>
+                                    <td>{{info.pv}}</td>
+                                    <td>{{info.like}}</td>
                                     <td>
-                                        <a href="" class="glyphicon glyphicon-trash" ng-click="adCtrl.deleteItem(info._id, $index)"></a>
+                                        <a href="" class="glyphicon glyphicon-trash" ng-click="articleCtrl.deleteItem(info._id, $index)"></a>
+                                        <a href="" class="glyphicon glyphicon-eye-open" ng-click="articleCtrl.viewArticle($index)"></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -71,8 +69,8 @@
             <div role="tabpanel" class="tab-pane" id="postArticle">
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-sm-6">
-                    	<h3>填写文章信息</h3>
-                    	<hr>
+                        <h3>填写文章信息</h3>
+                        <hr>
                         <form class="article-form" ng-submit="articleCtrl.submitArticle()">
                             <div class="form-group">
                                 <label for="inputTitle">标题</label>
@@ -85,94 +83,43 @@
                             <div class="form-group">
                                 <label for="inputTag">标签</label>
                                 <input type="text" class="form-control" id="inputTag" ng-model="articleCtrl.formData.tags">
-                                <p class="help-block">多个标签之间请用英文分号;分割</p>
+                                <p class="help-block">多个标签之间请用英文分号<strong>;</strong>分割</p>
                             </div>
                             <div class="form-group">
-                            	<label for="inputContent">正文</label>
-                            	<textarea id="pagedownMe" class="form-control" rows="10" cols="100" ng-model="articleCtrl.formData.content"></textarea>
+                                <label for="inputContent">正文</label>
+                                <textarea id="pagedownMe" class="form-control article-content" rows="10" cols="100" ng-model="articleCtrl.formData.content"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">提交</button>
                         </form>
                     </div>
                     <div class="col-sm-6 article-preview">
-                    	<h3>文章预览</h3>
-                    	<hr>
+                        <h3>文章预览</h3>
+                        <hr>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="adModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加新保养项目</h4>
+                <h4 class="modal-title" id="myModalLabel">查看文章</h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success" role="alert" style="margin: -8px 0 0;padding: 5px;text-align: center;visibility: hidden;">添加上得到</div>
-                <form class="form-horizontal" ng-submit="adCtrl.processForm()">
-                    <div class="form-group">
-                        <label for="adTitle" class="col-sm-3 control-label">标题</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="adTitle" placeholder="填写广告标题" ng-model="adCtrl.formData.title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="adContent" class="col-sm-3 control-label">内容</label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control" rows="3" id="adContent" placeholder="填写广告内容" ng-model="adCtrl.formData.content"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="adImgUrl" class="col-sm-3 control-label">图片地址</label>
-                        <div class="col-sm-9">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="imgUrlRadio" id="imgUrlRadio1" value="0" ng-model="adCtrl.imgSource" checked>上传图片
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="imgUrlRadio" id="imgUrlRadio2" value="1" ng-model="adCtrl.imgSource">网络图片
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-sm-offset-3 col-sm-9" ng-if="adCtrl.imgSource==0">
-                            <div class="col-xs-9">
-                                <input type="file" id="imgFile" class="form-control" placeholder="请选择图片" accept="image/jpeg, image/gif, image/png">
-                            </div>
-                            <div class="col-xs-3">
-                                <a class="btn btn-primary" ng-click="adCtrl.uploadImg()" id="uploadButton">上传</a>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-warning" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-offset-3 col-sm-9" ng-show="adCtrl.imgSource">
-                            <input type="text" class="form-control" id="adImgUrl" ng-readonly="adCtrl.imgSource==0" required="required" placeholder="填写图片路径" ng-model="adCtrl.formData.imgUrl">
-                        </div>
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <img ng-src="{{adCtrl.formData.imgUrl}}" alt="" id="imgPreview" ng-show="adCtrl.formData.imgUrl">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="adLinkUrl" class="col-sm-3 control-label">链接地址</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" id="adLinkUrl" required="required" placeholder="填写广告链接地址" ng-model="adCtrl.formData.linkUrl">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-9">
-                            <button type="submit" class="btn btn-primary">提交</button>
-                        </div>
-                    </div>
-                    <input type="reset" class="hide">
-                </form>
+                <article>
+                    <h1>{{articleCtrl.activeArticle.title}}</h1>
+                    <p>
+                        <span>{{articleCtrl.activeArticle.publishDate.formatDate}}</span>
+                        <span>{{articleCtrl.activeArticle.author}}</span>
+                    </p>
+                    <p>
+                        <span ng-repeat="tag in articleCtrl.activeArticle.tags">{{tag}}</span>
+                    </p>
+                    <div ng-bind-html="articleCtrl.activeArticle.content"></div>
+                </article>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
@@ -180,3 +127,33 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">上传图片</h4>
+            </div>
+            <div class="modal-body">
+            	<div class="alert alert-success" role="alert" style="margin: -8px 0 0;padding: 5px;text-align: center;visibility: hidden;">添加上得到</div>
+                <form role="form" method="post" action="/upload" enctype="multipart/form-data" name="uploadform">
+                    <div class="form-group">
+                        <label for="fileInput">请选择图片（可同时选中多张）</label>
+                        <input type="file" name="files" class="form-control" id="fileInput" placeholder="select your images" multiple="multiple" accept="image/jpeg, image/gif, image/png">
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        </div>
+                    </div>
+                    <button id="uploadButton" type="button" class="btn btn-primary">上传</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="uploadOK">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

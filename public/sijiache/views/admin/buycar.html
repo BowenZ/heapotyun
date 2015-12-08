@@ -36,6 +36,7 @@
                             <th>里程数</th>
                             <th>手机号</th>
                             <th>创建时间</th>
+                            <th>备注</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -47,6 +48,10 @@
                             <td>{{info.mailage}}</td>
                             <td>{{info.tel}}</td>
                             <td>{{info.publishDate.formatDate}}</td>
+                            <td>
+                                <span ng-if="info.comment.length <= 5">{{info.comment}}</span>
+                                <a ng-if="info.comment.length > 5" href="javascript:" data-toggle="{{info.comment.length > 5 ? 'tooltip' : ''}}" data-placement="bottom" title="{{info.comment}}">{{buyCtrl.simplifyQestion(info.comment)}}</a>
+                            </td>
                             <td>
                                 <a href="" class="glyphicon glyphicon-trash" ng-click="buyCtrl.deleteInfo(info._id, $index)"></a>
                             </td>

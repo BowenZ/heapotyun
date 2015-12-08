@@ -2,12 +2,16 @@ var crypto = require('crypto'),
     ObjectID = require('mongodb').ObjectID;
 var mongoose = require('./getMongoose');
 
+var tools = require('../common/tools.js'),
+    markdown = require('markdown').markdown;
+
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var BuyCarInfoSchema = new mongoose.Schema({
     brand: String,
     buyYear: String,
     mailage: String,
     tel: String,
+    comment: String,
     publishDate: {
         date: Date,
         formatDate: String
@@ -31,19 +35,21 @@ function BuyCarInfo(info) {
     this.buyYear = info.buyYear;
     this.mailage = info.mailage;
     this.tel = info.tel;
+    this.comment = info.comment;
 }
 
 BuyCarInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
     var buyCarinfo = {
         brand: this.brand,
         buyYear: this.buyYear,
         mailage: this.mailage,
         tel: this.tel,
+        comment: this.comment,
         publishDate: time,
         userinfo: null
     }
@@ -74,11 +80,13 @@ var SellCarInfoSchema = new mongoose.Schema({
     color: String,
     price: String,
     displacement: String,
+    mailage: String,
     gearbox: Number,
     skylight: Boolean,
     licenseDate: Date,
     status: Boolean,
     tel: String,
+    comment: String,
     publishDate: {
         date: Date,
         formatDate: String
@@ -102,29 +110,33 @@ function SellCarInfo(info) {
     this.color = info.color;
     this.price = info.price;
     this.displacement = info.displacement;
+    this.mailage = info.mailage;
     this.gearbox = info.gearbox;
     this.skylight = info.skylight;
     this.licenseDate = info.licenseDate;
     this.status = info.status;
     this.tel = info.tel;
+    this.comment = info.comment;
 }
 
 SellCarInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
     var sellCarinfo = {
         brand: this.brand,
         color: this.color,
         price: this.price,
         displacement: this.displacement,
+        mailage: this.mailage,
         gearbox: this.gearbox,
         skylight: this.skylight,
         licenseDate: this.licenseDate,
         status: this.status,
         tel: this.tel,
+        comment: this.comment,
         publishDate: time,
         userinfo: null
     }
@@ -187,7 +199,7 @@ FixCarInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
     var fixCarInfo = {
         model: this.model,
@@ -247,7 +259,7 @@ MaintenanceItem.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
 
     var maintenanceItem = {
@@ -327,7 +339,7 @@ MaintenanceInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
 
     var maintenanceInfo = {
@@ -386,7 +398,7 @@ AdvertisementInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
 
     var newAdInfo = new AdvertisementInfoModel({
@@ -446,17 +458,17 @@ ArticleInfo.prototype.save = function(callback) {
     var date = new Date();
     var time = {
         date: date,
-        formatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
+        formatDate: tools.formatDate(date)
     };
 
     var newArticle = new ArticleInfoModel({
         author: this.author,
         title: this.title,
-        publishDate: this.date,
-        tags: this.tags,
+        publishDate: time,
+        tags: this.tags?this.tags.split(';'):null,
         content: this.content,
         pv: 0,
-        linke: 0
+        like: 0
     });
 
     newArticle.save(function(err, doc) {
@@ -466,6 +478,9 @@ ArticleInfo.prototype.save = function(callback) {
 
 ArticleInfo.get = function(callback) {
     ArticleInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        docs.forEach(function(doc){
+            doc.content = markdown.toHTML(doc.content);
+        });
         return callback(err, docs);
     });
 }
@@ -481,6 +496,7 @@ ArticleInfo.getOne = function(id, inc, callback) {
         upsert: false,
         new: false
     }, function(err, doc){
+        doc.content = markdown.toHTML(doc.content);
         return callback(err, doc);
     });
 }

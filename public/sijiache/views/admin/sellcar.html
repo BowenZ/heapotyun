@@ -35,12 +35,14 @@
                             <th>颜色</th>
                             <th>价格</th>
                             <th>排量</th>
+                            <th>里程</th>
                             <th>变速箱</th>
                             <th>天窗</th>
                             <th>上牌时间</th>
                             <th>目前状态</th>
                             <th>手机号</th>
                             <th>创建时间</th>
+                            <th>备注</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -51,12 +53,17 @@
                             <td>{{info.color}}</td>
                             <td>{{info.price}}</td>
                             <td>{{info.displacement}}</td>
+                            <td>{{info.mailage}}</td>
                             <td>{{sellCtrl.formatGearbox(info.gearbox)}}</td>
                             <td>{{info.skylight?'有':'无'}}</td>
                             <td>{{sellCtrl.formatDate(info.licenseDate)}}</td>
                             <td>{{info.status?'想卖车':'问问价'}}</td>
                             <td>{{info.tel}}</td>
                             <td>{{info.publishDate.formatDate}}</td>
+                            <td>
+                                <span ng-if="info.comment.length <= 5">{{info.comment}}</span>
+                                <a ng-if="info.comment.length > 5" href="javascript:" data-toggle="{{info.comment.length > 5 ? 'tooltip' : ''}}" data-placement="bottom" title="{{info.comment}}">{{sellCtrl.simplifyQestion(info.comment)}}</a>
+                            </td>
                             <td>
                                 <a href="" class="glyphicon glyphicon-trash" ng-click="sellCtrl.deleteInfo(info._id, $index)"></a>
                             </td>

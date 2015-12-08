@@ -18,6 +18,7 @@
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-session": "*",
+    "markdown": "^0.5.0",
     "moment": "^2.10.6",
     "mongodb": "*",
     "mongoose": "*",
