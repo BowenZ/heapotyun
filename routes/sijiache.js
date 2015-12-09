@@ -53,7 +53,7 @@ router.post('/buycar', function(req, res, next) {
 
 router.get('/buycar', checkLogin);
 router.get('/buycar', function(req, res) {
-    BuyCarInfo.get(function(err, result) {
+    BuyCarInfo.get(req.query.page, req.query.amount, function(err, result) {
         if (err) {
             res.json({
                 msg: 'error'
@@ -68,7 +68,7 @@ router.get('/buycar', function(req, res) {
 
 router.get('/buycar/getexcel', checkLogin);
 router.get('/buycar/getexcel', function(req, res) {
-    BuyCarInfo.get(function(err, result) {
+    BuyCarInfo.getAll(function(err, result) {
         if (err) {
             res.json({
                 msg: 'error'
@@ -129,7 +129,7 @@ router.post('/sellcar', function(req, res, next) {
 
 router.get('/sellcar', checkLogin);
 router.get('/sellcar', function(req, res, next) {
-    SellCarInfo.get(function(err, result) {
+    SellCarInfo.get(req.query.page, req.query.amount, function(err, result) {
         if (err) {
             res.json({
                 msg: 'error'
@@ -144,7 +144,7 @@ router.get('/sellcar', function(req, res, next) {
 
 router.get('/sellcar/getexcel', checkLogin);
 router.get('/sellcar/getexcel', function(req, res) {
-    SellCarInfo.get(function(err, result) {
+    SellCarInfo.getAll(function(err, result) {
         if (err) {
             res.json({
                 msg: 'error'
