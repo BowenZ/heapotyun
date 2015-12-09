@@ -554,6 +554,21 @@ ArticleInfo.like = function(id, callback) {
     });
 }
 
+ArticleInfo.update = function(id, obj, callback) {
+    ArticleInfoModel.findByIdAndUpdate(id, {
+        $set: {
+            title: obj.title,
+            author: obj.author,
+            tags: obj.price.tags.split(';'),
+            content: obj.content
+        }
+    }, function(err, doc) {
+        if (err) 
+            return callback(err);
+        return callback(err, doc)
+    });
+}
+
 
 module.exports = {
     BuyCarInfo: BuyCarInfo,

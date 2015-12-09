@@ -611,6 +611,20 @@ router.post('/article', function(req, res, next){
 	});
 });
 
+router.put('/article/:id', checkLogin);
+router.put('/article/:id', function(req, res, next){
+	ArticleInfo.update(req.params.id, req.body.article, function(err, doc){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success',
+            result: doc
+        });
+	});
+});
+
 router.delete('/article/:id', checkLogin);
 router.delete('/article/:id', function(req, res, next){
 	ArticleInfo.deleteOne(req.params.id, function(err){
