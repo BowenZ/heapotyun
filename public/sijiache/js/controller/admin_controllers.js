@@ -23,7 +23,11 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         updateLink('car', 'buycar');
 
         self.loadData = function(callback){
-            BuyCarService.get().$promise.then(function(result) {
+            self.currentPage = 1;
+            BuyCarService.get({
+                page: 1,
+                amount: 20
+            }).$promise.then(function(result) {
                 if (result.msg == 'error') {
                     alert('加载失败，请稍后再试');
                     return;
@@ -36,10 +40,46 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 setTimeout(function() {
                     $('[data-toggle="tooltip"]').tooltip();
                 }, 500);
+                if(result.result.length < 20){
+                    noMoreToLoad = true;
+                    $('.buycar-view .load-more-btn').attr('disabled', 'disabled').text('所有数据已全部加载');
+                }
+                callback && callback();
             });
         }
 
         self.loadData();
+
+        var noMoreToLoad = false;
+        self.loadMore = function(){
+            if(noMoreToLoad){
+                return
+            }
+            BuyCarService.get({
+                page: ++self.currentPage,
+                amount: 20
+            }).$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                if(result.result.length < 20){
+                    noMoreToLoad = true;
+                    $('.buycar-view .load-more-btn').attr('disabled', 'disabled').text('所有数据已全部加载');
+                }
+                if(result.result.length > 0){
+                    self.sellCarInfos = self.sellCarInfos.concat(result.result);
+                    setTimeout(function() {
+                        $('.buycar-view tr:gt('+(self.currentPage-1)*20+')').find('[data-toggle="tooltip"]').tooltip();
+                    }, 500);
+                }
+                
+            });
+        }
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
@@ -71,9 +111,13 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
     adminControllers.controller('SellCarController', ['$scope', 'SellCarService', function($scope, SellCarService) {
         var self = this;
         updateLink('car', 'sellcar');
-
+        
         self.loadData = function(callback){
-            SellCarService.get().$promise.then(function(result) {
+            self.currentPage = 1;
+            SellCarService.get({
+                page: 1,
+                amount: 20
+            }).$promise.then(function(result) {
                 if (result.msg == 'error') {
                     alert('加载失败，请稍后再试');
                     return;
@@ -86,11 +130,46 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                 setTimeout(function() {
                     $('[data-toggle="tooltip"]').tooltip();
                 }, 500);
+                if(result.result.length < 20){
+                    noMoreToLoad = true;
+                    $('.buycar-view .load-more-btn').attr('disabled', 'disabled').text('所有数据已全部加载');
+                }
                 callback && callback();
             });
         }
 
         self.loadData();
+
+        var noMoreToLoad = false;
+        self.loadMore = function(){
+            if(noMoreToLoad){
+                return
+            }
+            SellCarService.get({
+                page: ++self.currentPage,
+                amount: 20
+            }).$promise.then(function(result) {
+                if (result.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (result.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                if(result.result.length < 20){
+                    noMoreToLoad = true;
+                    $('.buycar-view .load-more-btn').attr('disabled', 'disabled').text('所有数据已全部加载');
+                }
+                if(result.result.length > 0){
+                    self.sellCarInfos = self.sellCarInfos.concat(result.result);
+                    setTimeout(function() {
+                        $('.buycar-view tr:gt('+(self.currentPage-1)*20+')').find('[data-toggle="tooltip"]').tooltip();
+                    }, 500);
+                }
+                
+            });
+        }
 
         $scope.dateFilter = function(obj) {
             return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);

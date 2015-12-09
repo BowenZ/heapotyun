@@ -4,6 +4,7 @@ var mongoose = require('./getMongoose');
 
 var tools = require('../common/tools.js'),
     markdown = require('markdown').markdown;
+require('mongoose-pagination');
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 var BuyCarInfoSchema = new mongoose.Schema({
@@ -60,7 +61,15 @@ BuyCarInfo.prototype.save = function(callback) {
     });
 };
 
-BuyCarInfo.get = function(callback) {
+BuyCarInfo.get = function(page, amount,callback) {
+    if(!page) page = 1;
+    if(!amount) amount = 20;
+    BuyCarInfoModel.find({}).paginate(page, amount).sort('-publishDate.date').exec(function(err, docs) {
+        callback(err, docs);
+    });
+}
+
+BuyCarInfo.getAll = function(callback) {
     BuyCarInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
         callback(err, docs);
     });
@@ -147,7 +156,15 @@ SellCarInfo.prototype.save = function(callback) {
     });
 };
 
-SellCarInfo.get = function(callback) {
+SellCarInfo.get = function(page, amount, callback) {
+    if(!amount) amount = 20;
+    if(!page) page = 1;
+    SellCarInfoModel.find({}).paginate(page, amount).sort('-publishDate.date').exec(function(err, docs) {
+        callback(err, docs);
+    });
+}
+
+SellCarInfo.getAll = function(callback) {
     SellCarInfoModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
         callback(err, docs);
     });
