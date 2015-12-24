@@ -33,6 +33,7 @@ router.get('/lukuang/:city', cors(), function(req,res, next){
 				};
 				var $ = cheerio.load(response.body);
 				$('td>div').each(function(index, el) {
+					if($(el).find('>div').length === 0) return;
 					result.data.push({
 						time: $(el).find('>div').eq(1).text(),
 						roadCondition: $(el).find('>div').eq(2).text()
