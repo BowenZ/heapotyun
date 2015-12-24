@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request'),
 	cheerio = require('cheerio');
 var needle = require('needle');
+var cors = require('cors');
 
 router.get('/kuaidi', function(req, res, next) {
 	var url = 'http://wap.kuaidi100.com/wap_result.jsp?rand=20120517&fromWeb=null' + '&id=' + req.query.id + '&postid=' + req.query.postid;
@@ -19,10 +20,11 @@ router.get('/kuaidi', function(req, res, next) {
 	});
 });
 
-router.get('/lukuang/:city', function(req,res, next){
+router.get('/lukuang/:city', cors(), function(req,res, next){
 	if(req.params.city == 'zhengzhou'){
 		var url = 'http://www.zhongbuauto.com/weixin/jiaojing/road/';
 		var result;
+		//原网站编码为gb2312，用request抓取中文乱码，改用needle后正常，原因待考究
 		needle.get(url, function(error, response){
 			if(!error && response.statusCode == 200){
 				result = {
