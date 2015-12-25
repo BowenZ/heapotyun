@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-CN" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>路况信息-私家车999</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="icons/favicon.ico" rel="shortcut icon">
+    <link href="icons/favicon.ico" rel="Bookmark">
+    <!-- Standard iPhone -->
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57-precomposed.png" />
+    <!-- Standard iPad -->
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72-precomposed.png" />
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon" sizes="114x114" href=icons/ "apple-touch-icon-114x114-precomposed.png" />
+    <!-- Retina iPad -->
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144-precomposed.png" />
+    <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="http://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="css/user_road.css">
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <header>
+            <h1>私家车999实时路况查询</h1>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home" role="tab" data-toggle="tab">交巡警二大队发布</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#profile" role="tab" data-toggle="tab">郑州交通出行网发布</a>
+                </li>
+            </ul>
+        </header>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="container tab1">
+                    <div class="alert alert-info" role="alert">
+                        加载中，请稍后...
+                    </div>
+                    <ul>
+                    </ul>
+                    <p class="info"><small>数据由郑州交巡警二大队微信平台实时路况发布</small></p>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <div class="container tab2">
+                    <div class="alert alert-info" role="alert">
+                        加载中，请稍后...
+                    </div>
+                    <ul>
+                        
+                    </ul>
+                    <p class="info"><small>数据由<a href="http://www.zzjtcx.com/">郑州交通出行网</a>实时发布</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script>
+    (function() {
+        $.get('http://heapot.zbw.name:3000/utils/lukuang/zhengzhou', function(data) {
+            if (data.msg == 'success') {
+                $('.tab1 .alert').hide();
+                var $list = $('.container.tab1 ul');
+                data.data.forEach(function(item, index) {
+                    var time = item.time.replace('时间：', '').split(' ');
+                    $list.append(
+                        '<li><h3><span>' + time[1] + '</span><span>' + time[0] + '</span></h3><p>' + item.roadCondition + '</p></li>'
+                    );
+                });
+            } else {
+                $('.tab1 .alert').removeClass('alert-info').addClass('alert-danger').text('加载失败，请稍后再试');
+            }
+        });
+        // return;
+        $.get('http://heapot.zbw.name:3000/utils/lukuang/zhengzhou2', function(data) {
+            if (data.msg == 'success') {
+                $('.tab2 .alert').hide();
+                var $express = $(data.data.expressway);
+                $('.container.tab2 ul').append('<li><h3><span>'+$express.find('li:eq(0)').text()+'</span><span>高速路况</span></h3><p>'+$express.find('li:eq(1) p').text()+'</p></li>');
+                $('.container.tab2 ul').append(parseData(data, 10));
+            } else {
+                $('.tab2 .alert').removeClass('alert-info').addClass('alert-danger').text('加载失败，请稍后再试');
+            }
+        });
+
+        function parseData(data, type) {
+            var str = "";
+
+            $.each(data.data.roadCondition, function(index, item) {
+                if (item.msgType == type) {
+                    //获取括号的索引值
+                    var bracketsIndex = item.plateName.indexOf("（");
+                    //获取路段的索引值
+                    var roadIndex = item.plateName.lastIndexOf("东向");
+                    if (roadIndex < bracketsIndex) {
+                        roadIndex = item.plateName.lastIndexOf("南向");
+                    }
+                    if (roadIndex < bracketsIndex) {
+                        roadIndex = item.plateName.lastIndexOf("西向");
+                    }
+                    if (roadIndex < bracketsIndex) {
+                        roadIndex = item.plateName.lastIndexOf("北向");
+                    }
+                    //获取站点名称字符串
+                    var plateStr = item.plateName.substring(0, bracketsIndex);
+                    //获取路段名称字符串
+                    var roadStr = item.plateName.substring(bracketsIndex + 1, roadIndex);
+                    //获取方向字符串
+                    var directionStr = item.plateName.substring(roadIndex, item.plateName.length - 1) + "方向";
+
+                    //组织路况播报文字
+                    str += '<li><h3 class="' + (item.speed < 8 ? 'red' : 'yellow') + '"><span>' + format(item.updateTime, 'HH:mm') + '</span><span>' + (item.speed < 8 ? '严重拥堵' : '通行缓慢') + '</span></h3><h4>' + roadStr + '</h4><p>' + directionStr + '</p><p>' + plateStr + '附近</p></li>';
+                }
+            });
+            return str;
+        }
+
+        var format = function(time, format) {
+            var t = new Date(time);
+            var tf = function(i) {
+                return (i < 10 ? '0' : '') + i
+            };
+            return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+                switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear());
+                        break;
+                    case 'MM':
+                        return tf(t.getMonth() + 1);
+                        break;
+                    case 'mm':
+                        return tf(t.getMinutes());
+                        break;
+                    case 'dd':
+                        return tf(t.getDate());
+                        break;
+                    case 'HH':
+                        return tf(t.getHours());
+                        break;
+                    case 'ss':
+                        return tf(t.getSeconds());
+                        break;
+                }
+            });
+        };
+    })();
+    </script>
+</body>
+
+</html>
