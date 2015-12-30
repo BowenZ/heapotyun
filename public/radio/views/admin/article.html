@@ -1,0 +1,149 @@
+<div class="article-view row">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#articleInfo" aria-controls="articleInfo" role="tab" data-toggle="tab">查看文章</a></li>
+            <li role="presentation"><a href="#postArticle" aria-controls="postArticle" role="tab" data-toggle="tab">发表文章</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="articleInfo">
+                <div class="panel panel-info">
+                    <div class="panel-heading clearfix">
+                        <h3 class="panel-title">文章信息</h3>
+                        <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
+                        <button type="button" class="btn btn-info" ng-click="articleCtrl.loadData()">刷新</button>
+                    </div>
+                    <div class="collapse search-form" id="searchForm">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-2 control-label">关键字</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputName" placeholder="请在此输入搜索问题的关键字" name="filterName" ng-model="queryName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDate1" class="col-sm-2 control-label">日期</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" id="inputDate1" ng-model="queryDate1">
+                                        <div class="input-group-addon">至</div>
+                                        <input type="date" class="form-control" id="inputDate2" ng-model="queryDate2">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>标题</th>
+                                    <th>作者</th>
+                                    <th>标签</th>
+                                    <th>创建时间</th>
+                                    <th>阅读量</th>
+                                    <th>点赞数</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="info in articleCtrl.articleInfos | filter: queryName | filter: dateFilter">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <td>
+                                        <a ng-href="/radio/article/{{info._id}}?html=1" target="_blank">{{info.title}}</a>
+                                    </td>
+                                    <td>{{info.author}}</td>
+                                    <td><span ng-repeat="tag in info.tags">{{tag}}&nbsp;</span></td>
+                                    <td>{{info.publishDate.formatDate}}</td>
+                                    <td>{{info.pv}}</td>
+                                    <td>{{info.like}}</td>
+                                    <td>
+                                        <a href="" title="删除" class="glyphicon glyphicon-trash" ng-click="articleCtrl.deleteItem(info._id, $index)"></a>
+                                        <a href="" title="预览" class="glyphicon glyphicon-eye-open" ng-click="articleCtrl.viewArticle($index)"></a>
+                                        <a href="" title="修改" class="glyphicon glyphicon-pencil" ng-click="articleCtrl.editArticle($index)"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane wrapper-editor" id="postArticle">
+                <div class="row " style="margin-top: 20px;">
+                    <div class="col-sm-6">
+                        <div class="tool-zone">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary btn-secondary btn-save"><i class="glyphicon glyphicon-floppy-save"></i>保存</button>
+                                <button type="button" class="btn btn-success btn-secondary btn-preview"><i class="glyphicon glyphicon-eye-open"></i>预览</button>
+                            </div>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="inputAuthor" class="col-sm-2 control-label">作者</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputAuthor" ng-model="articleCtrl.author">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTag" class="col-sm-2 control-label">标签</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputTag" ng-model="articleCtrl.label">
+                                </div>
+                                <p class="help-block col-sm-offset-3">多个标签之间请用英文分号<strong>;</strong>分割</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-6">
+                        <header class="title">
+                            <div class="bg-img" data-src="img/listbg.jpg"></div>
+                            <h1 contenteditable="true">请在此输入标题</h1>
+                            <label for="titleImg">更换封面</label>
+                            <input type="file" class="hidden" id="titleImg">
+                            <script id="upload_editor" type="text/plain"></script>
+                        </header>
+                        
+                        <div class="edit-zone">
+                            <script id="editor" type="text/plain"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">查看文章</h4>
+            </div>
+            <div class="modal-body">
+                <article>
+                    <h1>{{articleCtrl.activeArticle.title}}</h1>
+                    <p>
+                        <span>{{articleCtrl.activeArticle.publishDate.formatDate}}</span>
+                        <span class="author">{{articleCtrl.activeArticle.author}}</span>
+                    </p>
+                    <p>
+                        <span class="glyphicon glyphicon-tags"></span>
+                        <span ng-repeat="tag in articleCtrl.activeArticle.tags">{{tag}}</span>
+                    </p>
+                    <div ng-bind-html="articleCtrl.activeArticle.content"></div>
+                </article>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade qr-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <h4>扫描下方二维码在手机上查看效果</h4>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->

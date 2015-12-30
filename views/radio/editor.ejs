@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-CN" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>App Name</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="icons/favicon.ico" rel="shortcut icon">
+    <link href="icons/favicon.ico" rel="Bookmark">
+    <!-- Standard iPhone -->
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57-precomposed.png" />
+    <!-- Standard iPad -->
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72-precomposed.png" />
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114-precomposed.png" />
+    <!-- Retina iPad -->
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144-precomposed.png" />
+    <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="http://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>-->
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/radio/css/admin_editor.css">
+</head>
+
+<body data-id="<%= id %>">
+    <!--[if lt IE 9]>
+            <p class="chromeframe">您正在使用一个<strong>过时的</strong>浏览器。请点击<a href="http://browsehappy.com/">这里</a>来升级您的浏览器</p>
+        <![endif]-->
+    <textarea class="hidden article-content">
+        <%= content %>
+    </textarea>
+    <header class="main-header">
+        <h1>爱车梦工厂-直播</h1>
+    </header>
+    <div class="wrapper-editor">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="tool-zone">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary btn-save"><i class="fa fa-floppy-o"></i>保存</button>
+                        <button type="button" class="btn btn-secondary btn-preview"><i class="fa fa-eye"></i>预览</button>
+                        <button type="button" class="btn btn-secondary"><i class="fa fa-share-alt"></i>分享</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <header class="title">
+                    <div class="bg-img" data-src="<%= url %>"></div>
+                    <h1 contenteditable="true"><%= title %></h1>
+                    <label for="titleImg">更换封面</label>
+                    <input type="file" class="hidden" id="titleImg">
+                    <script id="upload_editor" type="text/plain"></script>
+                </header>
+                <div class="edit-zone">
+                    <script id="editor" type="text/plain"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade qr-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <h4>扫描下方二维码在手机上查看效果</h4>
+                <div id="qrcode"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/radio/js/vendor/ueditor/require.min.js" data-main="/radio/js/admin_editor"></script>
+</body>
+
+</html>

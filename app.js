@@ -20,7 +20,7 @@ var index = require('./routes/index');
 var heapot = require('./routes/heapot');
 var sijiache = require('./routes/sijiache');
 var utils = require('./routes/utils');
-var editor = require('./routes/editor');
+var radio = require('./routes/radio');
 
 var app = express();
 
@@ -58,7 +58,7 @@ app.use('/', index);
 app.use('/heapot', heapot);
 app.use('/utils', utils);
 app.use('/sijiache', sijiache);
-app.use('/editor', editor);
+app.use('/radio', radio);
 app.use('/ueditor/upload', ueditor(path.join(__dirname, 'public'), function(req, res, next){
   if(req.query.action === 'uploadimage'){
     var foo = req.ueditor;
