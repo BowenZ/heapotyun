@@ -178,7 +178,9 @@ require(['jquery', 'ZeroClipboard', 'ueditor', 'ueditor-zh', 'ColorAnalysis', 'b
                 callback && callback(thisColor);
             });
         }
-        img.src = $('header.title').find('.bg-img').data('src');
+        var imgSrc = $('header.title').find('.bg-img').data('src');
+        imgSrc = imgSrc || '/editor/img/listbg.jpg';
+        img.src = imgSrc;
     }
     loadTitleImg();
     /*++++++++++++++++++++++++++++++++++++++++++++++++*/
