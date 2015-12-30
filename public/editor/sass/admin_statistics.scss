@@ -1,0 +1,81 @@
+@import "base/base";
+@import "../bower_components/bootstrap/scss/bootstrap";
+@import "progress-radial";
+.line-chart {
+	overflow: hidden;
+    #line-chart {
+        width: 122%;
+        position: relative;
+        left: -7%;
+    }
+    >header {
+        padding: 0.5rem 1rem;
+        .left-copy {
+            float: left;
+            span {
+                line-height: 22px;
+                font-size: 1.3rem;
+                display: inline-block;
+            }
+            .progress-radial {
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                vertical-align: sub;
+            }
+        }
+        .right-copy {
+            float: right;
+            small {
+                color: $gray;
+                vertical-align: sub;
+                span {
+                    display: inline-block;
+                    width: 0.8rem;
+                    height: 0.8rem;
+                    background: blue;
+                    margin: 0 0.1rem;
+                }
+            }
+        }
+    }
+}
+
+.circle-chart {
+    margin-top: 1rem;
+    .row {
+        margin: 0;
+        .col-xs-6 {
+            height: 143px;
+            &:first-of-type {
+                border-right: 1px solid $gray-lighter;
+            }
+            &.active {
+                background-color: $brand-primary;
+                .copy {
+                    color: #fff;
+                }
+                .progress-radial .overlay {
+                    background-color: $brand-primary;
+                }
+            }
+            .progress-radial {
+                position: absolute;
+                bottom: 1rem;
+                right: 1rem;
+            }
+            .copy {
+                color: $gray;
+                position: absolute;
+                font-size: 1.2rem;
+                left: 1rem;
+                &.copy1 {
+                    top: 1rem;
+                }
+                &.copy2 {
+                    bottom: 1rem;
+                }
+            }
+        }
+    }
+}

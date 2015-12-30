@@ -1,0 +1,47 @@
+@import "base/base";
+@import "../bower_components/bootstrap/scss/bootstrap";
+@import "swiper";
+article.article-wrapper {
+    h1:first-of-type{
+        text-align: center;
+    }
+    img {
+        display: block;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    h1 {
+        font-size: 1.8rem;
+        margin: 0.8rem;
+        font-weight: bold;
+    }
+    p {
+        margin: 1rem;
+    }
+    .swiper-container {
+        .swiper-slide {
+            img {
+                width: 100%;
+            }
+            .copys {
+                color: #fff;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                background-color: rgba(0, 0, 0, .4);
+                padding: 0.5rem 0;
+                p {
+                    margin-bottom: 0.5rem;
+                    margin-top: 0;
+                }
+            }
+        }
+        .swiper-pagination {
+            bottom: 0;
+            .swiper-pagination-bullet {
+                background: #fff;
+            }
+        }
+    }
+}

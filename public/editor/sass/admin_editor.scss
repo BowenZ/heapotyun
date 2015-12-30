@@ -1,0 +1,88 @@
+@import "base/base";
+@import "../bower_components/bootstrap/scss/bootstrap";
+body {
+    background-color: $gray-lighter;
+}
+
+header.main-header {
+    color: $brand-gray;
+    padding: 1rem;
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+.wrapper-editor {
+    max-width: 810px;
+    margin: 1rem auto;
+    .row {
+        margin: 0;
+    }
+    header.title {
+        background-size: cover;
+        height: 144px;
+        padding: 1rem;
+        position: relative;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        #upload_editor {
+            display: none;
+        }
+        .bg-img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            canvas {
+                float: right;
+                height: 100%;
+                width: auto;
+            }
+        }
+        h1 {
+            width: 61.8%;
+            font-size: 1.35rem;
+            position: relative;
+            color: #fff;
+        }
+        label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: #ccc;
+            background: rgba(0, 0, 0, .6);
+            padding: 0.2rem 0.5rem;
+            margin: 0;
+            cursor: pointer;
+            &:hover {
+                color: #fff;
+                background: rgba(0, 0, 0, .8);
+                -webkit-transition: all .2s ease-out;
+                transition: all .2s ease-out;
+            }
+        }
+    }
+    .tool-zone {
+        .btn-group {
+            margin-bottom: $blank;
+            i {
+                margin-right: 0.5rem;
+            }
+        }
+        .edui-default .edui-toolbar {
+            .edui-separator {
+                display: block!important;
+                height: 2px;
+                visibility: hidden;
+            }
+            .edui-combox-body .edui-button-body {
+                width: 66px;
+            }
+        }
+    }
+}

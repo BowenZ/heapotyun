@@ -1,0 +1,112 @@
+@import "base/base";
+@import "../bower_components/bootstrap/scss/bootstrap";
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.main-wrapper {
+    nav {
+        color: #fff;
+        height: 0.618 * 61.8vw;
+        position: relative;
+        overflow: hidden;
+        .bg-img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            canvas {
+                float: right;
+                height: 100%;
+                width: auto;
+            }
+        }
+        h1 {
+            font-size: 1.5rem;
+            position: relative;
+            margin: 2rem;
+        }
+        ul {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 0 1rem;
+            @include div-nobreak();
+            li {
+                display: inline-block;
+                padding: 0.3rem 0.6rem;
+                &.active {
+                    border-bottom: 4px solid rgba(255, 255, 255, .7);
+                }
+                a {
+                    color: inherit;
+                }
+            }
+            &.fixed {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 99;
+                bottom: auto;
+            }
+        }
+    }
+    .main-container {
+        a {
+            text-decoration: none;
+            &:hover,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+        .list-item {
+            height: 0.618 * 61.8vw;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position-x: right;
+            position: relative;
+            .bg-img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+            .bg-img {
+                canvas {
+                    float: right;
+                    height: 100%;
+                    width: auto;
+                }
+            }
+            .bg-img {
+                height: 100%;
+                img {
+                    height: 100%;
+                    width: auto;
+                    float: right;
+                }
+            }
+            .copy {
+                position: relative;
+                color: #fff;
+                padding: 0.8rem;
+                width: 61.8%;
+                h3 {
+                    font-size: 1.5rem;
+                }
+                ul.sub-list {
+                    padding-left: $blank;
+                    font-size: 0.9rem;
+                    li {
+                        width: 61.8%;
+                        border-bottom: 1px solid #fff;
+                    }
+                }
+            }
+        }
+    }
+}

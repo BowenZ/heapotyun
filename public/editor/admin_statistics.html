@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-CN" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>标签统计</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="icons/favicon.ico" rel="shortcut icon">
+    <link href="icons/favicon.ico" rel="Bookmark">
+    <!--<link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="css/admin_statistics.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 9]>
+            <p class="chromeframe">您正在使用一个<strong>过时的</strong>浏览器。请点击<a href="http://browsehappy.com/">这里</a>来升级您的浏览器</p>
+        <![endif]-->
+    <div class="main-wrapper">
+        <div class="statistics-container">
+            <section class="line-chart">
+                <header class="clearfix">
+                    <div class="left-copy">
+                        <span>高尔夫GTI</span>
+                        <div class="progress-radial progress-60" data-unoccupied="1" data-total="5"></div>
+                    </div>
+                    <div class="right-copy">
+                        <small>分类<span></span>汽车</small>
+                    </div>
+                </header>
+                <div id="line-chart" style="height:400px"></div>
+            </section>
+            <section class="circle-chart">
+                <div class="row">
+                    <div class="col-xs-6 active">
+                        <div class="progress-radial progress-30" data-unoccupied="1" data-total="5">
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="copy copy1">
+                            浏览量
+                        </div>
+                        <div class="copy copy2">
+                            +3131
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="progress-radial progress-60" data-unoccupied="1" data-total="5">
+                            <div class="overlay"></div>
+                        </div>
+                        <div class="copy copy1">
+                            关注量
+                        </div>
+                        <div class="copy copy2">
+                            +3131
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script src="./js/admin_statistics.js"></script>
+</body>
+
+</html>

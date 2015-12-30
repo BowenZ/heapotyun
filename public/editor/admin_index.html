@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-CN" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>App Name</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="icons/favicon.ico" rel="shortcut icon">
+    <link href="icons/favicon.ico" rel="Bookmark">
+    <!-- Standard iPhone -->
+    <link rel="apple-touch-icon" sizes="57x57" href="icons/apple-touch-icon-57x57-precomposed.png" />
+    <!-- Standard iPad -->
+    <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72-precomposed.png" />
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon" sizes="114x114" href=icons/ "apple-touch-icon-114x114-precomposed.png" />
+    <!-- Retina iPad -->
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-touch-icon-144x144-precomposed.png" />
+    <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="http://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>-->
+    <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin_index.css">
+</head>
+
+<body>
+    <!--[if lt IE 9]>
+            <p class="chromeframe">您正在使用一个<strong>过时的</strong>浏览器。请点击<a href="http://browsehappy.com/">这里</a>来升级您的浏览器</p>
+        <![endif]-->
+    <div class="wrapper-nav">
+        <nav class="navbar navbar-light bg-faded">
+            <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+                &#9776;
+            </button>
+            <div class="collapse navbar-toggleable-xs pull-xs-left" id="exCollapsingNavbar2">
+                <a class="navbar-brand" href="#">HeaPot</a>
+                <ul class="nav navbar-nav clearfix">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">节目 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">标签</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">用户</a>
+                    </li>
+                </ul>
+                <nav class="nav nav-inline sub-nav clearfix">
+                    <a class="nav-link" href="#list1">直播</a>
+                    <a class="nav-link" href="#list2">直播</a>
+                    <a class="nav-link" href="#list3">直播</a>
+                    <a class="nav-link" href="#list4">直播</a>
+                    <a class="nav-link" href="#list5">直播</a>
+                    <div class="progress">
+                        <div class="bar"></div>
+                    </div>
+                </nav>
+            </div>
+            <div class="right-nav pull-xs-right">
+                <div class="search">
+                    <a href="">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+                <div class="dropdown">
+                    <a href="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="img-circle" src="img/img.jpg">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+                <div class="qr-code">
+                    <a href="">
+                        <img src="img/qr.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="wrapper-single-list">
+        <section class="single-list" id="list1">
+            <header class="list-header left-status status-green">
+                <div class="copy-container">
+                    <h2>直播</h2>
+                    <p>2个话题 500条评论</p>
+                </div>
+                <div class="labels">
+                    <span class="label label-success">展示中</span>
+                </div>
+            </header>
+            <div class="new-topic">
+                <!-- <p class="info text-xs-center">单机回车即可新建任务</p> -->
+                <p class="text-xs-center"><i>+</i>新建话题</p>
+            </div>
+            <ul class="article-list">
+                <li class="left-status status-green">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">习近平主席就3名中国公民在马里人质劫持事件中遇害做出重要批示</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-success">讨论中</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="left-status status-red">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">雾霾到底会对身体产生多大的危害？</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-danger">抽奖结束</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <section class="editor">
+                <div class="edit-title">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <textarea name="title" id="" cols="20" rows="4" placeholder="标题"></textarea>
+                        </div>
+                        <div class="col-xs-5">
+                            <label for="titleImg">+封面图</label>
+                            <input type="file" id="titleImg" class="hidden">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-container clearfix">
+                    <div class="edit-text">
+                        <textarea name="text" id="" cols="30" rows="4" placeholder="添加备注"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary text-xs-right create-btn">创建</button>
+                </div>
+            </section>
+            <!-- <div class="bottom-block">
+                
+                <button class="btn btn-block fresh-btn">更新</button>
+            </div> -->
+        </section>
+        <section class="single-list" id="list1">
+            <header class="list-header left-status status-green">
+                <div class="copy-container">
+                    <h2>直播</h2>
+                    <p>2个话题 500条评论</p>
+                </div>
+                <div class="labels">
+                    <span class="label label-success">展示中</span>
+                </div>
+            </header>
+            <div class="new-topic">
+                <!-- <p class="info text-xs-center">单机回车即可新建任务</p> -->
+                <p class="text-xs-center"><i>+</i>新建话题</p>
+            </div>
+            <ul class="article-list">
+                <li class="left-status status-green">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">习近平主席就3名中国公民在马里人质劫持事件中遇害做出重要批示</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-success">讨论中</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="left-status status-red">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">雾霾到底会对身体产生多大的危害？</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-danger">抽奖结束</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <section class="editor">
+                <div class="edit-title">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <textarea name="title" id="" cols="20" rows="4" placeholder="标题"></textarea>
+                        </div>
+                        <div class="col-xs-5">
+                            <label for="titleImg">+封面图</label>
+                            <input type="file" id="titleImg" class="hidden">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-container clearfix">
+                    <div class="edit-text">
+                        <textarea name="text" id="" cols="30" rows="4" placeholder="添加备注"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary text-xs-right create-btn">创建</button>
+                </div>
+            </section>
+            <!-- <div class="bottom-block">
+                
+                <button class="btn btn-block fresh-btn">更新</button>
+            </div> -->
+        </section>
+        <section class="single-list" id="list1">
+            <header class="list-header left-status status-green">
+                <div class="copy-container">
+                    <h2>直播</h2>
+                    <p>2个话题 500条评论</p>
+                </div>
+                <div class="labels">
+                    <span class="label label-success">展示中</span>
+                </div>
+            </header>
+            <div class="new-topic">
+                <!-- <p class="info text-xs-center">单机回车即可新建任务</p> -->
+                <p class="text-xs-center"><i>+</i>新建话题</p>
+            </div>
+            <ul class="article-list">
+                <li class="left-status status-green">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">习近平主席就3名中国公民在马里人质劫持事件中遇害做出重要批示</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-success">讨论中</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="left-status status-red">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">雾霾到底会对身体产生多大的危害？</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-danger">抽奖结束</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <section class="editor">
+                <div class="edit-title">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <textarea name="title" id="" cols="20" rows="4" placeholder="标题"></textarea>
+                        </div>
+                        <div class="col-xs-5">
+                            <label for="titleImg">+封面图</label>
+                            <input type="file" id="titleImg" class="hidden">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-container clearfix">
+                    <div class="edit-text">
+                        <textarea name="text" id="" cols="30" rows="4" placeholder="添加备注"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary text-xs-right create-btn">创建</button>
+                </div>
+            </section>
+            <!-- <div class="bottom-block">
+                
+                <button class="btn btn-block fresh-btn">更新</button>
+            </div> -->
+        </section>
+        <section class="single-list" id="list1">
+            <header class="list-header left-status status-green">
+                <div class="copy-container">
+                    <h2>直播</h2>
+                    <p>2个话题 500条评论</p>
+                </div>
+                <div class="labels">
+                    <span class="label label-success">展示中</span>
+                </div>
+            </header>
+            <div class="new-topic">
+                <!-- <p class="info text-xs-center">单机回车即可新建任务</p> -->
+                <p class="text-xs-center"><i>+</i>新建话题</p>
+            </div>
+            <ul class="article-list">
+                <li class="left-status status-green">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">习近平主席就3名中国公民在马里人质劫持事件中遇害做出重要批示</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-success">讨论中</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="left-status status-red">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">雾霾到底会对身体产生多大的危害？</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-danger">抽奖结束</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <section class="editor">
+                <div class="edit-title">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <textarea name="title" id="" cols="20" rows="4" placeholder="标题"></textarea>
+                        </div>
+                        <div class="col-xs-5">
+                            <label for="titleImg">+封面图</label>
+                            <input type="file" id="titleImg" class="hidden">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-container clearfix">
+                    <div class="edit-text">
+                        <textarea name="text" id="" cols="30" rows="4" placeholder="添加备注"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary text-xs-right create-btn">创建</button>
+                </div>
+            </section>
+            <!-- <div class="bottom-block">
+                
+                <button class="btn btn-block fresh-btn">更新</button>
+            </div> -->
+        </section>
+        <section class="single-list" id="list1">
+            <header class="list-header left-status status-green">
+                <div class="copy-container">
+                    <h2>直播</h2>
+                    <p>2个话题 500条评论</p>
+                </div>
+                <div class="labels">
+                    <span class="label label-success">展示中</span>
+                </div>
+            </header>
+            <div class="new-topic">
+                <!-- <p class="info text-xs-center">单机回车即可新建任务</p> -->
+                <p class="text-xs-center"><i>+</i>新建话题</p>
+            </div>
+            <ul class="article-list">
+                <li class="left-status status-green">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">习近平主席就3名中国公民在马里人质劫持事件中遇害做出重要批示</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-success">讨论中</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="left-status status-red">
+                    <div class="list-container">
+                        <div class="list-bg"></div>
+                        <h5 class="list-title">雾霾到底会对身体产生多大的危害？</h5>
+                        <div class="labels">
+                            <span class="label label-default">11条评论</span>
+                            <span class="label label-danger">抽奖结束</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <section class="editor">
+                <div class="edit-title">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <textarea name="title" id="" cols="20" rows="4" placeholder="标题"></textarea>
+                        </div>
+                        <div class="col-xs-5">
+                            <label for="titleImg">+封面图</label>
+                            <input type="file" id="titleImg" class="hidden">
+                        </div>
+                    </div>
+                </div>
+                <div class="edit-container clearfix">
+                    <div class="edit-text">
+                        <textarea name="text" id="" cols="30" rows="4" placeholder="添加备注"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary text-xs-right create-btn">创建</button>
+                </div>
+            </section>
+            <!-- <div class="bottom-block">
+                
+                <button class="btn btn-block fresh-btn">更新</button>
+            </div> -->
+        </section>
+    </div>
+    <div class="modal fade program-modal 节目" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">私家车999</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" placeholder="编辑标签名">
+                    <div class="change-img">
+                        <label for="InputFile">编辑此标签背景图片（可选）</label>
+                        <input type="file" class="form-control-file hidden" id="InputFile">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.bootcss.com/require.js/2.1.20/require.min.js" data-main="./js/admin_index"></script>
+</body>
+
+</html>

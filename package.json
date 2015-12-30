@@ -30,6 +30,7 @@
     "needle": "^0.11.0",
     "request": "^2.65.0",
     "serve-favicon": "~2.3.0",
+    "ueditor": "^1.1.1",
     "xlsx": "^0.8.0"
   },
   "devDependencies": {

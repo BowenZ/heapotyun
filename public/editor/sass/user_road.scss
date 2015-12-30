@@ -1,0 +1,70 @@
+@import "base/base";
+@import "../bower_components/bootstrap/scss/bootstrap";
+.main-wrapper {
+    >header {
+        position: fixed;
+        width: 100%;
+        background: #fff;
+        z-index: 9;
+        h1 {
+            font-size: 1.6rem;
+            line-height: 3rem;
+            text-align: center;
+            background-color: $brand-primary;
+            color: #fff;
+        }
+    }
+    .nav {
+        display: flex;
+        justify-content: center;
+    }
+    .tab-content {
+        position: relative;
+        top: 100px;
+    }
+    .container {
+        padding: 0.8rem;
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            li {
+                border-radius: 3px;
+                overflow: hidden;
+                background: #EEEEEE;
+                margin-bottom: 1rem;
+                h3 {
+                    margin: 0;
+                    background: #626262;
+                    color: #fff;
+                    font-size: 1.4rem;
+                    line-height: 2rem;
+                    padding: 0 0.8rem;
+                    &.red {
+                        background-color: $brand-danger;
+                    }
+                    &.yellow {
+                        background-color: $brand-warning;
+                    }
+                    span:last-child {
+                        float: right;
+                    }
+                }
+                h4 {
+                    font-size: 1.3rem;
+                    margin: 0.8rem 0.8rem 0.2rem;
+                    font-weight: bold;
+                }
+                p {
+                    padding: 0.3rem 0.8rem;
+                    color: #626262;
+                    margin-bottom: 0.2rem;
+                }
+            }
+        }
+        .info {
+            text-align: center;
+            color: $gray;
+        }
+    }
+}
