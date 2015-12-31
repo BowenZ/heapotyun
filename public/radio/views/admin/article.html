@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label for="inputTag" class="col-sm-2 control-label">标签</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputTag" ng-model="articleCtrl.label">
+                                    <input type="text" class="form-control" id="inputTag" ng-model="articleCtrl.tags">
                                 </div>
                                 <p class="help-block col-sm-offset-3">多个标签之间请用英文分号<strong>;</strong>分割</p>
                             </div>
@@ -138,6 +138,25 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade revise-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改文章</h4>
+            </div>
+            <div class="modal-body">
+                <script id="revise-editor" type="text/plain"></script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" ng-click="articleCtrl.loadData()" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="articleCtrl.saveEdit()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade qr-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">

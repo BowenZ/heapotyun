@@ -100,16 +100,19 @@ ol {
     }
 }
 
-.ad-view {
-    .link-img {
-        max-width: 300px;
-        min-width: 60px;
-    }
+.modal-backdrop {
+    z-index: 888;
+}
+.modal{
+    z-index: 999;
 }
 
-.buycar-view {
-    table td:nth-child(5) {
-        max-width: 80px;
+.revise-modal {
+    .modal-dialog {
+        width: 407px;
+        .edui-editor-iframeholder {
+            min-height: 500px;
+        }
     }
 }
 

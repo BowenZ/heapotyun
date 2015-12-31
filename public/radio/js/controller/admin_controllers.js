@@ -31,7 +31,7 @@ define(['jquery', 'angular'], function($, angular) {
         var self = this;
         updateLink('article');
 
-        self.loadData = function(){
+        self.loadData = function() {
             $.get('article', function(data) {
                 if (data.msg == 'error') {
                     alert('加载失败，请稍后再试');
@@ -43,6 +43,7 @@ define(['jquery', 'angular'], function($, angular) {
                 }
                 if (data.msg == 'success') {
                     self.articleInfos = data.result;
+                    $scope.$apply();
                 }
             });
         }
@@ -55,23 +56,23 @@ define(['jquery', 'angular'], function($, angular) {
         self.deleteItem = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
                 $.ajax({
-                    url: 'article/'+id,
-                    type: 'DELETE'
-                })
-                .done(function(result) {
-                    if (result.msg == 'nologin') {
-                        alert('登录超时，请刷新页面重新登录');
-                        return;
-                    } else if (result.msg == 'error') {
-                        alert('删除失败，请稍后再试');
-                        return;
-                    }
-                    self.articleInfos.splice(index, 1);
-                    $scope.$apply();
-                })
-                .fail(function() {
-                    console.log("error");
-                });
+                        url: 'article/' + id,
+                        type: 'DELETE'
+                    })
+                    .done(function(result) {
+                        if (result.msg == 'nologin') {
+                            alert('登录超时，请刷新页面重新登录');
+                            return;
+                        } else if (result.msg == 'error') {
+                            alert('删除失败，请稍后再试');
+                            return;
+                        }
+                        self.articleInfos.splice(index, 1);
+                        $scope.$apply();
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    });
             }
         }
 
@@ -81,13 +82,39 @@ define(['jquery', 'angular'], function($, angular) {
             $('#article').modal('show');
         }
 
-        self.editArticle = function(index){
-            'aaaaaaaaaaaaaaaa'
+        self.editArticle = function(index) {
+            self.editArticleId = self.articleInfos[index]._id;
+            UE.getEditor('revise-editor').setContent(self.articleInfos[index].content);
+            $('.revise-modal').modal('show');
+        }
+
+        self.saveEdit = function() {
+            var result = {
+                content: UE.getEditor('revise-editor').getContent()
+            };
+            $.ajax({
+                    url: '/radio/article/' + self.editArticleId,
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: {
+                        article: JSON.stringify(result)
+                    }
+                })
+                .done(function(a) {
+                    if (a.msg == 'success')
+                        showAlert(true, '修改成功！');
+                    else
+                        showAlert(false, '修改失败！' + a.result);
+                })
+                .fail(function(a) {
+                    showAlert(false, '修改失败！');
+                });
         }
 
         require(['ZeroClipboard', 'ueditor', 'ueditor-zh', 'ColorAnalysis', 'jquery-qr'], function(ZeroClipboard, UE) {
             window.ZeroClipboard = ZeroClipboard;
             var ue = UE.getEditor('editor');
+            var reviseEditor = UE.getEditor('revise-editor');
 
 
             var timer = setInterval(function() {
@@ -231,7 +258,7 @@ define(['jquery', 'angular'], function($, angular) {
                 result.title = $('header.title').find('h1').text();
                 result.content = UE.getEditor('editor').getContent();
                 result.author = self.author;
-                result.label = self.label;
+                result.tags = self.tags;
                 console.log(result);
                 if (self.currentArticleId) {
                     $.ajax({
@@ -243,10 +270,10 @@ define(['jquery', 'angular'], function($, angular) {
                             }
                         })
                         .done(function(a) {
-                            if(a.msg == 'success')
+                            if (a.msg == 'success')
                                 showAlert(true, '修改成功！');
                             else
-                                showAlert(false, '修改失败！'+a.result);
+                                showAlert(false, '修改失败！' + a.result);
                         })
                         .fail(function(a) {
                             showAlert(false, '修改失败！');

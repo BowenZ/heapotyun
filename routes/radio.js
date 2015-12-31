@@ -93,8 +93,9 @@ router.post('/article', function(req, res, next){
 
 router.put('/article/:id', checkLogin);
 router.put('/article/:id', function(req, res, next){
-    console.log(JSON.parse(req.body.article),'+++++++++++');
-    UserArticle.update(req.params.id, JSON.parse(req.body.article), function(err, doc){
+    var obj = JSON.parse(req.body.article);
+    obj.tags && (obj.tags = obj.tags.split(';'));
+    UserArticle.update(req.params.id, obj, function(err, doc){
         if (err)
             return res.json({
                 msg: 'error'

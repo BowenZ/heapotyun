@@ -97,19 +97,62 @@ UserArticle.like = function(id, callback) {
 UserArticle.update = function(id, obj, callback) {
     console.log(id, obj,'==============');
     ArticleInfoModel.findByIdAndUpdate(id, {
-        $set: {
-            title: obj.title,
-            url: obj.url,
-            author: obj.author,
-            tags: obj.tags ? obj.tags.split(';') : null,
-            content: obj.content
-        }
+        $set: obj
     }, function(err, doc) {
         if (err)
             return callback(err);
         return callback(err, doc)
     });
 }
+
+var ActivitySchema = new mongoose.Schema({
+    imgs: [String],
+    title: String,
+    content: String,
+    price: Number,
+    startDate: Date,
+    endDate: Date,
+    publishDate: {
+        date: Date,
+        formatDate: String
+    },
+    amount: Number
+}, {
+    collection: 'userarticle'
+});
+
+var ActivityModel = mongoose.model('ActivityInfo', ActivitySchema);
+
+function ActivityInfo(info){
+    this.imgs = info.imgs;
+    this.title = info.title;
+    this.content = info.content;
+    this.price = info.price;
+    this.startDate = info.startDate;
+    this.endDate = info.endDate;
+}
+
+ActivityInfo.prototype.save = function(callback) {
+    var date = new Date();
+    var time = {
+        date: date,
+        formatDate: tools.formatDate(date)
+    };
+
+    var newArticle = new ArticleInfoModel({
+        author: this.author,
+        title: this.title,
+        publishDate: time,
+        tags: this.tags ? this.tags.split(';') : null,
+        content: this.content,
+        pv: 0,
+        like: 0
+    });
+
+    newArticle.save(function(err, doc) {
+        return callback(err, doc);
+    });
+};
 
 module.exports = {
     UserArticle: UserArticle
