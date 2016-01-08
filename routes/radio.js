@@ -3,7 +3,16 @@ var router = express.Router();
 var path = require('path');
 var tools = require('../common/tools.js');
 var radio = require('../models/radio.js');
-var UserArticle = radio.UserArticle;
+
+var fs = require('fs'),
+    multer = require('multer'),
+    upload = multer({
+        dest: '/public/radio/upload/'
+    });
+
+var UserArticle = radio.UserArticle,
+	ActivityInfo = radio.ActivityInfo,
+	EnrollInfo = radio.EnrollInfo;
 
 function checkLogin(req, res, next) {
     if (!req.session.login) {
@@ -135,6 +144,144 @@ router.patch('/article/:id', function(req, res, next){
             msg: 'success'
         });
     });
+});
+
+router.get('/activity', function(req, res, next){
+	ActivityInfo.getAll(function(err, docs){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success',
+            result: docs
+        });
+	});
+});
+
+router.get('/activity/:id', function(req, res, next){
+	ActivityInfo.getOne(req.params.id, function(err, doc){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.render('radio/activity', {
+        	data: doc
+        });
+	});
+});
+
+router.post('/activity', checkLogin);
+router.post('/activity', upload.array('files'), function(req, res, next){
+	if (req.files && req.files.length > 0) {
+        var folder = req.body.folder?(req.body.folder+'/'):'';
+	    var result = {msg: 'success', filenames: []};
+
+	    req.files.forEach(function(file, index){
+	    	var tmp_path = file.path;
+
+		    var file_name = (new Date - 0) + (Math.random()+'').substr(-5) + ('.' + file.originalname.split('.').pop());
+		    var target_path = 'public/radio/upload/' + folder + file_name;
+
+		    var src = fs.createReadStream(tmp_path);
+		    var dest = fs.createWriteStream(target_path);
+		    src.pipe(dest);
+		    src.on('end', function() {
+		    	result.filenames.push(file_name);
+		    	if(index == req.files.length - 1){
+		    		var newActivity = new ActivityInfo({
+						imgs: result.filenames,
+				        title: req.body.title,
+				        content: req.body.content,
+				        price: req.body.price,
+				        startDate: req.body.startDate,
+				        endDate: req.body.endDate,
+				        amount: req.body.amount
+					});
+					newActivity.save(function(err, doc){
+						if(err)
+							return res.send({
+								msg: 'error'
+							});
+						return res.send({
+							msg: 'success',
+							result: doc
+						});
+					});
+		    	}
+		    });
+		    src.on('error', function(err) {
+		        result.msg = 'error';
+		        result.err = err;
+		    });
+	    });
+    }else{
+    	var newActivity = new ActivityInfo({
+	        title: req.body.title,
+	        content: req.body.content,
+	        price: req.body.price,
+	        startDate: req.body.startDate,
+	        endDate: req.body.endDate,
+	        amount: req.body.amount
+		});
+		newActivity.save(function(err, doc){
+			if(err)
+				return res.send({
+					msg: 'error'
+				});
+			return res.send({
+				msg: 'success',
+				result: doc
+			});
+		});
+    }
+    
+});
+
+router.delete('/activity/:id', checkLogin);
+router.delete('/activity/:id', function(req, res, next){
+    ActivityInfo.deleteOne(req.params.id, function(err){
+        if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success'
+        });
+    });
+});
+
+router.post('/enroll', function(req, res, next){
+	var newEnroll = new EnrollInfo({
+		activityId: req.body.activityId,
+		name: req.body.name,
+		tel: req.body.tel,
+		remark: req.body.remark
+	});
+
+	newEnroll.save(function(err, doc){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success',
+            result: doc
+        });
+	});
+});
+
+router.get('/enroll', function(req, res, next){
+	EnrollInfo.findByActivityId(req.query.activityId, function(err, doc){
+		if (err)
+            return res.json({
+                msg: 'error'
+            });
+        return res.json({
+            msg: 'success',
+            result: doc
+        });
+	});
 });
 
 module.exports = router;

@@ -294,21 +294,98 @@ define(['jquery', 'angular'], function($, angular) {
             });
 
             $('.btn-preview').click(function(event) {
-                console.log(location.origin + '/radio/article/' + self.currentArticleId);
+                if (!self.currentArticleId) {
+                    showAlert(false, '保存之后才能预览');
+                    return;
+                }
                 $('#qrcode').html('').qrcode({
                     width: 220,
                     height: 220,
-                    text: location.origin + '/radio/article/' + self.currentArticleId
+                    text: location.origin + '/radio/article/' + self.currentArticleId + '?html=true'
                 });
                 $('.qr-modal').modal();
             });
         });
     }]);
 
-    adminControllers.controller('EnrollmentController', ['$scope', function($scope) {
+    adminControllers.controller('ActivityController', ['$scope', function($scope) {
         var self = this;
-        console.log(123);
-    }])
+        updateLink('activity');
+
+        self.loadData = function() {
+            $.get('activity', function(data) {
+                console.log(data);
+                if (data.msg == 'error') {
+                    alert('加载失败，请稍后再试');
+                    return;
+                }
+                if (data.msg == 'nologin') {
+                    alert('登录超时，请刷新页面重新登录');
+                    return;
+                }
+                if (data.msg == 'success') {
+                    self.activityInfos = data.result;
+                    $scope.$apply();
+                }
+                setTimeout(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+                }, 500);
+            });
+        }
+        self.loadData();
+
+        $scope.dateFilter = function(obj) {
+            return ($scope.queryDate1 ? (Date.parse(obj.publishDate.date) >= Date.parse($scope.queryDate1)) : true) && ($scope.queryDate2 ? (Date.parse(obj.publishDate.date) <= Date.parse($scope.queryDate2)) : true);
+        }
+
+        self.addActivity = function() {
+            var imgFile = document.getElementById("activityImg").files;
+            var formData = new FormData(document.forms.namedItem("uploadform"));
+            var xhr;
+            if (window.ActiveXObject) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            }
+            xhr.open("POST", "/radio/activity", true);
+            xhr.onload = function(event) {
+                var result = JSON.parse(xhr.response);
+                if(result.msg == 'success'){
+                    showAlert(true, '添加成功');        
+                }else{
+                    showAlert(false, '添加失败');        
+                }
+            };
+            xhr.send(formData);
+            showAlert(true, '正在上传中，请稍后...');
+        }
+        self.deleteItem = function(id, index) {
+            if (window.confirm('确定要删除该项吗？')) {
+                $.ajax({
+                        url: 'activity/' + id,
+                        type: 'DELETE'
+                    })
+                    .done(function(result) {
+                        if (result.msg == 'nologin') {
+                            alert('登录超时，请刷新页面重新登录');
+                            return;
+                        } else if (result.msg == 'error') {
+                            alert('删除失败，请稍后再试');
+                            return;
+                        }
+                        self.activityInfos.splice(index, 1);
+                        $scope.$apply();
+                    })
+                    .fail(function() {
+                        console.log("error");
+                    });
+            }
+        }
+        self.simplifyQestion = function(str) {
+            if(str)
+                return str.substr(0, 10) + (str.length > 10 ? '...' : '');
+        }
+    }]);
 
 
     return adminControllers;

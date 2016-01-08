@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh-CN" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>爱车梦工厂</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0, user-scalable=no">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/Swiper/3.2.7/css/swiper.min.css" rel="stylesheet">
+    <style>
+    .swiper-slide img, .header-img img{
+        width: 100%;
+        display: block;
+    }
+    .container{
+        padding-bottom: 60px;
+    }
+.container h1{
+    text-align: center;
+    margin-bottom: 30px;
+}
+.container h4{
+        border-bottom: 1px solid #ccc;
+    padding-bottom: 6px;
+}
+button.enroll{
+        position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 9]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- Add your site or application content here -->
+    <div class="wrapper">
+        <% if(data.imgs.length > 1){ %>
+        <div class="swiper-container swiper-top">
+            <div class="swiper-wrapper">
+                <% data.imgs.forEach(function(item, index){ %>
+                <div class="swiper-slide">
+                    <img src="/radio/upload/<%= item %>" alt="">
+                </div>
+                <% }) %>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <% }else if(data.imgs.length == 1){ %>
+        <div class="header-img">
+            <img src="/radio/upload/<%= data.imgs[0] %>" alt="">
+        </div>
+        <% } %>
+        <div class="container">
+            <h1><%= data.title %></h1>
+            <h4>活动简介</h4>
+            <p><%= data.content %></p>
+            <p><strong>报名开始日期：</strong> <%= (new Date(data.startDate)).toLocaleDateString() %></p>
+            <p><strong>报名截止日期：</strong> <%= (new Date(data.endDate)).toLocaleDateString() %></p>
+            <p><strong>报名费用：</strong> <% if(data.price === null || data.price == 0){  %> <span>免费</span> <% }else{ %> <%= data.price %>元 <%}%></p>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg enroll" data-toggle="modal" data-target="#myModal">立即报名</button>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">填写报名信息</h4>
+      </div>
+      <div class="modal-body">
+        <form class="enroll-form">
+          <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="hidden" id="id" value="<%= data._id %>">
+            <input type="text" class="form-control" id="name" placeholder="请输入你的姓名" required="required">
+          </div>
+          <div class="form-group">
+            <label for="tel">手机号</label>
+            <input type="tel" class="form-control" id="tel" placeholder="请输入可以联系上你的手机号码" required="required">
+          </div>
+          <div class="form-group">
+            <label for="remark">备注</label>
+            <textarea class="form-control" id="remark"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="submit()">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/Swiper/3.2.7/js/swiper.jquery.min.js"></script>
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: false,
+        // direction: 'vertical',
+        // autoplay: 1000,
+        effect: 'slide', //Could be "slide", "fade", "cube" or "coverflow"
+        loop: true,
+        onSlideChangeEnd: function(s) {
+            // console.log(s.activeIndex);
+        }
+    });
+    $('input').focus(function(event) {
+        console.log(123);
+        $('.form-group').removeClass('has-error');
+    });
+    function submit(){
+        var valid = true;
+        $('.enroll-form input').each(function(index, el) {
+            if(!$(el).val()){
+                $(el).parent('.form-group').addClass('has-error');
+                valid = false;
+            }
+        });
+        if(!valid) return;
+        var data = {
+            activityId: $('#id').val(),
+            name: $('#name').val(),
+            tel: $('#tel').val(),
+            remark: $('#remark').val()
+        }
+        $.post('/radio/enroll', data, function(data, textStatus, xhr) {
+            console.log(data);
+        });
+    }
+    </script>
+</body>
+</html>

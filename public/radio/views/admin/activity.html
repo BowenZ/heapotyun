@@ -1,0 +1,120 @@
+<div class="activity-view">
+    <div class="panel panel-info">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">文章信息</h3>
+            <button class="btn btn-primary" data-toggle="collapse" href="#searchForm" aria-expanded="false" aria-controls="searchForm">筛选</button>
+            <button type="button" class="btn btn-info" ng-click="activityCtrl.loadData()">刷新</button>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#activityModal">添加</button>
+        </div>
+        <div class="collapse search-form" id="searchForm">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">关键字</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputName" placeholder="请在此输入搜索问题的关键字" name="filterName" ng-model="queryName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputDate1" class="col-sm-2 control-label">日期</label>
+                    <div class="col-sm-10">
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="inputDate1" ng-model="queryDate1">
+                            <div class="input-group-addon">至</div>
+                            <input type="date" class="form-control" id="inputDate2" ng-model="queryDate2">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>活动名</th>
+                        <th>内容</th>
+                        <!-- <th>图片</th> -->
+                        <th>价格</th>
+                        <th>开始日期</th>
+                        <th>截止日期</th>
+                        <th>人数限制</th>
+                        <th>发布日期</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="info in activityCtrl.activityInfos | filter: queryName | filter: dateFilter">
+                        <th scope="row">{{$index+1}}</th>
+                        <td>{{info.title}}</td>
+                        <td>
+                            <span ng-if="info.content.length <= 10">{{info.content}}</span>
+                            <a ng-if="info.content.length > 10" href="javascript:" data-toggle="{{info.content.length > 10 ? 'tooltip' : ''}}" data-placement="bottom" title="{{info.content}}">{{activityCtrl.simplifyQestion(info.content)}}</a>
+                        </td>
+                        <!-- <td><span ng-repeat="imgSrc in info.img"><img ng-src="imgSrc" alt=""></span></td> -->
+                        <td>{{info.price}}</td>
+                        <td>{{info.startDate | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{info.endDate | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{info.amount}}</td>
+                        <td>{{info.publishDate.formatDate}}</td>
+                        <td>
+                            <a href="" title="删除" class="glyphicon glyphicon-trash" ng-click="activityCtrl.deleteItem(info._id, $index)"></a>
+                            <a href="/radio/activity/{{info._id}}" title="预览" class="glyphicon glyphicon-eye-open" target="_blank"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加活动</h4>
+            </div>
+            <div class="modal-body">
+                <form name="uploadform">
+                    <div class="form-group">
+                        <label for="activityName">活动名</label>
+                        <input type="text" class="form-control" id="activityName" name="title" placeholder="" ng-model="activityCtrl.activityName">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityContent">活动内容</label>
+                        <textarea class="form-control" id="activityContent" name="content" ng-model="activityCtrl.activityContent"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityImg">展示图片</label>
+                        <input type="file" id="activityImg" name="files" multiple="multiple">
+                        <p class="help-block">可以同时选中多张</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityPrice">报名费</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">￥</div>
+                            <input type="number" class="form-control" id="activityPrice" name="price" placeholder="如没有报名费可以不填或者填0" ng-model="activityCtrl.activityPrice">
+                            <div class="input-group-addon">元</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityAmount">报名人数上限</label>
+                        <input type="number" class="form-control" id="activityAmount" name="amount" placeholder="" ng-model="activityCtrl.activityAmount"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">活动开始日期</label>
+                        <input type="date" class="form-control" id="startDate" placeholder="" name="startDate" ng-model="activityCtrl.startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">活动结束日期</label>
+                        <input type="date" class="form-control" id="endDate" placeholder="" name="endDate" ng-model="activityCtrl.endDate">
+                    </div>
+                    <button type="reset" class="btn btn-warning">清空表单</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="activityCtrl.addActivity()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

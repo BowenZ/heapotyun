@@ -118,7 +118,7 @@ var ActivitySchema = new mongoose.Schema({
     },
     amount: Number
 }, {
-    collection: 'userarticle'
+    collection: 'activityinfo'
 });
 
 var ActivityModel = mongoose.model('ActivityInfo', ActivitySchema);
@@ -130,6 +130,7 @@ function ActivityInfo(info){
     this.price = info.price;
     this.startDate = info.startDate;
     this.endDate = info.endDate;
+    this.amount = info.amount;
 }
 
 ActivityInfo.prototype.save = function(callback) {
@@ -138,22 +139,97 @@ ActivityInfo.prototype.save = function(callback) {
         date: date,
         formatDate: tools.formatDate(date)
     };
-
-    var newArticle = new ArticleInfoModel({
-        author: this.author,
+    var newActivity = new ActivityModel({
+        imgs: this.imgs,
         title: this.title,
-        publishDate: time,
-        tags: this.tags ? this.tags.split(';') : null,
         content: this.content,
-        pv: 0,
-        like: 0
+        price: this.price,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        publishDate: time,
+        amount: this.amount
     });
 
-    newArticle.save(function(err, doc) {
+    newActivity.save(function(err, doc) {
         return callback(err, doc);
     });
 };
 
+ActivityInfo.getOne = function(id, callback){
+    ActivityModel.findOne({_id: new ObjectID(id)}, function(err, doc) {
+        return callback(err, doc);
+    });
+}
+
+ActivityInfo.getAll = function(callback){
+    ActivityModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
+}
+
+ActivityInfo.deleteOne = function(id, callback) {
+    ActivityModel.remove({
+        _id: new ObjectID(id)
+    }, function(err) {
+        return callback(err);
+    });
+}
+
+var EnrollSchema = new mongoose.Schema({
+    activityId: String,
+    name: String,
+    tel: String,
+    remark: String,
+    publishDate: {
+        date: Date,
+        formatDate: String
+    }
+}, {
+    collection: 'enrollinfo'
+});
+
+var EnrollModel = mongoose.model('EnrollInfo', EnrollSchema);
+
+function EnrollInfo(info){
+    this.activityId = info.activityId;
+    this.name = info.name;
+    this.tel = info.tel;
+    this.remark = info.remark;
+}
+
+EnrollInfo.prototype.save = function(callback) {
+    var date = new Date();
+    var time = {
+        date: date,
+        formatDate: tools.formatDate(date)
+    };
+    var newEnroll = new EnrollModel({
+        activityId: this.activityId,
+        name: this.name,
+        tel: this.tel,
+        remark: this.remark,
+        publishDate: time
+    });
+
+    newEnroll.save(function(err, doc) {
+        return callback(err, doc);
+    });
+};
+
+EnrollInfo.getAll = function(callback){
+    EnrollModel.find({}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
+}
+
+EnrollInfo.findByActivityId = function(activityId, callback){
+    EnrollModel.find({activityId: activityId}).sort('-publishDate.date').exec(function(err, docs) {
+        return callback(err, docs);
+    });
+}
+
 module.exports = {
-    UserArticle: UserArticle
+    UserArticle: UserArticle,
+    ActivityInfo: ActivityInfo,
+    EnrollInfo: EnrollInfo
 };

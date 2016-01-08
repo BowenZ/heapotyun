@@ -18,12 +18,12 @@ define(['angular', 'angular-animate', 'ui.router', 'js/controller/admin_controll
                 }
             }
         }).
-        state('enrollment', {
-            url: '/enrollment',
+        state('activity', {
+            url: '/activity',
             views: {
                 'admin-view': {
-                    templateUrl: 'views/admin/enrollment.html',
-                    controller: 'EnrollmentController as enrollCtrl'
+                    templateUrl: 'views/admin/activity.html',
+                    controller: 'ActivityController as activityCtrl'
                 }
             }
         });
