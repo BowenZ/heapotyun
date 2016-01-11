@@ -23,7 +23,7 @@ require.config({
         'ueditor': DEV_CONFIG.DEV_MODE ? '/radio/js/vendor/ueditor/ueditor.all' : '/radio/js/vendor/ueditor/ueditor.all.min',
         'ueditor-config': 'js/vendor/ueditor/ueditor.config',
         'ueditor-zh': 'js/vendor/ueditor/zh-cn',
-        'ZeroClipboard': 'js/vendor/ueditor/third-party/zeroclipboard/zeroclipboard.min'
+        'ZeroClipboard': 'js/vendor/ueditor/third-party/zeroclipboard/ZeroClipboard.min'
     },
     shim: {
         'bootstrap': {
