@@ -65,11 +65,11 @@ button.enroll{
             <h1><%= data.title %></h1>
             <h4>活动简介</h4>
             <p><%= data.content %></p>
-            <p><strong>报名开始日期：</strong> <%= (new Date(data.startDate)).toLocaleDateString() %></p>
-            <p><strong>报名截止日期：</strong> <%= (new Date(data.endDate)).toLocaleDateString() %></p>
+            <p><strong>报名开始日期：</strong> <span class="start-date"><%= (new Date(data.startDate)).toLocaleDateString() %></span></p>
+            <p><strong>报名截止日期：</strong> <span class="end-date"><%= (new Date(data.endDate)).toLocaleDateString() %></span></p>
             <p><strong>报名费用：</strong> <% if(data.price === null || data.price == 0){  %> <span>免费</span> <% }else{ %> <%= data.price %>元 <%}%></p>
         </div>
-        <button class="btn btn-primary btn-block btn-lg enroll" data-toggle="modal" data-target="#myModal">立即报名</button>
+        <button class="btn btn-primary btn-block btn-lg enroll" <% if((new Date()) > data.endDate || (new Date()) < data.startDate){ %>disabled<% } %> data-toggle="modal" data-target="#myModal">立即报名</button>
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -93,6 +93,7 @@ button.enroll{
             <label for="remark">备注</label>
             <textarea class="form-control" id="remark"></textarea>
           </div>
+          <button type="reset" class="hidden">
         </form>
       </div>
       <div class="modal-footer">
@@ -118,15 +119,16 @@ button.enroll{
         }
     });
     $('input').focus(function(event) {
-        console.log(123);
         $('.form-group').removeClass('has-error');
     });
     function submit(){
         var valid = true;
         $('.enroll-form input').each(function(index, el) {
+            console.log($(el).val());
             if(!$(el).val()){
                 $(el).parent('.form-group').addClass('has-error');
                 valid = false;
+                console.log('no valid');
             }
         });
         if(!valid) return;
@@ -137,7 +139,13 @@ button.enroll{
             remark: $('#remark').val()
         }
         $.post('/radio/enroll', data, function(data, textStatus, xhr) {
-            console.log(data);
+            if(data.msg == 'success'){
+                $('button[type="reset"]').trigger('click');
+                alert('报名成功！');
+                $('#myModal').modal('hide');
+            }else{
+                alert('提交失败...' + data.result);
+            }
         });
     }
     </script>

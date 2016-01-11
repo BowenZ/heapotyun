@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 var tools = require('../common/tools.js');
 var radio = require('../models/radio.js');
+var cors = require('cors');
 
 var fs = require('fs'),
     multer = require('multer'),
@@ -11,8 +12,8 @@ var fs = require('fs'),
     });
 
 var UserArticle = radio.UserArticle,
-	ActivityInfo = radio.ActivityInfo,
-	EnrollInfo = radio.EnrollInfo;
+    ActivityInfo = radio.ActivityInfo,
+    EnrollInfo = radio.EnrollInfo;
 
 function checkLogin(req, res, next) {
     if (!req.session.login) {
@@ -67,7 +68,7 @@ router.get('/article/:id', function(req, res, next) {
             return res.status(500).json({
                 msg: 'error'
             });
-        if(req.query.html)
+        if (req.query.html)
             return res.render('radio/article', {
                 article: doc
             });
@@ -79,7 +80,7 @@ router.get('/article/:id', function(req, res, next) {
 });
 
 router.post('/article', checkLogin);
-router.post('/article', function(req, res, next){
+router.post('/article', function(req, res, next) {
     var newArticle = new UserArticle({
         author: req.body.author,
         title: req.body.title,
@@ -88,7 +89,7 @@ router.post('/article', function(req, res, next){
         content: req.body.content
     });
 
-    newArticle.save(function(err, doc){
+    newArticle.save(function(err, doc) {
         if (err)
             return res.json({
                 msg: 'error'
@@ -101,15 +102,15 @@ router.post('/article', function(req, res, next){
 });
 
 router.put('/article/:id', checkLogin);
-router.put('/article/:id', function(req, res, next){
+router.put('/article/:id', function(req, res, next) {
     var obj = JSON.parse(req.body.article);
     obj.tags && (obj.tags = obj.tags.split(';'));
-    UserArticle.update(req.params.id, obj, function(err, doc){
+    UserArticle.update(req.params.id, obj, function(err, doc) {
         if (err)
             return res.json({
                 msg: 'error'
             });
-        if(!doc)
+        if (!doc)
             return res.json({
                 msg: 'error',
                 result: '文章已被删除'
@@ -122,8 +123,8 @@ router.put('/article/:id', function(req, res, next){
 });
 
 router.delete('/article/:id', checkLogin);
-router.delete('/article/:id', function(req, res, next){
-    UserArticle.deleteOne(req.params.id, function(err){
+router.delete('/article/:id', function(req, res, next) {
+    UserArticle.deleteOne(req.params.id, function(err) {
         if (err)
             return res.json({
                 msg: 'error'
@@ -134,8 +135,8 @@ router.delete('/article/:id', function(req, res, next){
     });
 });
 
-router.patch('/article/:id', function(req, res, next){
-    UserArticle.like(req.params.id, function(err){
+router.patch('/article/:id', function(req, res, next) {
+    UserArticle.like(req.params.id, function(err) {
         if (err)
             return res.json({
                 msg: 'error'
@@ -146,9 +147,9 @@ router.patch('/article/:id', function(req, res, next){
     });
 });
 
-router.get('/activity', function(req, res, next){
-	ActivityInfo.getAll(function(err, docs){
-		if (err)
+router.get('/activity', cors(), function(req, res, next) {
+    ActivityInfo.getAll(function(err, docs) {
+        if (err)
             return res.json({
                 msg: 'error'
             });
@@ -156,91 +157,111 @@ router.get('/activity', function(req, res, next){
             msg: 'success',
             result: docs
         });
-	});
+    });
 });
 
-router.get('/activity/:id', function(req, res, next){
-	ActivityInfo.getOne(req.params.id, function(err, doc){
-		if (err)
+router.get('/activity/:id', cors(), function(req, res, next) {
+    ActivityInfo.getOne(req.params.id, function(err, doc) {
+        if (err)
             return res.json({
                 msg: 'error'
             });
+        if (req.query.json)
+            return res.json({
+                msg: 'success',
+                result: doc
+            });
         return res.render('radio/activity', {
-        	data: doc
+            data: doc
         });
-	});
+    });
 });
 
 router.post('/activity', checkLogin);
-router.post('/activity', upload.array('files'), function(req, res, next){
-	if (req.files && req.files.length > 0) {
-        var folder = req.body.folder?(req.body.folder+'/'):'';
-	    var result = {msg: 'success', filenames: []};
-
-	    req.files.forEach(function(file, index){
-	    	var tmp_path = file.path;
-
-		    var file_name = (new Date - 0) + (Math.random()+'').substr(-5) + ('.' + file.originalname.split('.').pop());
-		    var target_path = 'public/radio/upload/' + folder + file_name;
-
-		    var src = fs.createReadStream(tmp_path);
-		    var dest = fs.createWriteStream(target_path);
-		    src.pipe(dest);
-		    src.on('end', function() {
-		    	result.filenames.push(file_name);
-		    	if(index == req.files.length - 1){
-		    		var newActivity = new ActivityInfo({
-						imgs: result.filenames,
-				        title: req.body.title,
-				        content: req.body.content,
-				        price: req.body.price,
-				        startDate: req.body.startDate,
-				        endDate: req.body.endDate,
-				        amount: req.body.amount
-					});
-					newActivity.save(function(err, doc){
-						if(err)
-							return res.send({
-								msg: 'error'
-							});
-						return res.send({
-							msg: 'success',
-							result: doc
-						});
-					});
-		    	}
-		    });
-		    src.on('error', function(err) {
-		        result.msg = 'error';
-		        result.err = err;
-		    });
-	    });
-    }else{
-    	var newActivity = new ActivityInfo({
-	        title: req.body.title,
-	        content: req.body.content,
-	        price: req.body.price,
-	        startDate: req.body.startDate,
-	        endDate: req.body.endDate,
-	        amount: req.body.amount
-		});
-		newActivity.save(function(err, doc){
-			if(err)
-				return res.send({
-					msg: 'error'
-				});
-			return res.send({
-				msg: 'success',
-				result: doc
-			});
-		});
+router.post('/activity', upload.array('files'), function(req, res, next) {
+    var tags = [];
+    if (req.body.tags) {
+        req.body.tags.split(/\s/g).forEach(function(item, index) {
+            if (item)
+                tags.push(item);
+        });
     }
-    
+    if (req.files && req.files.length > 0) {
+        var folder = req.body.folder ? (req.body.folder + '/') : '';
+        var result = {
+            msg: 'success',
+            filenames: []
+        };
+        var imgNum = 0;
+        req.files.forEach(function(file, index) {
+            var tmp_path = file.path;
+            
+
+            var file_name = (new Date - 0) + (Math.random() + '').substr(-5) + ('.' + file.originalname.split('.').pop());
+            var target_path = 'public/radio/upload/' + folder + file_name;
+
+            var src = fs.createReadStream(tmp_path);
+            var dest = fs.createWriteStream(target_path);
+            src.pipe(dest);
+            src.on('end', function() {
+                result.filenames.push(file_name);
+                imgNum++;
+                console.log(imgNum, req.files.length, '++++++++++++');
+                if (imgNum == req.files.length) {
+                    var newActivity = new ActivityInfo({
+                        imgs: result.filenames,
+                        title: req.body.title,
+                        content: req.body.content,
+                        price: req.body.price,
+                        tags: tags,
+                        startDate: req.body.startDate,
+                        endDate: req.body.endDate,
+                        amount: req.body.amount
+                    });
+                    newActivity.save(function(err, doc) {
+                        if (err)
+                            return res.send({
+                                msg: 'error'
+                            });
+                        return res.send({
+                            msg: 'success',
+                            result: doc
+                        });
+                    });
+                }
+            });
+            src.on('error', function(err) {
+                result.msg = 'error';
+                result.err = err;
+            });
+        });
+    } else {
+        var newActivity = new ActivityInfo({
+            title: req.body.title,
+            content: req.body.content,
+            price: req.body.price,
+            tags: tags,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            amount: req.body.amount
+        });
+        newActivity.save(function(err, doc) {
+            if (err)
+                return res.send({
+                    msg: 'error'
+                });
+            return res.send({
+                msg: 'success',
+                result: doc
+            });
+        });
+    }
+
 });
 
 router.delete('/activity/:id', checkLogin);
-router.delete('/activity/:id', function(req, res, next){
-    ActivityInfo.deleteOne(req.params.id, function(err){
+router.delete('/activity/:id', function(req, res, next) {
+    ActivityInfo.deleteOne(req.params.id, function(err) {
         if (err)
             return res.json({
                 msg: 'error'
@@ -251,29 +272,66 @@ router.delete('/activity/:id', function(req, res, next){
     });
 });
 
-router.post('/enroll', function(req, res, next){
-	var newEnroll = new EnrollInfo({
-		activityId: req.body.activityId,
-		name: req.body.name,
-		tel: req.body.tel,
-		remark: req.body.remark
-	});
-
-	newEnroll.save(function(err, doc){
-		if (err)
+router.post('/enroll', function(req, res, next) {
+    ActivityInfo.getOne(req.body.activityId, function(err, activity) {
+        if (err)
             return res.json({
                 msg: 'error'
             });
-        return res.json({
-            msg: 'success',
-            result: doc
-        });
-	});
+        if (activity.amount) {
+            EnrollInfo.getCount(req.body.activityId, function(err, count) {
+                if (count >= activity.amount)
+                    return res.json({
+                        msg: 'error',
+                        result: '报名人数已满'
+                    });
+                else {
+                    var newEnroll = new EnrollInfo({
+                        activityId: req.body.activityId,
+                        name: req.body.name,
+                        tel: req.body.tel,
+                        remark: req.body.remark
+                    });
+
+                    newEnroll.save(function(err, doc) {
+                        if (err)
+                            return res.json({
+                                msg: 'error'
+                            });
+                        return res.json({
+                            msg: 'success',
+                            result: doc
+                        });
+                    });
+                }
+            });
+        } else {
+            var newEnroll = new EnrollInfo({
+                activityId: req.body.activityId,
+                name: req.body.name,
+                tel: req.body.tel,
+                remark: req.body.remark
+            });
+
+            newEnroll.save(function(err, doc) {
+                if (err)
+                    return res.json({
+                        msg: 'error'
+                    });
+                return res.json({
+                    msg: 'success',
+                    result: doc
+                });
+            });
+        }
+    });
+
+
 });
 
-router.get('/enroll', function(req, res, next){
-	EnrollInfo.findByActivityId(req.query.activityId, function(err, doc){
-		if (err)
+router.get('/enroll', function(req, res, next) {
+    EnrollInfo.findByActivityId(req.query.activityId, function(err, doc) {
+        if (err)
             return res.json({
                 msg: 'error'
             });
@@ -281,7 +339,7 @@ router.get('/enroll', function(req, res, next){
             msg: 'success',
             result: doc
         });
-	});
+    });
 });
 
 module.exports = router;

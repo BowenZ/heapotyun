@@ -18,11 +18,15 @@ define(['jquery', 'angular'], function($, angular) {
         }
     }
 
-    function showAlert(success, copy) {
+    function showAlert(success, copy, noHide) {
         if (success) {
             $('.alert').removeClass('alert-danger').addClass('alert-success').find('.info').text(copy);
         } else {
             $('.alert').removeClass('alert-success').addClass('alert-danger').find('.info').text(copy);
+        }
+        if(noHide){
+            $('.alert').fadeIn(200);
+            return;
         }
         $('.alert').fadeIn(200).delay(2000).fadeOut(200);
     }
@@ -339,7 +343,31 @@ define(['jquery', 'angular'], function($, angular) {
         }
 
         self.addActivity = function() {
+            if(!self.activityName){
+                showAlert(false, '请填写活动名');
+                return false;
+            }
+            if(!self.activityContent){
+                showAlert(false, '请填写活动内容');
+                return false;
+            }
             var imgFile = document.getElementById("activityImg").files;
+            if(imgFile.length > 0){
+                if(imgFile.length > 10){
+                    showAlert(false, '最多上传10张图片');
+                    return false;
+                }
+                var oversized = false;
+                for (var i = imgFile.length - 1; i >= 0; i--) {
+                    if(imgFile[i].size > 1024 * 1024){
+                        oversized = true;
+                    }
+                };
+                if(oversized){
+                    showAlert(false, '文件超出大小限制');
+                    return false;
+                }
+            }
             var formData = new FormData(document.forms.namedItem("uploadform"));
             var xhr;
             if (window.ActiveXObject) {
@@ -351,13 +379,14 @@ define(['jquery', 'angular'], function($, angular) {
             xhr.onload = function(event) {
                 var result = JSON.parse(xhr.response);
                 if(result.msg == 'success'){
-                    showAlert(true, '添加成功');        
+                    showAlert(true, '添加成功');
+                    $('form[name="uploadform"] button[type="reset"]').trigger('click');     
                 }else{
                     showAlert(false, '添加失败');        
                 }
             };
             xhr.send(formData);
-            showAlert(true, '正在上传中，请稍后...');
+            showAlert(true, '正在上传中，请稍后...', true);
         }
         self.deleteItem = function(id, index) {
             if (window.confirm('确定要删除该项吗？')) {
@@ -384,6 +413,16 @@ define(['jquery', 'angular'], function($, angular) {
         self.simplifyQestion = function(str) {
             if(str)
                 return str.substr(0, 10) + (str.length > 10 ? '...' : '');
+        }
+
+        self.showEnroll = function(activityId){
+            self.enrollInfos = null;
+            $.get('/radio/enroll?activityId='+activityId, function(data) {
+                if(data.msg == 'success'){
+                    self.enrollInfos = data.result;
+                    $scope.$apply();
+                }
+            });
         }
     }]);
 

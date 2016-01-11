@@ -110,6 +110,7 @@ var ActivitySchema = new mongoose.Schema({
     title: String,
     content: String,
     price: Number,
+    tags: [String],
     startDate: Date,
     endDate: Date,
     publishDate: {
@@ -128,6 +129,7 @@ function ActivityInfo(info){
     this.title = info.title;
     this.content = info.content;
     this.price = info.price;
+    this.tags = info.tags;
     this.startDate = info.startDate;
     this.endDate = info.endDate;
     this.amount = info.amount;
@@ -144,6 +146,7 @@ ActivityInfo.prototype.save = function(callback) {
         title: this.title,
         content: this.content,
         price: this.price,
+        tags: this.tags,
         startDate: this.startDate,
         endDate: this.endDate,
         publishDate: time,
@@ -225,6 +228,12 @@ EnrollInfo.getAll = function(callback){
 EnrollInfo.findByActivityId = function(activityId, callback){
     EnrollModel.find({activityId: activityId}).sort('-publishDate.date').exec(function(err, docs) {
         return callback(err, docs);
+    });
+}
+
+EnrollInfo.getCount = function(activityId, callback){
+    EnrollModel.count({activityId: activityId}, function(err, count){
+        return callback(err, count);
     });
 }
 

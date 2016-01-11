@@ -34,6 +34,7 @@
                         <th>活动名</th>
                         <th>内容</th>
                         <!-- <th>图片</th> -->
+                        <th>标签</th>
                         <th>价格</th>
                         <th>开始日期</th>
                         <th>截止日期</th>
@@ -51,6 +52,7 @@
                             <a ng-if="info.content.length > 10" href="javascript:" data-toggle="{{info.content.length > 10 ? 'tooltip' : ''}}" data-placement="bottom" title="{{info.content}}">{{activityCtrl.simplifyQestion(info.content)}}</a>
                         </td>
                         <!-- <td><span ng-repeat="imgSrc in info.img"><img ng-src="imgSrc" alt=""></span></td> -->
+                        <td><span ng-if="info.tags.length>0">{{info.tags.join(' ')}}</span></td>
                         <td>{{info.price}}</td>
                         <td>{{info.startDate | date : 'yyyy-MM-dd'}}</td>
                         <td>{{info.endDate | date : 'yyyy-MM-dd'}}</td>
@@ -59,6 +61,7 @@
                         <td>
                             <a href="" title="删除" class="glyphicon glyphicon-trash" ng-click="activityCtrl.deleteItem(info._id, $index)"></a>
                             <a href="/radio/activity/{{info._id}}" title="预览" class="glyphicon glyphicon-eye-open" target="_blank"></a>
+                            <a href="" class="glyphicon glyphicon-list-alt" title="查看报名情况" data-toggle="modal" data-target="#enrollModal" ng-click="activityCtrl.showEnroll(info._id)"></a>
                         </td>
                     </tr>
                 </tbody>
@@ -77,16 +80,21 @@
                 <form name="uploadform">
                     <div class="form-group">
                         <label for="activityName">活动名</label>
-                        <input type="text" class="form-control" id="activityName" name="title" placeholder="" ng-model="activityCtrl.activityName">
+                        <input type="text" class="form-control" id="activityName" name="title" placeholder="" ng-model="activityCtrl.activityName" required="required">
                     </div>
                     <div class="form-group">
                         <label for="activityContent">活动内容</label>
-                        <textarea class="form-control" id="activityContent" name="content" ng-model="activityCtrl.activityContent"></textarea>
+                        <textarea class="form-control" id="activityContent" name="content" ng-model="activityCtrl.activityContent" required="required"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityTags">标签</label>
+                        <input type="text" class="form-control" id="activityTags" name="tags" placeholder="" ng-model="activityCtrl.activityTags">
+                        <p class="help-block">多个标签中间请用空格分隔</p>
                     </div>
                     <div class="form-group">
                         <label for="activityImg">展示图片</label>
                         <input type="file" id="activityImg" name="files" multiple="multiple">
-                        <p class="help-block">可以同时选中多张</p>
+                        <p class="help-block">可以同时选中多张（最多10张，图片小于1M，宽高请保持一致）</p>
                     </div>
                     <div class="form-group">
                         <label for="activityPrice">报名费</label>
@@ -110,6 +118,47 @@
                     </div>
                     <button type="reset" class="btn btn-warning">清空表单</button>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="activityCtrl.addActivity()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="enrollModal" tabindex="-1" role="dialog" aria-labelledby="enrollModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="enrollModalLabel">添加活动</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>姓名</th>
+                            <th>手机号</th>
+                            <th>备注</th>
+                            <th>报名时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="info in activityCtrl.enrollInfos">
+                            <td>{{$index + 1}}</td>
+                            <td>{{info.name}}</td>
+                            <td>{{info.tel}}</td>
+                            <td>
+                                <span ng-if="info.remark.length <= 10">{{info.remark}}</span>
+                                <a ng-if="info.remark.length > 10" href="javascript:" data-toggle="{{info.remark.length > 10 ? 'tooltip' : ''}}" data-placement="bottom" title="{{info.remark}}">{{activityCtrl.simplifyQestion(info.remark)}}</a>
+                            </td>
+                            <td>
+                                {{info.publishDate.formatDate}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
