@@ -257,6 +257,9 @@ define(['jquery', 'angular'], function($, angular) {
             });
             self.currentArticleId = $('body').data('id');
             $('.btn-save').click(function(event) {
+                var ue = UE.getEditor('editor');
+                console.log(ue,'+++++');
+                return;
                 var result = {};
                 result.url = $('header.title').find('.bg-img').data('src');
                 result.title = $('header.title').find('h1').text();
