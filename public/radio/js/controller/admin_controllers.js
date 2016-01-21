@@ -24,14 +24,16 @@ define(['jquery', 'angular'], function($, angular) {
         } else {
             $('.alert').removeClass('alert-success').addClass('alert-danger').find('.info').text(copy);
         }
-        if(noHide){
+        if (noHide) {
             $('.alert').fadeIn(200);
             return;
         }
         $('.alert').fadeIn(200).delay(2000).fadeOut(200);
     }
 
-    adminControllers.controller('ArticleController', ['$scope', '$sce', function($scope, $sce) {
+    var setEditorClear = false;
+
+    adminControllers.controller('ArticleController', ['$scope', '$sce', '$rootScope', function($scope, $sce, $rootScope) {
         var self = this;
         updateLink('article');
 
@@ -88,7 +90,12 @@ define(['jquery', 'angular'], function($, angular) {
 
         self.editArticle = function(index) {
             self.editArticleId = self.articleInfos[index]._id;
-            UE.getEditor('revise-editor').setContent(self.articleInfos[index].content);
+            try {
+                UE.getEditor('revise-editor').setContent(self.articleInfos[index].content);
+            } catch (e) {
+                showAlert(false, '编辑器尚未加载，请稍后再试或者刷新页面重新加载');
+                return;
+            }
             $('.revise-modal').modal('show');
         }
 
@@ -116,10 +123,17 @@ define(['jquery', 'angular'], function($, angular) {
         }
 
         require(['ZeroClipboard', 'ueditor', 'ueditor-zh', 'ColorAnalysis', 'jquery-qr'], function(ZeroClipboard, UE) {
+            if (!setEditorClear) {
+                setEditorClear = true;
+                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+                    if (fromState.name == 'article') {
+                        UE.getEditor('editor').destroy();
+                    }
+                });
+            }
             window.ZeroClipboard = ZeroClipboard;
             var ue = UE.getEditor('editor');
             var reviseEditor = UE.getEditor('revise-editor');
-
 
             var timer = setInterval(function() {
                 if ($('.edit-zone').find('.edui-editor-toolbarbox').length > 0) {
@@ -264,7 +278,6 @@ define(['jquery', 'angular'], function($, angular) {
                 result.content = UE.getEditor('editor').getContent();
                 result.author = self.author;
                 result.tags = self.tags;
-                console.log(result);
                 if (self.currentArticleId) {
                     $.ajax({
                             url: '/radio/article/' + self.currentArticleId,
@@ -286,12 +299,10 @@ define(['jquery', 'angular'], function($, angular) {
 
                 } else {
                     $.post('/radio/article', result, function(data, textStatus, xhr) {
-                        console.log(data);
                         if (data.msg == 'success') {
                             self.currentArticleId = data.result._id;
                             showAlert(true, '保存成功！');
                             self.loadData();
-                            console.log(self.currentArticleId);
                         } else {
                             showAlert(false, '保存失败！');
                         }
@@ -320,7 +331,6 @@ define(['jquery', 'angular'], function($, angular) {
 
         self.loadData = function() {
             $.get('activity', function(data) {
-                console.log(data);
                 if (data.msg == 'error') {
                     alert('加载失败，请稍后再试');
                     return;
@@ -345,27 +355,27 @@ define(['jquery', 'angular'], function($, angular) {
         }
 
         self.addActivity = function() {
-            if(!self.activityName){
+            if (!self.activityName) {
                 showAlert(false, '请填写活动名');
                 return false;
             }
-            if(!self.activityContent){
+            if (!self.activityContent) {
                 showAlert(false, '请填写活动内容');
                 return false;
             }
             var imgFile = document.getElementById("activityImg").files;
-            if(imgFile.length > 0){
-                if(imgFile.length > 10){
+            if (imgFile.length > 0) {
+                if (imgFile.length > 10) {
                     showAlert(false, '最多上传10张图片');
                     return false;
                 }
                 var oversized = false;
                 for (var i = imgFile.length - 1; i >= 0; i--) {
-                    if(imgFile[i].size > 1024 * 1024){
+                    if (imgFile[i].size > 1024 * 1024) {
                         oversized = true;
                     }
                 };
-                if(oversized){
+                if (oversized) {
                     showAlert(false, '文件超出大小限制');
                     return false;
                 }
@@ -380,12 +390,12 @@ define(['jquery', 'angular'], function($, angular) {
             xhr.open("POST", "/radio/activity", true);
             xhr.onload = function(event) {
                 var result = JSON.parse(xhr.response);
-                if(result.msg == 'success'){
+                if (result.msg == 'success') {
                     showAlert(true, '添加成功');
-                    $('form[name="uploadform"] button[type="reset"]').trigger('click');   
-                    self.loadData();  
-                }else{
-                    showAlert(false, '添加失败');        
+                    $('form[name="uploadform"] button[type="reset"]').trigger('click');
+                    self.loadData();
+                } else {
+                    showAlert(false, '添加失败');
                 }
             };
             xhr.send(formData);
@@ -414,14 +424,14 @@ define(['jquery', 'angular'], function($, angular) {
             }
         }
         self.simplifyQestion = function(str) {
-            if(str)
+            if (str)
                 return str.substr(0, 10) + (str.length > 10 ? '...' : '');
         }
 
-        self.showEnroll = function(activityId){
+        self.showEnroll = function(activityId) {
             self.enrollInfos = null;
-            $.get('/radio/enroll?activityId='+activityId, function(data) {
-                if(data.msg == 'success'){
+            $.get('/radio/enroll?activityId=' + activityId, function(data) {
+                if (data.msg == 'success') {
                     self.enrollInfos = data.result;
                     $scope.$apply();
                 }
