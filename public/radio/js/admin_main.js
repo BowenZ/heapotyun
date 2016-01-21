@@ -70,7 +70,7 @@ require.config({
             exports: 'ZeroClipboard'
         }
     },
-    waitSeconds: 30
+    waitSeconds: 60
 });
 
 require(['js/admin_app', 'jquery', 'bootstrap', 'bootstrapValidator'], function(app) {

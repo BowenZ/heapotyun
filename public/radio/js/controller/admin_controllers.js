@@ -258,8 +258,6 @@ define(['jquery', 'angular'], function($, angular) {
             self.currentArticleId = $('body').data('id');
             $('.btn-save').click(function(event) {
                 var ue = UE.getEditor('editor');
-                console.log(ue,'+++++');
-                return;
                 var result = {};
                 result.url = $('header.title').find('.bg-img').data('src');
                 result.title = $('header.title').find('h1').text();
@@ -292,6 +290,7 @@ define(['jquery', 'angular'], function($, angular) {
                         if (data.msg == 'success') {
                             self.currentArticleId = data.result._id;
                             showAlert(true, '保存成功！');
+                            self.loadData();
                             console.log(self.currentArticleId);
                         } else {
                             showAlert(false, '保存失败！');
@@ -383,7 +382,8 @@ define(['jquery', 'angular'], function($, angular) {
                 var result = JSON.parse(xhr.response);
                 if(result.msg == 'success'){
                     showAlert(true, '添加成功');
-                    $('form[name="uploadform"] button[type="reset"]').trigger('click');     
+                    $('form[name="uploadform"] button[type="reset"]').trigger('click');   
+                    self.loadData();  
                 }else{
                     showAlert(false, '添加失败');        
                 }
