@@ -341,6 +341,7 @@ var MaintenanceInfoSchema = new mongoose.Schema({
     model: String,
     tel: String,
     licensePlateNumber: String,
+	address: String,
     publishDate: {
         date: Date,
         formatDate: String
@@ -364,6 +365,7 @@ function MaintenanceInfo(info) {
     this.model = info.model;
     this.tel = info.tel;
     this.licensePlateNumber = info.licensePlateNumber;
+	
 }
 
 MaintenanceInfo.prototype.save = function(callback) {
@@ -378,6 +380,7 @@ MaintenanceInfo.prototype.save = function(callback) {
         model: this.model,
         tel: this.tel,
         licensePlateNumber: this.licensePlateNumber,
+		
         publishDate: time,
         userinfo: null
     }
