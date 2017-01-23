@@ -22,6 +22,7 @@ router.get('/user/login', function(req, res, next) {
         if (user) {
             var md5 = crypto.createHash('md5'),
                 password = md5.update(req.query.password).digest('hex');
+            console.log(password,'+++++++++');
             if (user.password != password) {
                 // res.send(req.query.callback + '(' + 2 + ')');
                 res.jsonp(2);
@@ -88,7 +89,7 @@ router.get('/question/user', function(req, res, next) {
             return res.send('请求超时，请稍后重试');
         }
         var arr = [];
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < docs.length; i++) {
             arr.push(docs.splice(parseInt(Math.random() * docs.length), 1)[0]);
         }
         // res.json(arr);
