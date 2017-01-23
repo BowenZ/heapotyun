@@ -198,6 +198,10 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
                 });
             });
             self.formData.items = itemArr;
+			//获取服务地址
+			 //var address=$('input:radio[name="radio1"]:checked').val();
+			// self.formData.address=address;
+
             var newMaintenanceInfo = new MaintenanceService(self.formData);
             newMaintenanceInfo.$save(function(result) {
                 console.log(result);

@@ -36,6 +36,7 @@
                             <th>车型</th>
                             <th>车牌号</th>
                             <th>手机号</th>
+							<th>服务地址</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
@@ -51,6 +52,7 @@
                             <td>{{info.model}}</td>
                             <td>{{info.licensePlateNumber}}</td>
                             <td>{{info.tel}}</td>
+							<td>{{info.address}}</td>
                             <td>{{info.publishDate.formatDate}}</td>
                             <td>
                                 <a href="" class="glyphicon glyphicon-trash" ng-click="mtncCtrl.deleteItem(info._id, $index)"></a>

@@ -356,7 +356,7 @@ router.post('/maintenance', function(req, res, next) {
         items: req.body.items,
         model: req.body.model,
         tel: req.body.tel,
-        licensePlateNumber: req.body.licensePlateNumber
+		licensePlateNumber: req.body.licensePlateNumber
     });
 
     newMaintenanceInfo.save(function(err) {
@@ -403,9 +403,9 @@ router.get('/maintenance/getexcel', function(req, res) {
             });
         }
         var dataArr = [];
-        dataArr.push(['参加优惠', '车型', '车牌号', '手机号', '创建时间']);
+        dataArr.push(['参加优惠', '车型', '车牌号', '手机号','服务地址', '创建时间']);
         result.forEach(function(item) {
-            dataArr.push([formatItems(item.items), item.model, item.licensePlateNumber, item.tel, item.publishDate.formatDate]);
+            dataArr.push([formatItems(item.items), item.model, item.licensePlateNumber, item.tel, item.address, item.publishDate.formatDate]);
         });
         tools.exportExcel({
             data: dataArr,
