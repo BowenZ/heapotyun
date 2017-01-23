@@ -246,7 +246,7 @@ $(document).ready(function() {
                 oldPwd: oldPwd.value,
                 newPwd: newPwd1.value
             }, function(data) {
-                console.log(data);
+                // console.log(data);
                 $loadingIcon.css('visibility', 'hidden');
                 if (data == 0) {
                     alert('修改失败：原密码不正确！');
@@ -342,7 +342,7 @@ $(document).ready(function() {
         $('.logout').click(function() {
             $shade.show(200);
             $.get('/heapot/user/logout', function(data) {
-                console.log(data);
+                // console.log(data);
             });
         });
         $('#changePwd').click(function() {

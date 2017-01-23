@@ -22,7 +22,7 @@ router.get('/user/login', function(req, res, next) {
         if (user) {
             var md5 = crypto.createHash('md5'),
                 password = md5.update(req.query.password).digest('hex');
-            console.log(password,'+++++++++');
+            // console.log(password,'+++++++++');
             if (user.password != password) {
                 // res.send(req.query.callback + '(' + 2 + ')');
                 res.jsonp(2);
