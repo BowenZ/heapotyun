@@ -57,20 +57,20 @@
                 <div class="weui_cells weui_cells_radio" >
                     <label class="weui_cell weui_check_label" for="x11" >
                         <div class="weui_cell_bd weui_cell_primary">
-                            <p>三全路索凌路交叉口向西200米路南“乐驾汽车养护”（爱车梦工厂1号店）</p>
+                            <p>爱车梦工厂北区店</p>
                         </div>
                         <div class="weui_cell_ft">
-                            <input type="radio" class="weui_check" value="三全路索凌路交叉口向西200米路南“乐驾汽车养护”（爱车梦工厂1号店）" name="radio1" id="x11" checked="checked">
+                            <input type="radio" class="weui_check" value="爱车梦工厂北区店" name="radio1" id="x11" checked="checked">
                             <span class="weui_icon_checked"></span>
                         </div>
                     </label>
                     <label class="weui_cell weui_check_label" for="x12">
 
                         <div class="weui_cell_bd weui_cell_primary">
-                            <p>农业东路九如路交叉口向东100米路南“乐驾汽车养护”（爱车梦工厂2号店）</p>
+                            <p>爱车梦工厂东区店</p>
                         </div>
                         <div class="weui_cell_ft">
-                            <input type="radio" name="radio1" value="农业东路九如路交叉口向东100米路南“乐驾汽车养护”（爱车梦工厂2号店）" class="weui_check" id="x12" >
+                            <input type="radio" name="radio1" value="爱车梦工厂东区店" class="weui_check" id="x12" >
                             <span class="weui_icon_checked"></span>
                         </div>
                     </label>
@@ -124,13 +124,24 @@ function userlogin(){
            //var select1 = $("#select1 option:selected").text();
 		   var telphone= $("#telphone").val();
 		var youhui="";
+		var arr='';
 	
 	
           $("input:checkbox[name='youhui']:checked").each(function() { // 遍历name=test的多选框
 		if(youhui=="")
-		youhui=youhui+$(this).val();
+		{
+			arr=$(this).val().split("|");
+		youhui=youhui+arr[0];
+		
+		}
 		else  
-			youhui=youhui+","+$(this).val();
+			  {
+				 arr=$(this).val().split("|");
+			youhui=youhui+","+arr[0];
+			
+			  }
+			  arr='';
+			 //alert(youhui);
 		});
 			if(""==telphone)
 	{
@@ -154,7 +165,9 @@ function userlogin(){
 $.ajax({
    type: "POST",
    url: "http://sijiache.heapot.com/webui/api/likecar_sendnotes.php",
-   data: "telphone="+telphone+"&youhui="+youhui+"",
+  
+   data: "telphone="+telphone+"&youhui="+youhui+"&address="+address+"",
+   
    dataType: "json",
    success: function(data){
     //alert(data.status);
