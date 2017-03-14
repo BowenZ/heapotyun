@@ -72,7 +72,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
                     $('.buycar-view .load-more-btn').attr('disabled', 'disabled').text('所有数据已全部加载');
                 }
                 if(result.result.length > 0){
-                    self.sellCarInfos = self.sellCarInfos.concat(result.result);
+                    self.buyCarInfos = self.buyCarInfos.concat(result.result);
                     setTimeout(function() {
                         $('.buycar-view tr:gt('+(self.currentPage-1)*20+')').find('[data-toggle="tooltip"]').tooltip();
                     }, 500);
@@ -269,6 +269,7 @@ define(['jquery', 'angular', 'js/service/admin_services'], function($, angular) 
         }
 
         self.simplifyQestion = function(str) {
+            if(!str) return;
             return str.substr(0, 20) + (str.length > 20 ? '...' : '');
         }
     }]);
