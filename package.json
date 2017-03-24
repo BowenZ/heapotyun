@@ -31,6 +31,7 @@
     "request": "^2.65.0",
     "serve-favicon": "~2.3.0",
     "ueditor": "^1.1.1",
+    "urllib": "^2.21.2",
     "xlsx": "^0.8.0"
   },
   "devDependencies": {

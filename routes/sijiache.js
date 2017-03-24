@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var sendMsg = require('../common/dayu/sendMsg.js')
 
 var fs = require('fs'),
     multer = require('multer'),
@@ -32,6 +33,21 @@ router.get('/index', function(req, res, next) {
     res.render('sijiache/index');
 });
 
+router.post('/sendmsg', function(req, res, next){
+    console.log(req.body,'=======');
+    sendMsg(req.body.phoneNumber, req.body.position, req.body.name, req.body.extend, function(code, result){
+        if(code == 'success'){
+            return res.json({
+                msg: 'success'
+            })
+        }else{
+            console.log(result);
+            return res.json({
+                msg: 'error'
+            })
+        }
+    })
+})
 
 /*===>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 router.post('/buycar', function(req, res, next) {
