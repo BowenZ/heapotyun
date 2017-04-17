@@ -158,7 +158,6 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
         });
 
         MaintenanceItemService.getActiveItems().$promise.then(function(result) {
-            console.log(result);
             self.maintenanceItems = result.result;
         });
 
@@ -201,10 +200,9 @@ define(['jquery', 'angular', 'js/service/admin_services', 'swiper'], function($,
 			//获取服务地址
 			 var address=$('input:radio[name="radio1"]:checked').val();
 			self.formData.address=address;
-            console.log('========',self.formData)
+            console.log('@@@@@@@@@',self.formData)
             var newMaintenanceInfo = new MaintenanceService(self.formData);
             newMaintenanceInfo.$save(function(result) {
-                console.log(result);
                 if (result.msg == 'success') {
                     // $scope.$parent.showToptip(result.msg, '提交成功');
                     $('.popup-maintenance form input[type="reset"]').trigger('click');

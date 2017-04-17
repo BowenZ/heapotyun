@@ -365,7 +365,7 @@ function MaintenanceInfo(info) {
     this.model = info.model;
     this.tel = info.tel;
     this.licensePlateNumber = info.licensePlateNumber;
-	
+	this.address = info.address;
 }
 
 MaintenanceInfo.prototype.save = function(callback) {
@@ -380,10 +380,12 @@ MaintenanceInfo.prototype.save = function(callback) {
         model: this.model,
         tel: this.tel,
         licensePlateNumber: this.licensePlateNumber,
-		
+		address: this.address,
         publishDate: time,
         userinfo: null
     }
+
+    console.log('++++', maintenanceInfo)
 
     var newMaintenanceInfo = new MaintenanceInfoModel(maintenanceInfo);
     newMaintenanceInfo.save(function(err, doc) {

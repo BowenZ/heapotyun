@@ -372,6 +372,7 @@ router.post('/maintenance', function(req, res, next) {
         items: req.body.items,
         model: req.body.model,
         tel: req.body.tel,
+        address: req.body.address,
 		licensePlateNumber: req.body.licensePlateNumber
     });
 

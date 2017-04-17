@@ -137,9 +137,10 @@ function userlogin() {
     if ("" == telphone) {
         return;
     }
-    //var address=document.getElementsByName("radio1");
+    // var address=document.getElementsByName("radio1");
     //获取地址
     var address = $('input:radio[name="radio1"]:checked').val();
+    console.log('========', address)
     // 将地址以电话号码更新到数据库中
     var position = $('input:radio[name="radio1"]:checked').data('position');
 
