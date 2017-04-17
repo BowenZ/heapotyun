@@ -38,3 +38,5 @@ node_modules
 #自定义忽略文件
 #app/bower_components/*
 private/sijiache/*.xlsx
+
+.DS_Store
