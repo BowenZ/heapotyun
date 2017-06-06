@@ -6,13 +6,17 @@
         <form ng-submit="mtncCtrl.processForm()">
             <div class="weui_cells_title">参与本月哪个特惠？</div>
             <div class="weui_cells weui_cells_checkbox">
-                <label ng-repeat="item in mtncCtrl.maintenanceItems" class="weui_cell weui_check_label" for="{{'mtnc' + $index}}">
+                <label ng-repeat="item in mtncCtrl.maintenanceItems" class="weui_cell weui_check_label"
+                       for="{{'mtnc' + $index}}">
                     <div class="weui_cell_hd">
-                        <input type="checkbox" name="youhui" value="{{item.name}}" class="weui_check mtnc-item" id="{{'mtnc' + $index}}" data-itemid="{{item._id}}" data-itemname="{{item.name}}" data-itemprice="{{item.price}}">
+                        <input type="checkbox" name="youhui" value="{{item.name}}" class="weui_check mtnc-item"
+                               id="{{'mtnc' + $index}}" data-itemid="{{item._id}}" data-itemname="{{item.name}}"
+                               data-itemprice="{{item.price}}">
                         <i class="weui_icon_checked"></i>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <p>{{item.name}}<a href="" style="margin-left: 5px;" ng-click="mtncCtrl.showMore($index)">查看详情</a></p>
+                        <p>{{item.name}}<a href="" style="margin-left: 5px;"
+                                           ng-click="mtncCtrl.showMore($index)">查看详情</a></p>
                     </div>
                 </label>
             </div>
@@ -22,7 +26,8 @@
                         <label class="weui_label">车型</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input required="required" class="weui_input" type="text" placeholder="请输入您的车型" ng-model="mtncCtrl.formData.model">
+                        <input required="required" class="weui_input" type="text" placeholder="请输入您的车型"
+                               ng-model="mtncCtrl.formData.model">
                     </div>
                     <div class="weui_cell_ft">
                         <i class="weui_icon_warn"></i>
@@ -33,7 +38,8 @@
                         <label class="weui_label">手机号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input required="required" class="weui_input" name="telphone" id="telphone" type="tel" placeholder="如果需要帮助，请留下联系方式" ng-model="mtncCtrl.formData.tel">
+                        <input required="required" class="weui_input" name="telphone" id="telphone" type="tel"
+                               placeholder="如果需要帮助，请留下联系方式" ng-model="mtncCtrl.formData.tel">
                     </div>
                     <div class="weui_cell_ft">
                         <i class="weui_icon_warn"></i>
@@ -44,7 +50,8 @@
                         <label class="weui_label">车牌号</label>
                     </div>
                     <div class="weui_cell_bd weui_cell_primary">
-                        <input required="required" class="weui_input" type="text" placeholder="进场维修唯一凭证" ng-model="mtncCtrl.formData.licensePlateNumber">
+                        <input required="required" class="weui_input" type="text" placeholder="进场维修唯一凭证"
+                               ng-model="mtncCtrl.formData.licensePlateNumber">
                     </div>
                     <div class="weui_cell_ft">
                         <i class="weui_icon_warn"></i>
@@ -53,12 +60,13 @@
             </div>
             <div class="weui_cells_title">服务地址</div>
             <div class="weui_cells weui_cells_radio">
-                <label class="weui_cell weui_check_label" for="x11">
+                <label class="weui_cell weui_check_label" for="x13">
                     <div class="weui_cell_bd weui_cell_primary">
-                        <p>爱车梦工厂北区店</p>
+                        <p>爱车梦工厂中心店</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <input type="radio" class="weui_check" data-position="north" value="爱车梦工厂北区店" name="radio1" id="x11" checked="checked">
+                        <input type="radio" name="radio1" data-position="center" value="爱车梦工厂中心店" class="weui_check"
+                               id="x13">
                         <span class="weui_icon_checked"></span>
                     </div>
                 </label>
@@ -67,18 +75,45 @@
                         <p>爱车梦工厂东区店</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <input type="radio" name="radio1" data-position="east" value="爱车梦工厂东区店" class="weui_check" id="x12">
+                        <input type="radio" name="radio1" data-position="east" value="爱车梦工厂东区店" class="weui_check"
+                               id="x12">
                         <span class="weui_icon_checked"></span>
                     </div>
                 </label>
-                <label class="weui_cell weui_check_label" for="x13">
+
+                <label class="weui_cell weui_check_label" for="x11">
                     <div class="weui_cell_bd weui_cell_primary">
-                        <p>爱车梦工厂中心店</p>
+                        <p>爱车梦工厂北区店</p>
                     </div>
                     <div class="weui_cell_ft">
-                        <input type="radio" name="radio1" data-position="center" value="爱车梦工厂中心店" class="weui_check" id="x13">
+                        <input type="radio" class="weui_check" data-position="north" value="爱车梦工厂北区店" name="radio1"
+                               id="x11">
                         <span class="weui_icon_checked"></span>
                     </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="x14">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>爱车梦工厂西区店</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radio1" data-position="center" value="爱车梦工厂西区店" class="weui_check"
+                               disabled="disabled"
+                               id="x14">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                    <div class="weui_cell_ft"><i class="weui_icon_warn"></i></div>
+                </label>
+                <label class="weui_cell weui_check_label" for="x15">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>爱车梦工厂南区店</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radio1" data-position="center" value="爱车梦工厂南区店" class="weui_check"
+                               disabled="disabled"
+                               id="x15">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                    <div class="weui_cell_ft"><i class="weui_icon_warn"></i></div>
                 </label>
             </div>
             <div class="weui_btn_area">
@@ -117,57 +152,57 @@
     </div>
 </div>
 <script>
-$('#show').click(function() {
-    userlogin();
-});
-
-function userlogin() {
-    //var select1 = $("#select1 option:selected").text();
-    var telphone = $("#telphone").val();
-    var youhui = "";
-    var arr = '';
-
-    youhui = $("input:checkbox[name='youhui']:checked").eq(0).val()
-    if(youhui.length > 13){
-        youhui = youhui.substring(0, 9)
-    }
-    if($("input:checkbox[name='youhui']:checked").length>0){
-        youhui += '等'
-    }
-    if ("" == telphone) {
-        return;
-    }
-    // var address=document.getElementsByName("radio1");
-    //获取地址
-    var address = $('input:radio[name="radio1"]:checked').val();
-    console.log('========', address)
-    // 将地址以电话号码更新到数据库中
-    var position = $('input:radio[name="radio1"]:checked').data('position');
-
-    $.ajax({
-        type: "POST",
-        url: "http://sijiache.heapot.com/webui/api/likecar_update.php",
-        data: "telphone=" + telphone + "&address=" + address + "",
-        dataType: "json",
-        success: function(data) {
-            //alert(data.status);
-        }
+    $('#show').click(function () {
+        userlogin();
     });
-    //发送短信
 
-    $.ajax({
-        type: "POST",
-        url: "/sijiache/sendmsg",
-        data: {
-            phoneNumber: telphone,
-            position: position,
-            name: youhui,
-            extend: 'null'
-        },
-        dataType: "json",
-        success: function(data) {
-            console.log(data);
+    function userlogin() {
+        //var select1 = $("#select1 option:selected").text();
+        var telphone = $("#telphone").val();
+        var youhui = "";
+        var arr = '';
+
+        youhui = $("input:checkbox[name='youhui']:checked").eq(0).val()
+        if (youhui.length > 13) {
+            youhui = youhui.substring(0, 9)
         }
-    });
-}
+        if ($("input:checkbox[name='youhui']:checked").length > 0) {
+            youhui += '等'
+        }
+        if ("" == telphone) {
+            return;
+        }
+        // var address=document.getElementsByName("radio1");
+        //获取地址
+        var address = $('input:radio[name="radio1"]:checked').val();
+        console.log('========', address)
+        // 将地址以电话号码更新到数据库中
+        var position = $('input:radio[name="radio1"]:checked').data('position');
+
+        $.ajax({
+            type: "POST",
+            url: "http://sijiache.heapot.com/webui/api/likecar_update.php",
+            data: "telphone=" + telphone + "&address=" + address + "",
+            dataType: "json",
+            success: function (data) {
+                //alert(data.status);
+            }
+        });
+        //发送短信
+
+        $.ajax({
+            type: "POST",
+            url: "/sijiache/sendmsg",
+            data: {
+                phoneNumber: telphone,
+                position: position,
+                name: youhui,
+                extend: 'null'
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
 </script>
