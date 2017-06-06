@@ -189,17 +189,17 @@
         // 将地址以电话号码更新到数据库中
         var position = $('input:radio[name="radio1"]:checked').data('position');
 
-        $.ajax({
-            type: "POST",
-            url: "http://sijiache.heapot.com/webui/api/likecar_update.php",
-            data: "telphone=" + telphone + "&address=" + address + "",
-            dataType: "json",
-            success: function (data) {
-                //alert(data.status);
-            }
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "http://sijiache.heapot.com/webui/api/likecar_update.php",
+        //     data: "telphone=" + telphone + "&address=" + address + "",
+        //     dataType: "json",
+        //     success: function (data) {
+        //         //alert(data.status);
+        //     }
+        // });
+        
         //发送短信
-
         $.ajax({
             type: "POST",
             url: "/sijiache/sendmsg",
