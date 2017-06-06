@@ -176,9 +176,11 @@
         if (youhui.length > 13) {
             youhui = youhui.substring(0, 12)
         }
-        if ($("input:checkbox[name='youhui']:checked").length > 0) {
+        if ($("input:checkbox[name='youhui']:checked").length > 1) {
             youhui += '等'
+            console.log('=====111===')
         }
+        return
         if ("" == telphone) {
             return;
         }
