@@ -17,6 +17,11 @@ module.exports = {
     	north: {
     		address: '三全路索凌路西200米路南乐驾',
     		phoneNumber: '0371-55206111'
-    	}
+    	},
+        northfix: {
+            address: '三全路香山路南200米梦工厂店',
+            phoneNumber: '13608670314'
+        }
+        
     }
 }

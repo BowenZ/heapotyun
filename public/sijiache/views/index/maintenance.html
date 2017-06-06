@@ -91,6 +91,16 @@
                         <span class="weui_icon_checked"></span>
                     </div>
                 </label>
+                <label class="weui_cell weui_check_label" for="x16">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>爱车梦工厂北区维修店</p>
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="radio" name="radio1" data-position="northfix" value="爱车梦工厂北区维修店" class="weui_check"
+                               id="x16">
+                        <span class="weui_icon_checked"></span>
+                    </div>
+                </label>
                 <label class="weui_cell weui_check_label" for="x14">
                     <div class="weui_cell_bd weui_cell_primary">
                         <p>爱车梦工厂西区店</p>
@@ -164,7 +174,7 @@
 
         youhui = $("input:checkbox[name='youhui']:checked").eq(0).val()
         if (youhui.length > 13) {
-            youhui = youhui.substring(0, 9)
+            youhui = youhui.substring(0, 12)
         }
         if ($("input:checkbox[name='youhui']:checked").length > 0) {
             youhui += '等'
